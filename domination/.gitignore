@@ -1,0 +1,5 @@
+# ignore maven builds and eclipse configs
+.classpath
+.project
+.settings/
+target/
