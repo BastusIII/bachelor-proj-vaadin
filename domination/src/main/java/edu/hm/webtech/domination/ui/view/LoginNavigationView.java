@@ -30,13 +30,25 @@ public class LoginNavigationView extends AbstractNavigationView {
 
 	@Override
 	protected Component initializeComponent() {
-		VerticalComponentGroup vertCompGroup = new VerticalComponentGroup();
+		//VerticalComponentGroup vertCompGroup = new VerticalComponentGroup();
 
+		/*Label welcomeLabel = new Label(
+				"<h1 align=\"center\">Welcome! Please enter your username!</h1>",
+				Label.CONTENT_XHTML);*/
 		Label welcomeLabel = new Label(
-				"<h1 align=\"center\">welcome! please enter your username!</h1>",
+				"<h1 align=\"center\">Welcome! Please choose a character!</h1>",
 				Label.CONTENT_XHTML);
 
-		Label usernameLabel = new Label("username:");
+		VerticalComponentGroup componentGroup = new VerticalComponentGroup("Character");
+		componentGroup.addComponent(welcomeLabel);
+		// Generate 6 players. Easier to test in the beginning. May be replaced with login mechanism later.
+		for(int i = 1; i <= 6; i++) {
+			Button playerButton = new Button("Player" + i);
+			playerButton.addListener(getClickListener());
+			componentGroup.addComponent(playerButton);
+		}
+		
+		/*Label usernameLabel = new Label("username:");
 		TextField usernameTextField = new TextField();
 		Button loginButton = new Button("login");
 		loginButton.addListener(new ClickListener() {
@@ -50,9 +62,19 @@ public class LoginNavigationView extends AbstractNavigationView {
 		vertCompGroup.addComponent(welcomeLabel);
 		vertCompGroup.addComponent(usernameLabel);
 		vertCompGroup.addComponent(usernameTextField);
-		vertCompGroup.addComponent(loginButton);
+		vertCompGroup.addComponent(loginButton);*/
 
-		return vertCompGroup;
+		return componentGroup;
 	}
 
+	
+	private ClickListener getClickListener() {
+		return new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO IMPLEMENT ME, BIATCH!
+			}
+		};
+	}
 }
