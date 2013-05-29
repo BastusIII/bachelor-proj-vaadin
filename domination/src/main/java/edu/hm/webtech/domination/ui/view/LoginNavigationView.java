@@ -7,7 +7,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 
 /**
  * This {@link NavigationView} provides a user interface for login.
@@ -18,6 +17,8 @@ import com.vaadin.ui.TextField;
 @SuppressWarnings("serial")
 public class LoginNavigationView extends AbstractNavigationView {
 
+	private MainTabView mainTabView;
+	
 	/**
 	 * Ctor, intializing this {@link NavigationView} with the given caption.
 	 * 
@@ -48,6 +49,8 @@ public class LoginNavigationView extends AbstractNavigationView {
 			componentGroup.addComponent(playerButton);
 		}
 		
+		this.mainTabView = new MainTabView();
+		
 		/*Label usernameLabel = new Label("username:");
 		TextField usernameTextField = new TextField();
 		Button loginButton = new Button("login");
@@ -67,13 +70,13 @@ public class LoginNavigationView extends AbstractNavigationView {
 		return componentGroup;
 	}
 
-	
 	private ClickListener getClickListener() {
 		return new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO IMPLEMENT ME, BIATCH!
+				getWindow().setContent(mainTabView);
 			}
 		};
 	}
