@@ -19,6 +19,10 @@ public class MyVaadinApplication extends TouchKitApplication {
 	 */
 	private AbstractNavigationView loginNaviView;
 
+	private double currentLatitude;
+	
+	private double currentLongitude;
+	
 	@Override
 	public void init() {
 		super.init();
@@ -30,5 +34,20 @@ public class MyVaadinApplication extends TouchKitApplication {
 	public void onBrowserDetailsReady() {
 		getMainWindow().setContent(loginNaviView);
 	}
+	
+	public double getCurrentLongitude() {
+		return this.currentLongitude;
+	}
 
+	public double getCurrentLatitude() {
+		return this.currentLatitude;
+	}
+	
+	public void setCurrentLongitude(double currentLongitude) {
+		this.currentLongitude = currentLongitude;
+	}
+	
+	public void setCurrentLatitude(double currentLatitude) {
+		this.currentLatitude = currentLatitude;
+	}
 }

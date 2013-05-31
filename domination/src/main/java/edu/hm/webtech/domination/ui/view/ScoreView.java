@@ -35,6 +35,24 @@ public class ScoreView extends AbstractNavigationView implements ScoreListener{
 	 */
 	public ScoreView(String caption) {
 		super(caption);
+		this.scoreManager = new ScoreManager();
+		this.scoreManager.addScoreListener(this);
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true) {
+					scoreManager.increaseScore(ScoreManager.Teams.BLUE, 10);
+					scoreManager.increaseScore(ScoreManager.Teams.RED, 5);
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		t.start();
 	}
 
 	/**
@@ -43,15 +61,16 @@ public class ScoreView extends AbstractNavigationView implements ScoreListener{
 	 */
 	@Override
 	protected Component initializeComponent() {
-		this.scoreManager = new ScoreManager();
 		// Initialize container components
 		VerticalComponentGroup componentGroup = new VerticalComponentGroup();
 		VerticalComponentGroup blueComponentGroup = new VerticalComponentGroup("Team Blue");
 		VerticalComponentGroup redComponentGroup = new VerticalComponentGroup("Team Red");
 		
 		// Initialize Labels representing the score
-		blueScore = new Label(String.valueOf(scoreManager.getScore(ScoreManager.Teams.BLUE)));
-		redScore = new Label(String.valueOf(scoreManager.getScore(ScoreManager.Teams.RED)));
+		blueScore = new Label("0");
+		redScore = new Label("0");
+		blueScore.setHeight(30, UNITS_PIXELS);
+		redScore.setHeight(30, UNITS_PIXELS);
 		
 		//Build the view
 		blueComponentGroup.addComponent(blueScore);
@@ -67,7 +86,9 @@ public class ScoreView extends AbstractNavigationView implements ScoreListener{
 	 */
 	@Override
 	public void ScoreChanged() {
-		blueScore.setCaption(String.valueOf(scoreManager.getScore(ScoreManager.Teams.BLUE)));
-		redScore.setCaption(String.valueOf(scoreManager.getScore(ScoreManager.Teams.RED)));
+		blueScore.setValue(String.valueOf(scoreManager.getScore(ScoreManager.Teams.BLUE)));
+		redScore.setValue(String.valueOf(scoreManager.getScore(ScoreManager.Teams.RED)));
+		blueScore.requestRepaint();
+		redScore.requestRepaint();
 	}
 }
