@@ -50,4 +50,8 @@ public class MyVaadinApplication extends TouchKitApplication {
 	public void setCurrentLatitude(double currentLatitude) {
 		this.currentLatitude = currentLatitude;
 	}
+	
+	public static MyVaadinApplication getApp(){
+		return (MyVaadinApplication) get();
+	}
 }
