@@ -11,7 +11,7 @@ public class MainTabView extends TabBarView{
 	public MainTabView() {
 		super();
 		
-		this.mapView = new MapView("Map");
+		this.mapView = new MapView();
 		this.scoreView = new ScoreView("Score");
 		
 		addTab(this.mapView, "Map");

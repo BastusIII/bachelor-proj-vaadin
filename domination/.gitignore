@@ -1,7 +1,8 @@
 # ignore maven builds and eclipse configs
 .classpath
 .project
-.idea
+*.iml
+.idea/
 .settings/
 target/
 VAADIN/

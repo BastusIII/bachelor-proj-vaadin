@@ -75,7 +75,6 @@ public class LoginNavigationView extends AbstractNavigationView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO IMPLEMENT ME, BIATCH!
 				getWindow().setContent(mainTabView);
 			}
 		};
