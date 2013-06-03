@@ -7,6 +7,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.LoginForm;
+
+import edu.hm.webtech.domination.gameInternals.LoginManager;
 
 /**
  * This {@link NavigationView} provides a user interface for login.
@@ -48,6 +51,22 @@ public class LoginNavigationView extends AbstractNavigationView {
 			playerButton.addListener(getClickListener());
 			componentGroup.addComponent(playerButton);
 		}
+		
+		
+		        
+		// Create the form
+		LoginForm login = new LoginForm();
+		login.setSizeFull();
+		componentGroup.addComponent(login);
+		        
+		// Handle form submits
+		login.addListener(new LoginManager(this,mainTabView));	
+		
+
+		
+		
+		
+		
 		
 		this.mainTabView = new MainTabView();
 		

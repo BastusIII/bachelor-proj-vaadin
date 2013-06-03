@@ -8,4 +8,6 @@ public interface IPlayer {
 	double getLongitude();
 	double getLatitude();
 	void setLocation(double longitude, double latitude);
+	String getName();
+	void setName(String name);
 }
