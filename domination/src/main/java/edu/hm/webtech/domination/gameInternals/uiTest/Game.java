@@ -9,6 +9,7 @@ public class Game implements IGame{
 
 	private List<IPlayer> players = new ArrayList<IPlayer>();
 	private List<IDominationPoint> dominationPoints = new ArrayList<IDominationPoint>();
+	private IPlayer self;
 	
 	public Game(){
 	}
@@ -47,5 +48,20 @@ public class Game implements IGame{
 		this.dominationPoints.add(redDomPoint);
 		this.dominationPoints.add(blueDomPoint);
 		this.dominationPoints.add(neutralDomPoint);
+	}
+
+	@Override
+	public IPlayer getCurrentPlayer() {
+		return self;
+	}
+
+	@Override
+	public void addPlayer(IPlayer player) {
+		players.add(player);
+	}
+
+	@Override
+	public void setSelf(IPlayer player) {
+		this.self = player;
 	}
 }

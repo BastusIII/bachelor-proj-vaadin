@@ -9,9 +9,16 @@ public class Player implements IPlayer{
 	
 	private double longitude;
 	private double latitude;
+	private String name;
 	
 	public Player(ScoreManager.Teams team) {
 		this.team = team;
+		this.name = "Nobody";
+	}
+	
+	public Player(ScoreManager.Teams team, String name) {
+		this.team = team;
+		this.name=name;
 	}
 	
 	@Override
@@ -33,5 +40,15 @@ public class Player implements IPlayer{
 	@Override
 	public Teams getTeam() {
 		return this.team;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name=name;
 	}
 }
