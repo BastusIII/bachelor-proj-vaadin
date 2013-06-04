@@ -27,6 +27,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 	public void init() {
 		super.init();
 		this.loginNaviView = new LoginNavigationView("Login");
+		setTheme("domination");
 		getMainWindow().setContent(loginNaviView);
 	}
 

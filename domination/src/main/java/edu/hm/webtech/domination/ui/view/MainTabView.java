@@ -1,22 +1,28 @@
 package edu.hm.webtech.domination.ui.view;
 
+import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TabBarView;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.TabSheet;
+
 
 @SuppressWarnings("serial")
 public class MainTabView extends TabBarView{
 
-	private MapView mapView;
-	private ScoreView scoreView;
-	
 	public MainTabView() {
 		super();
+
+		Layout gameView = new GameView();
+
+		NavigationView settingsView = new ScoreView("Score");
+
+		TabSheet.Tab mapTab = addTab(gameView, "Map");
+		mapTab.setIcon(new ThemeResource("images/map.png"));
+
+		TabSheet.Tab settingsTab = addTab(settingsView, "Settings");
+		settingsTab.setIcon(new ThemeResource("images/settings.png"));
 		
-		this.mapView = new MapView();
-		this.scoreView = new ScoreView("Score");
-		
-		addTab(this.mapView, "Map");
-		addTab(this.scoreView, "Score");
-		
-		setSelectedTab(this.mapView);
+		setSelectedTab(gameView);
 	}
 }
