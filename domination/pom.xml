@@ -32,16 +32,6 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>refresher</artifactId>
-			<version>1.2.1.7</version>
-		</dependency>
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-server</artifactId>
-			<version>7.0.6</version>
-		</dependency>
-		<dependency>
 			<groupId>com.vaadin.addon</groupId>
 			<artifactId>vaadin-touchkit-agpl</artifactId>
 			<version>2.1.0</version>
@@ -74,6 +64,16 @@
 			<artifactId>openlayers-wrapper</artifactId>
 			<version>1.2.0</version>
 		</dependency>
+		<dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+            <version>7.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>refresher</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 	</dependencies>
 
 	<build>
