@@ -8,7 +8,8 @@ import java.util.List;
  * @author Maximilian Briglmeier
  *
  */
-public class ScoreManager{
+@Deprecated
+public class ScoreManager implements ScorePublisher{
 	/**
 	 * Represent the teams available.
 	 * @author Maximilian Briglmeier
@@ -82,7 +83,7 @@ public class ScoreManager{
 	 * Adds the specified component, which gets notified when the score changes.
 	 * @param scoreListener the component to be added
 	 */
-	public void addScoreListener(ScoreListener scoreListener) {
+	public void subscribeScoreChange(ScoreListener scoreListener) {
 		scoreListeners.add(scoreListener);
 	}
 }

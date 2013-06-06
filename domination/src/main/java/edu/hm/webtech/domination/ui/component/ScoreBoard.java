@@ -77,7 +77,7 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
 
         setCompositionRoot(mainLayout);
 
-        this.scoreManager.addScoreListener(this);
+        this.scoreManager.subscribeScoreChange(this);
     }
 
     /**

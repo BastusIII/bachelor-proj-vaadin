@@ -1,7 +1,11 @@
 package edu.hm.webtech.domination.model;
 
+import edu.hm.webtech.domination.gameInternals.ScoreListener;
+import edu.hm.webtech.domination.gameInternals.ScorePublisher;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * User: Basti
@@ -10,7 +14,7 @@ import java.util.Collection;
  * <h1>Team ist das Datenobjekt eines Teams, welches die Spieler enthält, eine Farbe, Namen und Punktestand des Teams speichert.</h1>
  * <p>Name und Identifier können nach Erstellung des Teams nicht mehr geändert werden.</p>
  */
-public class Team {
+public class Team implements ScorePublisher {
     /**
      * Der Identifier des Teams ist eine Farbe.
      */
@@ -27,6 +31,11 @@ public class Team {
      * Die Liste der Spieler des Teams.
      */
     private Collection<Player> players;
+
+    /**
+     * Contains components, which are notified when the score changes.
+     */
+    private List<ScoreListener> scoreListeners = new ArrayList<ScoreListener>();
 
     /**
      * Konstrutor.
@@ -110,6 +119,14 @@ public class Team {
      */
     public Collection<Player> getPlayers() {
         return new ArrayList<Player>(this.players);
+    }
+
+    /**
+     * Adds the specified component, which gets notified when the score changes.
+     * @param scoreListener the component to be added
+     */
+    public void subscribeScoreChange(ScoreListener scoreListener) {
+        scoreListeners.add(scoreListener);
     }
 
     @Override
