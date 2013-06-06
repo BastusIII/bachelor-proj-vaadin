@@ -1,5 +1,7 @@
 package edu.hm.webtech.domination.ui.component;
 
+import com.github.wolfie.refresher.Refresher;
+import com.github.wolfie.refresher.Refresher.RefreshListener;
 import com.vaadin.ui.*;
 import edu.hm.webtech.domination.gameInternals.ScoreListener;
 import edu.hm.webtech.domination.gameInternals.ScoreManager;
@@ -25,14 +27,8 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
     /**
      * The score manager attached to this Score board.
      */
-    private ScoreManager scoreManager;
-
-    /**
-     * Dummy ScoreBoard for Game with two teams, red vs. blue.
-     */
-	public ScoreBoard() {
-
-        this.scoreManager = new ScoreManager();
+    private static ScoreManager scoreManager = new ScoreManager();
+    static{
         // start dummy game
         Thread t = new Thread(new Runnable() {
 
@@ -50,7 +46,12 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
             }
         });
         t.start();
+    }
 
+    /**
+     * Dummy ScoreBoard for Game with two teams, red vs. blue.
+     */
+	public ScoreBoard() {
         initLayout();
     }
 
@@ -58,7 +59,20 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
      * Initializes the ScoreBoards layout.
      */
     private void initLayout() {
+    	Refresher refresher = new Refresher();
+		refresher.setRefreshInterval(500);
+		refresher.addListener(new RefreshListener(){
+			@Override
+			public void refresh(Refresher source) {
+				blueScore.setValue(getTeamScore(ScoreManager.Teams.BLUE));
+				redScore.setValue(getTeamScore(ScoreManager.Teams.RED));
+				blueScore.requestRepaint();
+				redScore.requestRepaint();
+			}
+			
+		});
         HorizontalLayout scoreLayout = new HorizontalLayout();
+        scoreLayout.addComponent(refresher);
         scoreLayout.setStyleName("score-bg");
 
         blueScore = new Label(getTeamScore(ScoreManager.Teams.BLUE));
