@@ -1,0 +1,24 @@
+@import "../base/styles.css";
+
+.blue-score, .red-score {
+   padding: 6px;
+   color: white;
+   font-weight:bold;
+   font-size:20px;
+}
+
+.score-bg {
+  background-color:#0e0e0e;
+  border-radius: 16px;
+  padding: 2px;
+}
+
+.blue-score {
+   background-color:#2044de;
+   border-radius: 14px 0px 0px 14px;
+}
+
+.red-score {
+   background-color:#D0242e;
+   border-radius: 0px 14px 14px 0px;
+}

@@ -178,6 +178,7 @@ public class MapView extends NavigationView implements PositionCallback,
 			dominationPointLocationVector_neutral.setSelectionMode(SelectionMode.SIMPLE);
 			dominationPointLocationVector_neutral.addListener(this);
 		}
+
 	}
 
 	private void configureMapControls() {

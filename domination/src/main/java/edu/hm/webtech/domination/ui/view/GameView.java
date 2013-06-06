@@ -11,7 +11,9 @@ import edu.hm.webtech.domination.ui.component.ScoreBoard;
 public class GameView  extends AbsoluteLayout{
 
 	public GameView() {
-		addComponent(new MapView(), "left: 0%; right: 0%; top: 0%; bottom: 0%;");
+        MapView mapView = new MapView();
+        mapView.setSizeFull();
+		addComponent(mapView, "left: 0%; right: 0%; top: 0%; bottom: 0%;");
 		addComponent(new ScoreBoard(), "top: 1%;");
 	}
 

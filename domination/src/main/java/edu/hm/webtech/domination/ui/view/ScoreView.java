@@ -77,7 +77,7 @@ public class ScoreView extends AbstractNavigationView implements ScoreListener{
 		redComponentGroup.addComponent(redScore);		
 		componentGroup.addComponent(blueComponentGroup);
 		componentGroup.addComponent(redComponentGroup);
-		
+
 		return componentGroup;
 	}
 
@@ -88,7 +88,5 @@ public class ScoreView extends AbstractNavigationView implements ScoreListener{
 	public void ScoreChanged() {
 		blueScore.setValue(String.valueOf(scoreManager.getScore(ScoreManager.Teams.BLUE)));
 		redScore.setValue(String.valueOf(scoreManager.getScore(ScoreManager.Teams.RED)));
-		blueScore.requestRepaint();
-		redScore.requestRepaint();
 	}
 }

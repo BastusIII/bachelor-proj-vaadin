@@ -29,11 +29,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-        <repository>
-            <id>vaadin-releases</id>
-            <name>Vaadin releases</name>
-            <url>https://oss.sonatype.org/content/repositories/vaadin-releases/</url>
-        </repository>
 	</repositories>
 	<dependencies>
 		<dependency>

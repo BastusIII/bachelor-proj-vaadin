@@ -18,6 +18,7 @@ public class MainTabView extends TabBarView{
 		NavigationView settingsView = new ScoreView("Score");
 
 		TabSheet.Tab mapTab = addTab(gameView, "Map");
+
 		mapTab.setIcon(new ThemeResource("images/map.png"));
 
 		TabSheet.Tab settingsTab = addTab(settingsView, "Settings");
