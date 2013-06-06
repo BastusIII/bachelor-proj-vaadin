@@ -3,15 +3,21 @@ package edu.hm.webtech.domination.gameInternals.uiTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.addon.touchkit.ui.TouchKitApplication;
+
 import edu.hm.webtech.domination.gameInternals.ScoreManager;
 
 public class Game implements IGame{
 
 	private List<IPlayer> players = new ArrayList<IPlayer>();
 	private List<IDominationPoint> dominationPoints = new ArrayList<IDominationPoint>();
-	private IPlayer self;
+	private TouchKitApplication tka;
 	
 	public Game(){
+	}
+
+	public Game(TouchKitApplication tka) {
+		this.tka=tka;
 	}
 
 	@Override
@@ -51,8 +57,8 @@ public class Game implements IGame{
 	}
 
 	@Override
-	public IPlayer getCurrentPlayer() {
-		return self;
+	public IPlayer getSelf() {
+		return (IPlayer) tka.getMainWindow().getApplication().getUser();
 	}
 
 	@Override
@@ -62,6 +68,6 @@ public class Game implements IGame{
 
 	@Override
 	public void setSelf(IPlayer player) {
-		this.self = player;
+		tka.getMainWindow().getApplication().setUser(player);
 	}
 }

@@ -1,5 +1,6 @@
 package edu.hm.webtech.domination.gameInternals;
 
+import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 import com.vaadin.ui.LoginForm.LoginEvent;
 import com.vaadin.ui.LoginForm.LoginListener;
 
@@ -24,23 +25,28 @@ public class LoginManager implements LoginListener{
 
 	private LoginNavigationView loginNavigationView;
 	private MainTabView mainTabView;
+	private TouchKitApplication tka;
 	
-	public LoginManager(LoginNavigationView loginNavigationView, MainTabView mainTabView) {
+	public LoginManager(LoginNavigationView loginNavigationView, MainTabView mainTabView, TouchKitApplication tka) {
 		this.loginNavigationView = loginNavigationView;
 		this.mainTabView = mainTabView;
+		this.tka = tka;
 	}
 
 	@Override
 	public void onLogin(LoginEvent event) {
 		//TODO Hier nur Testgame, ich brauche Referenz zum echten Game, um die Spieler anzulegen...!
-		IGame game = new Game();
+		IGame game = new Game(tka);
 		IPlayer iplay = new Player(ScoreManager.Teams.BLUE,event.getLoginParameter("username"));
 		game.addPlayer(iplay);
 		game.setSelf(iplay);
 		
+		
+		
+		
 //		String username = event.getLoginParameter("username");
 //        String password = event.getLoginParameter("password");
-        loginNavigationView.getWindow().showNotification("Added Player:  " + game.getCurrentPlayer().getName());
+        loginNavigationView.getWindow().showNotification("Added Player:  " + game.getSelf().getName());
         loginNavigationView.getWindow().setContent(mainTabView);
 		
 	}

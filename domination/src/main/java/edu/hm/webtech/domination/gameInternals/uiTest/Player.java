@@ -1,5 +1,7 @@
 package edu.hm.webtech.domination.gameInternals.uiTest;
 
+import com.vaadin.addon.touchkit.ui.TouchKitApplication;
+
 import edu.hm.webtech.domination.gameInternals.ScoreManager;
 import edu.hm.webtech.domination.gameInternals.ScoreManager.Teams;
 
@@ -20,7 +22,7 @@ public class Player implements IPlayer{
 		this.team = team;
 		this.name=name;
 	}
-	
+
 	@Override
 	public void setLocation(double longitude, double latitude) {
 		this.longitude = longitude;

@@ -11,7 +11,7 @@ public interface IGame {
 	 * Liefert den eigenen Spielernamen zurueck. Damit soll der Spieler spaeter unterschieden werden.
 	 * @return den eigenen Spielernamen
 	 */
-	IPlayer getCurrentPlayer();
+	IPlayer getSelf();
 	
 	/**
 	 * Fuegt einen Spieler in die Liste der Spieler hinzu.

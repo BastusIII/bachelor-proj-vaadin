@@ -1,6 +1,7 @@
 package edu.hm.webtech.domination.ui.view;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -19,6 +20,8 @@ import edu.hm.webtech.domination.gameInternals.LoginManager;
  */
 @SuppressWarnings("serial")
 public class LoginNavigationView extends AbstractNavigationView {
+	
+	private TouchKitApplication tka;
 
 	private MainTabView mainTabView;
 	
@@ -30,6 +33,11 @@ public class LoginNavigationView extends AbstractNavigationView {
 	 */
 	public LoginNavigationView(String caption) {
 		super(caption);
+	}
+	
+	public LoginNavigationView(String caption, TouchKitApplication tka) {
+		super(caption);
+		this.tka = tka;
 	}
 
 	@Override
@@ -54,13 +62,6 @@ public class LoginNavigationView extends AbstractNavigationView {
 		
 		
 		        
-		// Create the form
-		LoginForm login = new LoginForm();
-		login.setSizeFull();
-		componentGroup.addComponent(login);
-		        
-		// Handle form submits
-		login.addListener(new LoginManager(this,mainTabView));	
 		
 
 		
@@ -69,6 +70,15 @@ public class LoginNavigationView extends AbstractNavigationView {
 		
 		
 		this.mainTabView = new MainTabView();
+		
+		// Create the form
+				LoginForm login = new LoginForm();
+				login.setSizeFull();
+				componentGroup.addComponent(login);
+				        
+				// Handle form submits
+				login.addListener(new LoginManager(this,mainTabView,tka));	
+				
 		
 		/*Label usernameLabel = new Label("username:");
 		TextField usernameTextField = new TextField();
