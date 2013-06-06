@@ -31,12 +31,11 @@ public class ScoreView extends AbstractNavigationView implements ScoreListener{
 	/**
 	 * Initializes the view.
 	 * @param caption the caption of the view
-	 * @param scoreManager responsible for updateing the score
 	 */
 	public ScoreView(String caption) {
 		super(caption);
 		this.scoreManager = new ScoreManager();
-		this.scoreManager.addScoreListener(this);
+		this.scoreManager.subscribeScoreChange(this);
 		Thread t = new Thread(new Runnable() {
 			
 			@Override
