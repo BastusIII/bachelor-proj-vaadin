@@ -10,7 +10,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.LoginForm;
 
-import edu.hm.webtech.domination.gameInternals.LoginManager;
+import edu.hm.webtech.domination.oldbs.gameInternals.LoginManager;
 
 /**
  * This {@link NavigationView} provides a user interface for login.

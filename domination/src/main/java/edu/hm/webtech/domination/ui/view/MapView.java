@@ -21,11 +21,11 @@ import com.vaadin.addon.touchkit.ui.TouchKitWindow;
 import com.vaadin.ui.Component;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
-import edu.hm.webtech.domination.gameInternals.ScoreManager;
-import edu.hm.webtech.domination.gameInternals.uiTest.Game;
-import edu.hm.webtech.domination.gameInternals.uiTest.IDominationPoint;
-import edu.hm.webtech.domination.gameInternals.uiTest.IPlayer;
-import edu.hm.webtech.domination.gameInternals.uiTest.Player;
+import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
+import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.Game;
+import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.IDominationPoint;
+import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.IPlayer;
+import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.Player;
 
 /**
  * This view shows the map with the current positions of the players to the

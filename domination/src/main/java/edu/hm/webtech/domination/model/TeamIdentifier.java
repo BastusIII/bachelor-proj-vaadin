@@ -8,4 +8,5 @@ package edu.hm.webtech.domination.model;
  */
 public enum TeamIdentifier {
     RED, GREEN, BLUE, PINK, PURPLE, BLACK
+    // TODO IS THERE ANYTHING MORE WE NEED IN THIS TEAM IDENTIFIER?
 }

@@ -12,4 +12,6 @@
     <!-- <script src="OpenLayers.js"></script>-->
 
     <inherits name="org.vaadin.vol.VolWidgetsetWithHostedScript" />
+
+    <inherits name="com.github.wolfie.refresher.RefresherApplicationWidgetset" />
 </module>

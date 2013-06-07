@@ -4,8 +4,8 @@ import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 
-import edu.hm.webtech.domination.gameInternals.ScoreListener;
-import edu.hm.webtech.domination.gameInternals.ScoreManager;
+import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
+import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 
 /**
  * This view shows the current score to the user.

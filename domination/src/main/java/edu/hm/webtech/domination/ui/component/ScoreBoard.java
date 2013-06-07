@@ -3,8 +3,9 @@ package edu.hm.webtech.domination.ui.component;
 import com.github.wolfie.refresher.Refresher;
 import com.github.wolfie.refresher.Refresher.RefreshListener;
 import com.vaadin.ui.*;
-import edu.hm.webtech.domination.gameInternals.ScoreListener;
-import edu.hm.webtech.domination.gameInternals.ScoreManager;
+
+import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
+import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 
 
 /**
