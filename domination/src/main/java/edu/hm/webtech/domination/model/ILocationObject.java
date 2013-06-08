@@ -14,30 +14,24 @@ public interface ILocationObject {
     public double getLongitude();
 
     /**
-     * Sets the longitude of the object.
-     *
-     * @param longitude The longitude.
-     */
-    public void setLongitude(double longitude);
-
-    /**
      * @return latitude of the object.
      */
     public double getLatitude();
 
     /**
-     * Sets the latitude of the object.
+     * Sets the geo coordinates of the object.
      *
-     * @param latitude The latitude.
+     * @param longitude The longitude.
+     * @param latitude  The latitude.
      */
-    public void setLatitude(double latitude);
+    public void setGeoCoordinates(final double longitude, final double latitude);
 
     /**
      * Calculates the distance between this objects location and the given one.
      *
      * @param longitude The longitude.
-     * @param latitude The latitude.
+     * @param latitude  The latitude.
      * @return distance of this location to given location in meters.
      */
-    public double getDistance(double longitude, double latitude);
+    public double getDistance(final double longitude, final double latitude);
 }
