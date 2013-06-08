@@ -5,9 +5,10 @@ import edu.hm.webtech.domination.oldbs.model.ObjectCoordinates;
 import edu.hm.webtech.domination.oldbs.model.Player;
 
 /**
- * User: Basti Date: 04.06.13 Time: 13:32 <h1>Der LocationController kümmert
+ * User: Basti Date: 04.06.13 Time: 13:32 <h1>Der LocationManager kümmert
  * sich um die Aktualisierung der Spielerpositionen.</h1>
  */
+@Deprecated
 public class LocationController {
 	/**
 	 * Das Spiel.

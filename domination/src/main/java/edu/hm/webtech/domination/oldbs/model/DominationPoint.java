@@ -6,6 +6,7 @@ package edu.hm.webtech.domination.oldbs.model;
  * Time: 13:30
  * <h1>DominationPoint ist das Datenobjekt eines zu erobernden Punktes auf dem Map.</h1>
  */
+@Deprecated
 public class DominationPoint extends ObjectCoordinates {
 
     /**

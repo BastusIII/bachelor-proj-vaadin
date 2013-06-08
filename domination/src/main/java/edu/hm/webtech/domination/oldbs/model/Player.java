@@ -6,6 +6,7 @@ package edu.hm.webtech.domination.oldbs.model;
  * Time: 13:32
  * <h1>Player ist das Datenobjekt eines Spielers.</h1>
  */
+@Deprecated
 public class Player extends ObjectCoordinates {
     /**
      * Der eindeutige Name des Spielers.

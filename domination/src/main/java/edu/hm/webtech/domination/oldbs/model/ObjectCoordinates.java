@@ -6,6 +6,7 @@ package edu.hm.webtech.domination.oldbs.model;
  * Time: 13:38
  * <h1>ObjectCoordinates definiert eine Position auf der Karte mit X und y Koordinaten.</h1>
  */
+@Deprecated
 public class ObjectCoordinates {
     /**
      * Die x Koordinate.

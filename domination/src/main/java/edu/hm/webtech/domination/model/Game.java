@@ -1,0 +1,159 @@
+package edu.hm.webtech.domination.model;
+
+import edu.hm.webtech.domination.exception.ModelException;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * <h1>Das Datenobjekt für ein Spiel.</h1>
+ *
+ * @author Sebastian Stumpf
+ */
+public class Game extends LocationObject implements IGame {
+    /**
+     * Die Spielerliste.
+     */
+    private Collection<IPlayer> players;
+    /**
+     * Die Liste der Teams.
+     */
+    private Collection<ITeam> teams;
+    /**
+     * Die Liste der Domination Points.
+     */
+    private Collection<IDominationPoint> dominationPoints;
+    /**
+     * Die Spielkarte.
+     */
+    private IMap map;
+    /**
+     * Ersteller des Spiels.
+     */
+    private IPlayer owner;
+
+    /**
+     * Spiel Konfiguration.
+     */
+    private IGameConfiguration config;
+
+    /**
+     * Konstruktor.
+     *
+     * @param longitude Längengrad.
+     * @param latitude  Breitengrad.
+     * @param map       Die Spielkarte.
+     */
+    public Game(final double longitude, final double latitude, final IMap map, final IPlayer owner, final IGameConfiguration config) {
+        super(longitude, latitude);
+        this.players = new ArrayList<IPlayer>();
+        this.teams = new ArrayList<ITeam>();
+        this.dominationPoints = new ArrayList<IDominationPoint>();
+        this.map = map;
+        this.owner = owner;
+    }
+
+    /**
+     * Konstruktor.
+     *
+     * @param longitude Längengrad.
+     * @param latitude  Breitengrad.
+     */
+    public Game(final double longitude, final double latitude) {
+        super(longitude, latitude);
+        this.players = new ArrayList<IPlayer>();
+        this.teams = new ArrayList<ITeam>();
+        this.dominationPoints = new ArrayList<IDominationPoint>();
+        this.map = null;
+        this.owner = null;
+        this.config = null;
+    }
+
+    @Override
+    public void addPlayer(final IPlayer player) throws ModelException {
+        if (!this.players.add(player))
+            throw new ModelException("Player could not be added.");
+    }
+
+    @Override
+    public void removePlayer(final IPlayer player) throws ModelException {
+        if (!this.players.remove(player))
+            throw new ModelException("Player could not be removed.");
+    }
+
+    @Override
+    public void addTeam(final ITeam team) throws ModelException {
+        if (!this.teams.add(team))
+            throw new ModelException("Team could not be added.");
+    }
+
+    @Override
+    public void removeTeam(final ITeam team) throws ModelException {
+        if (!this.teams.remove(team))
+            throw new ModelException("Team could not be removed.");
+    }
+
+    @Override
+    public void addDominationPoint(final IDominationPoint dominationPoint) throws ModelException {
+        if (!this.dominationPoints.add(dominationPoint))
+            throw new ModelException("Domination Point could not be added.");
+    }
+
+    @Override
+    public void removeDominationPoint(final IDominationPoint dominationPoint) throws ModelException {
+        if (!this.dominationPoints.remove(dominationPoint))
+            throw new ModelException("Domination Point could not be removed.");
+    }
+
+    @Override
+    public void setMap(final IMap map) {
+        this.map = map;
+    }
+
+    @Override
+    public IMap getMap() throws ModelException {
+        if (this.map == null)
+            throw new ModelException("Map is not yet initialized. Initialize before use.");
+        return this.map;
+    }
+
+
+    @Override
+    public IPlayer getOwner() throws ModelException {
+        if (this.owner == null)
+            throw new ModelException("Owner is not yet initialized. Initialize before use.");
+        return this.owner;
+    }
+
+    @Override
+    public void setOwner(final IPlayer player) {
+        this.owner = player;
+    }
+
+    @Override
+    public IGameConfiguration getGameConfiguration() throws ModelException {
+        if (this.config == null)
+            throw new ModelException("Configuration is not yet initialized. Please use default configuration");
+        return this.config;
+    }
+
+    @Override
+    public void setGameConfiguration(final IGameConfiguration gameConfiguration) {
+        this.config = gameConfiguration;
+    }
+
+    @Override
+    public Collection<IPlayer> getPlayers() {
+        return this.players;
+    }
+
+    @Override
+    public Collection<ITeam> getTeams() {
+        return this.teams;
+    }
+
+    @Override
+    public Collection<IDominationPoint> getDominationPoints() {
+        return this.dominationPoints;
+    }
+}

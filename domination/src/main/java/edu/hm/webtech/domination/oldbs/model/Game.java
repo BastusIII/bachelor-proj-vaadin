@@ -11,6 +11,7 @@ import edu.hm.webtech.domination.model.TeamIdentifier;
  * Time: 13:32
  * <h1>Das Datenobjekt für ein Spiel.</h1>
  */
+@Deprecated
 public class Game {
     /**
      * Die Spielerliste.

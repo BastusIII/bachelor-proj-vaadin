@@ -15,6 +15,7 @@ import java.util.List;
  * <h1>Team ist das Datenobjekt eines Teams, welches die Spieler enthält, eine Farbe, Namen und Punktestand des Teams speichert.</h1>
  * <p>Name und Identifier können nach Erstellung des Teams nicht mehr geändert werden.</p>
  */
+@Deprecated
 public class Team implements ScorePublisher {
     /**
      * Der Identifier des Teams ist eine Farbe.

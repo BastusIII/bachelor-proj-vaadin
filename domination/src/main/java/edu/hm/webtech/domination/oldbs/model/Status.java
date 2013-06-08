@@ -10,6 +10,7 @@ package edu.hm.webtech.domination.oldbs.model;
  * FREE: Kein Spieler innerhalb des Radius des Domination Points.<br />
  * DRAW: Erobernde Spieler gleichen sich aus.</p>
  */
+@Deprecated
 public enum Status {
     LOCKED, IS_BEING_CAPTURED, FREE, DRAW
 }

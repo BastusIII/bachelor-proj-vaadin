@@ -3,42 +3,41 @@ package edu.hm.webtech.domination.model;
 /**
  * Defines methods for a object having a location based on longitude and
  * latitude.
- * 
+ *
  * @author Marco Wolff
- * 
  */
 public interface ILocationObject {
 
-	/**
-	 * @return longitude of the object.
-	 */
-	public double getLongitude();
+    /**
+     * @return longitude of the object.
+     */
+    public double getLongitude();
 
-	/**
-	 * Sets the longitude of the object.
-	 * 
-	 * @param longitude
-	 */
-	public void setLongitude(double longitude);
+    /**
+     * Sets the longitude of the object.
+     *
+     * @param longitude
+     */
+    public void setLongitude(double longitude);
 
-	/**
-	 * @return latitude of the object.
-	 */
-	public double getLatitude();
+    /**
+     * @return latitude of the object.
+     */
+    public double getLatitude();
 
-	/**
-	 * Sets the latitude of the object.
-	 * 
-	 * @param latitude
-	 */
-	public void setLatitude(double latitude);
+    /**
+     * Sets the latitude of the object.
+     *
+     * @param latitude
+     */
+    public void setLatitude(double latitude);
 
-	/**
-	 * Calculates the distance between this objects location and the given one.
-	 * 
-	 * @param longitude
-	 * @param latitude
-	 * @return distance of this location to given location.
-	 */
-	public double getDistance(double longitude, double latitude);
+    /**
+     * Calculates the distance between this objects location and the given one.
+     *
+     * @param longitude
+     * @param latitude
+     * @return distance of this location to given location in meters.
+     */
+    public double getDistance(double longitude, double latitude);
 }

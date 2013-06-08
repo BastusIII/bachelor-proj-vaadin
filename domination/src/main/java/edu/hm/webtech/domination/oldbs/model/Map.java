@@ -6,6 +6,7 @@ package edu.hm.webtech.domination.oldbs.model;
  * Time: 13:32
  * <h1>Map ist das Datenobjekt der Karte und wird durch ein Zentrum repräsentiert, sowie Radius (Begrenzung des Spielfeldes) und Zoomfaktor.</h1>
  */
+@Deprecated
 public class Map extends ObjectCoordinates {
 
     /**
