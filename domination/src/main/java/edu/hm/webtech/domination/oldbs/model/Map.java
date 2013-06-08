@@ -79,9 +79,8 @@ public class Map extends ObjectCoordinates {
         Map map = (Map) o;
 
         if (radius != map.radius) return false;
-        if (zoomFactor != map.zoomFactor) return false;
+        return zoomFactor == map.zoomFactor;
 
-        return true;
     }
 
     @Override

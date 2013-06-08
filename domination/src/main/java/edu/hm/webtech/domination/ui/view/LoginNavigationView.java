@@ -9,7 +9,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.LoginForm;
-
 import edu.hm.webtech.domination.oldbs.gameInternals.LoginManager;
 
 /**

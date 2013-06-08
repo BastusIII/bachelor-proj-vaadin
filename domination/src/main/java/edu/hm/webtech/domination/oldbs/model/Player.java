@@ -116,9 +116,8 @@ public class Player extends ObjectCoordinates {
 
         Player player = (Player) o;
 
-        if (name != null ? !name.equals(player.name) : player.name != null) return false;
+        return !(name != null ? !name.equals(player.name) : player.name != null);
 
-        return true;
     }
 
     @Override

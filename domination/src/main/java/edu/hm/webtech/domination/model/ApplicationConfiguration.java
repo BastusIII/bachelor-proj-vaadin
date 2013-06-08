@@ -2,6 +2,7 @@ package edu.hm.webtech.domination.model;
 
 /**
  * This class holds some static values needed for Application Configuration. For example filenames.
+ *
  * @author Sebastian Stumpf
  */
 public interface ApplicationConfiguration {

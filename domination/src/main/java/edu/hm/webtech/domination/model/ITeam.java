@@ -12,7 +12,7 @@ public interface ITeam extends IScoreObject {
 
     /**
      * @return {@link TeamIdentifier} of the team.
-     * @throws {@link ModelException} if the Team Identifier is not initialized.
+     * @throws ModelException if the Team Identifier is not initialized.
      */
     public TeamIdentifier getTeamIdentifier() throws ModelException;
 

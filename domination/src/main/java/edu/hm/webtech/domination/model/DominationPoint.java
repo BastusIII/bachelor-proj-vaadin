@@ -8,7 +8,7 @@ package edu.hm.webtech.domination.model;
 public class DominationPoint extends LocationObject implements IDominationPoint {
 
     /**
-     * Radius, in dem man sich befinden muss, um zu erobern in Zentimetern.
+     * Radius, in dem man sich befinden muss, um zu erobern in Metern.
      */
     private int radius;
     /**

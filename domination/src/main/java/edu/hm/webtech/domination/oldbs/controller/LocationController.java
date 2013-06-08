@@ -30,8 +30,8 @@ public class LocationController {
 	 * Ist der Spieler nicht in der Spielerliste des Spiels, wird die Anfrage
 	 * ignoriert.
 	 * 
-	 * @param playerName
-	 * @param coordinates
+	 * @param playerName The player name.
+	 * @param coordinates Die Koordinaten.
 	 */
 	public void updatePlayer(final String playerName,
 			final ObjectCoordinates coordinates) {

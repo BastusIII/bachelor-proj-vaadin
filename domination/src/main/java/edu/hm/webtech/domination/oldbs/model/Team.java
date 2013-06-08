@@ -138,9 +138,8 @@ public class Team implements ScorePublisher {
 
         Team team = (Team) o;
 
-        if (color != team.color) return false;
+        return color == team.color;
 
-        return true;
     }
 
     @Override

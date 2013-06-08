@@ -1,10 +1,10 @@
 package edu.hm.webtech.domination.manager.lobby;
 
-import java.util.Collection;
-
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.IGameConfiguration;
+
+import java.util.Collection;
 
 /**
  * Defines methods which are necessary for handling a lobby which allows

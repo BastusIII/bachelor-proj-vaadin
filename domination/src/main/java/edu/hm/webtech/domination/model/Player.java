@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Sebastian Stumpf
  */
-public class Player extends LocationObject implements IPlayer,ScorePublisher{
+public class Player extends LocationObject implements IPlayer, ScorePublisher {
     /**
      * Der eindeutige Name des Spielers.
      */
@@ -72,7 +72,7 @@ public class Player extends LocationObject implements IPlayer,ScorePublisher{
 
 
     @Override
-    public String getIdentifier() throws ModelException{
+    public String getIdentifier() throws ModelException {
         if (this.name == null)
             throw new ModelException("Player name is not yet initialized. Initialize before use.");
         return this.name;
@@ -97,7 +97,7 @@ public class Player extends LocationObject implements IPlayer,ScorePublisher{
     @Override
     synchronized public void resetScore() {
         this.score = 0;
-        for(ScoreListener listener : scoreListeners) {
+        for (ScoreListener listener : scoreListeners) {
             listener.ScoreChanged();
         }
     }
@@ -110,7 +110,7 @@ public class Player extends LocationObject implements IPlayer,ScorePublisher{
     @Override
     synchronized public void addScore(int toAdd) {
         this.score += toAdd;
-        for(ScoreListener listener : scoreListeners) {
+        for (ScoreListener listener : scoreListeners) {
             listener.ScoreChanged();
         }
     }

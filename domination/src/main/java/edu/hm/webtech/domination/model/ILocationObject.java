@@ -16,7 +16,7 @@ public interface ILocationObject {
     /**
      * Sets the longitude of the object.
      *
-     * @param longitude
+     * @param longitude The longitude.
      */
     public void setLongitude(double longitude);
 
@@ -28,15 +28,15 @@ public interface ILocationObject {
     /**
      * Sets the latitude of the object.
      *
-     * @param latitude
+     * @param latitude The latitude.
      */
     public void setLatitude(double latitude);
 
     /**
      * Calculates the distance between this objects location and the given one.
      *
-     * @param longitude
-     * @param latitude
+     * @param longitude The longitude.
+     * @param latitude The latitude.
      * @return distance of this location to given location in meters.
      */
     public double getDistance(double longitude, double latitude);

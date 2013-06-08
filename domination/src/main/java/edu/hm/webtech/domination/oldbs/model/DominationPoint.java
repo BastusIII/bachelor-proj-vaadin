@@ -88,7 +88,7 @@ public class DominationPoint extends ObjectCoordinates {
     /**
      * Setter für Score.
      *
-     * @param score
+     * @param score The score.
      */
     public void setScore(final int score) {
         this.score = score;

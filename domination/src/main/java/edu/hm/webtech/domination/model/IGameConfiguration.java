@@ -5,9 +5,8 @@ package edu.hm.webtech.domination.model;
  * {@link IGame} object.
  *
  * @author Marco Wolff
- *
  */
 public interface IGameConfiguration {
 
-	// TODO WHAT DO WE NEED HERE? LIKE MAX TIME LIMIT, SCORE LIMIT?
+    // TODO WHAT DO WE NEED HERE? LIKE MAX TIME LIMIT, SCORE LIMIT?
 }

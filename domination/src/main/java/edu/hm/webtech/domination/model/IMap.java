@@ -15,7 +15,7 @@ public interface IMap extends ILocationObject {
     /**
      * Sets the zoom factor of the map.
      *
-     * @param zoomFactor
+     * @param zoomFactor The zoom factor.
      */
     public void setZoomFactor(int zoomFactor);
 }

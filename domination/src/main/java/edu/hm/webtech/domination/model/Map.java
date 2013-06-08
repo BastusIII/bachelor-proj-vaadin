@@ -1,12 +1,11 @@
 package edu.hm.webtech.domination.model;
 
-import edu.hm.webtech.domination.oldbs.model.ObjectCoordinates;
-
 /**
  * <h1>Map ist das Datenobjekt der Karte und wird durch ein Zentrum repräsentiert, sowie Radius (Begrenzung des Spielfeldes) und Zoomfaktor.</h1>
+ *
  * @author Sebastian Stumpf
  */
-public class Map extends LocationObject implements IMap{
+public class Map extends LocationObject implements IMap {
 
     /**
      * Der Zoomfaktor der Map.
@@ -16,9 +15,9 @@ public class Map extends LocationObject implements IMap{
     /**
      * Konstruktor.
      *
-     * @param longitude Längengrad.
-     * @param latitude  Breitengrad.
-     * @param zoomFactor    Der Radius.
+     * @param longitude  Längengrad.
+     * @param latitude   Breitengrad.
+     * @param zoomFactor Der Radius.
      */
     public Map(final double longitude, final double latitude, final int zoomFactor) {
         super(longitude, latitude);

@@ -1,9 +1,9 @@
 package edu.hm.webtech.domination.oldbs.model;
 
+import edu.hm.webtech.domination.model.TeamIdentifier;
+
 import java.util.ArrayList;
 import java.util.Collection;
-
-import edu.hm.webtech.domination.model.TeamIdentifier;
 
 /**
  * User: Basti
@@ -75,7 +75,7 @@ public class Game {
     public Player getPlayer(final String playerName) {
         Player player = null;
         for (Player temp : players) {
-            if (temp.getName() == playerName) {
+            if (temp.getName().equals(playerName)) {
                 player = temp;
                 break;
             }

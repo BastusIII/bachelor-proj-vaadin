@@ -33,7 +33,7 @@ public class Team implements ScorePublisher, ITeam {
      *
      * @param identifier Der Team Identifier.
      * @param score      Der Punktestand.
-     * @throws {@link IllegalArgumentException} if identifier is null.
+     * @throws IllegalArgumentException if identifier is null.
      */
     public Team(final TeamIdentifier identifier, final int score) {
         this.identifier = identifier;
@@ -58,7 +58,7 @@ public class Team implements ScorePublisher, ITeam {
     @Override
     synchronized public void resetScore() {
         this.score = 0;
-        for(ScoreListener listener : scoreListeners) {
+        for (ScoreListener listener : scoreListeners) {
             listener.ScoreChanged();
         }
     }
@@ -78,7 +78,7 @@ public class Team implements ScorePublisher, ITeam {
     @Override
     synchronized public void addScore(final int score) {
         this.score += score;
-        for(ScoreListener listener : scoreListeners) {
+        for (ScoreListener listener : scoreListeners) {
             listener.ScoreChanged();
         }
     }

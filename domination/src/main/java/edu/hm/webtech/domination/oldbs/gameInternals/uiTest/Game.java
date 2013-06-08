@@ -1,11 +1,10 @@
 package edu.hm.webtech.domination.oldbs.gameInternals.uiTest;
 
+import com.vaadin.addon.touchkit.ui.TouchKitApplication;
+import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.vaadin.addon.touchkit.ui.TouchKitApplication;
-
-import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 
 public class Game implements IGame {
 

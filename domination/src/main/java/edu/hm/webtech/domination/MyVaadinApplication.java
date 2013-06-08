@@ -2,7 +2,6 @@ package edu.hm.webtech.domination;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
-
 import edu.hm.webtech.domination.ui.view.AbstractNavigationView;
 import edu.hm.webtech.domination.ui.view.LoginNavigationView;
 

@@ -3,7 +3,6 @@ package edu.hm.webtech.domination.oldbs.gameInternals;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 import com.vaadin.ui.LoginForm.LoginEvent;
 import com.vaadin.ui.LoginForm.LoginListener;
-
 import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.Game;
 import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.IGame;
 import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.IPlayer;

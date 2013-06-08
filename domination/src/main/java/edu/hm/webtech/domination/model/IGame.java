@@ -14,7 +14,7 @@ public interface IGame {
 
     /**
      * @return {@link IGameConfiguration} of this game object.
-     * @throws {@link ModelException} if game configuration is not initialized.
+     * @throws ModelException if game configuration is not initialized.
      */
     public IGameConfiguration getGameConfiguration() throws ModelException;
 
@@ -36,7 +36,7 @@ public interface IGame {
      * Adds given {@link IPlayer} to the game.
      *
      * @param player {@link IPlayer} which will be added to the game.
-     * @throws {@link ModelException} if player could not be added.
+     * @throws ModelException if player could not be added.
      */
     public void addPlayer(IPlayer player) throws ModelException;
 
@@ -44,7 +44,7 @@ public interface IGame {
      * Removes given {@link IPlayer} from the game.
      *
      * @param player {@link IPlayer} which will be removed from the game.
-     * @throws {@link ModelException} if player could not be removed.
+     * @throws ModelException if player could not be removed.
      */
     public void removePlayer(IPlayer player) throws ModelException;
 
@@ -58,7 +58,7 @@ public interface IGame {
      * Adds given {@link ITeam} to the game.
      *
      * @param team {@link ITeam} which will be added to the game.
-     * @throws {@link ModelException} if team could not be added.
+     * @throws ModelException if team could not be added.
      */
     public void addTeam(ITeam team) throws ModelException;
 
@@ -66,7 +66,7 @@ public interface IGame {
      * Removes given {@link ITeam} from the game.
      *
      * @param team {@link IPlayer} which will be removed from the game.
-     * @throws {@link ModelException} if team could not be removed.
+     * @throws ModelException if team could not be removed.
      */
     public void removeTeam(ITeam team) throws ModelException;
 
@@ -80,7 +80,7 @@ public interface IGame {
      * Adds given {@link IDominationPoint} to the game.
      *
      * @param dominationPoint {@link IDominationPoint} which will be added to the game.
-     * @throws {@link ModelException} if domination point could not be added.
+     * @throws ModelException if domination point could not be added.
      */
     public void addDominationPoint(IDominationPoint dominationPoint) throws ModelException;
 
@@ -88,13 +88,13 @@ public interface IGame {
      * Removes given {@link IDominationPoint} from the game.
      *
      * @param dominationPoint {@link IDominationPoint} which will be removed from the game.
-     * @throws {@link ModelException} if domination point could not be removed.
+     * @throws ModelException if domination point could not be removed.
      */
     public void removeDominationPoint(IDominationPoint dominationPoint) throws ModelException;
 
     /**
      * @return {@link IMap} of this game.
-     * @throws {@link ModelException} if map is not initialized.
+     * @throws ModelException if map is not initialized.
      */
     public IMap getMap() throws ModelException;
 
@@ -107,7 +107,7 @@ public interface IGame {
 
     /**
      * @return {@link IPlayer} owning this game, which means he created it.
-     * @throws {@link ModelException} if owner is not initialized.
+     * @throws ModelException if owner is not initialized.
      */
     public IPlayer getOwner() throws ModelException;
 

@@ -1,31 +1,19 @@
 package edu.hm.webtech.domination.ui.view;
 
-import java.util.Iterator;
-
-import org.vaadin.vol.Control;
-import org.vaadin.vol.OpenLayersMap;
-import org.vaadin.vol.OpenStreetMapLayer;
-import org.vaadin.vol.PointVector;
-import org.vaadin.vol.Style;
-import org.vaadin.vol.StyleMap;
-import org.vaadin.vol.Vector;
-import org.vaadin.vol.VectorLayer;
-import org.vaadin.vol.VectorLayer.SelectionMode;
-import org.vaadin.vol.VectorLayer.VectorSelectedEvent;
-import org.vaadin.vol.VectorLayer.VectorSelectedListener;
-
 import com.vaadin.addon.touchkit.service.Position;
 import com.vaadin.addon.touchkit.service.PositionCallback;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TouchKitWindow;
-import com.vaadin.ui.Component;
-
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.Game;
 import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.IDominationPoint;
 import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.IPlayer;
 import edu.hm.webtech.domination.oldbs.gameInternals.uiTest.Player;
+import org.vaadin.vol.*;
+import org.vaadin.vol.VectorLayer.SelectionMode;
+import org.vaadin.vol.VectorLayer.VectorSelectedEvent;
+import org.vaadin.vol.VectorLayer.VectorSelectedListener;
 
 /**
  * This view shows the map with the current positions of the players to the
@@ -128,7 +116,7 @@ public class MapView extends NavigationView implements PositionCallback,
 	public void attach() {
 		buildView();
 		super.attach();
-	};
+	}
 
 	private void buildView() {
 		if (openLayersMap == null) {
@@ -138,7 +126,7 @@ public class MapView extends NavigationView implements PositionCallback,
 				protected void updateExtent(java.util.Map<String, Object> variables) {
 					super.updateExtent(variables);
 					updateLocations();
-				};
+				}
 			};
 
 			configureMapControls();

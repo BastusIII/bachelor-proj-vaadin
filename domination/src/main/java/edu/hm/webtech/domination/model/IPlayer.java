@@ -12,7 +12,7 @@ public interface IPlayer extends ILocationObject, IScoreObject {
 
     /**
      * @return {@link String} representing the identifier of the player.
-     * @throws {@link ModelException} if the player identifier is not initialized.
+     * @throws ModelException if the player identifier is not initialized.
      */
     public String getIdentifier() throws ModelException;
 

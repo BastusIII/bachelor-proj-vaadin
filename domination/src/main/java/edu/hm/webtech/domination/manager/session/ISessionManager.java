@@ -1,7 +1,6 @@
 package edu.hm.webtech.domination.manager.session;
 
 import com.vaadin.service.ApplicationContext;
-
 import edu.hm.webtech.domination.model.IPlayer;
 
 /**

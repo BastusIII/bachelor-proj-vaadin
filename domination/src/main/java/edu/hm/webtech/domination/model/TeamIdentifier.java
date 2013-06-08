@@ -2,6 +2,7 @@ package edu.hm.webtech.domination.model;
 
 /**
  * <h1>Teams werden anhand von Farben identifiziert.</h1>
+ *
  * @author Sebastian Stumpf
  */
 public enum TeamIdentifier {
@@ -16,6 +17,7 @@ public enum TeamIdentifier {
 
     /**
      * Konstruktor.
+     *
      * @param pathExtension Die Erweiterung des Dateinamens von Icons, die diesem Identifier zugeordnet sind.
      */
     private TeamIdentifier(String pathExtension) {
@@ -24,6 +26,7 @@ public enum TeamIdentifier {
 
     /**
      * Getter für Erweiterung des Dateinamens.
+     *
      * @return Die Erweiterung.
      */
     public String getPathExtension() {

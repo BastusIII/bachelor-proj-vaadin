@@ -1,7 +1,5 @@
 package edu.hm.webtech.domination.oldbs.gameInternals.uiTest;
 
-import com.vaadin.addon.touchkit.ui.TouchKitApplication;
-
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager.Teams;
 
