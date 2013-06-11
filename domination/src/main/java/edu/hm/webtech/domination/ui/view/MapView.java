@@ -58,7 +58,7 @@ public class MapView extends NavigationView implements PositionCallback,
 		if(MY_LOCATION_POINT == null) {
 			synchronized (MapView.class) {
 				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/mapElements/my_location_point.png");
+				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/my_location_point.png");
 				style.setGraphicHeight(10);
 				style.setGraphicWidth(10);
 				style.setFillOpacity(1);
@@ -69,7 +69,7 @@ public class MapView extends NavigationView implements PositionCallback,
 		if(TEAM_MEMBERS_LOCATION_POINT == null) {
 			synchronized (MapView.class) {
 				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/mapElements/team_member_location_point.png");
+				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/team_member_location_point.png");
 				style.setGraphicHeight(10);
 				style.setGraphicWidth(10);
 				style.setFillOpacity(1);
@@ -80,7 +80,7 @@ public class MapView extends NavigationView implements PositionCallback,
 		if(DOMINATION_POINT_LOCATION_POINT_RED == null) {
 			synchronized (MapView.class) {
 				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/mapElements/domination_point_location_point(red).png");
+				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/domination_point_location_point(red).png");
 				style.setGraphicHeight(20);
 				style.setGraphicWidth(20);
 				style.setFillOpacity(1);
@@ -91,7 +91,7 @@ public class MapView extends NavigationView implements PositionCallback,
 		if(DOMINATION_POINT_LOCATION_POINT_BLUE == null) {
 			synchronized (MapView.class) {
 				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/mapElements/domination_point_location_point(blue).png");
+				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/domination_point_location_point(blue).png");
 				style.setGraphicHeight(20);
 				style.setGraphicWidth(20);
 				style.setFillOpacity(1);
@@ -102,7 +102,7 @@ public class MapView extends NavigationView implements PositionCallback,
 		if(DOMINATION_POINT_LOCATION_POINT_NEUTRAL == null) {
 			synchronized (MapView.class) {
 				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/mapElements/domination_point_location_point(neutral).png");
+				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/domination_point_location_point(neutral).png");
 				style.setGraphicHeight(20);
 				style.setGraphicWidth(20);
 				style.setFillOpacity(1);
