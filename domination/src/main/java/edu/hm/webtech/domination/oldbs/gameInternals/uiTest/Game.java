@@ -44,18 +44,15 @@ public class Game implements IGame {
 			players.add(player);
 		}
 		// Location of 'Pliening'
-		// IDominationPoint redDomPoint = new DominationPoint(48.19636,
-		// 11.79894);
-		// redDomPoint.setOwner(ScoreManager.Teams.RED);
-		// IDominationPoint blueDomPoint = new DominationPoint(48.1966,
-		// 11.79894);
-		// blueDomPoint.setOwner(ScoreManager.Teams.BLUE);
-		// IDominationPoint neutralDomPoint = new DominationPoint(48.1962,
-		// 11.7986);
-		// neutralDomPoint.setOwner(null);
-		// this.dominationPoints.add(redDomPoint);
-		// this.dominationPoints.add(blueDomPoint);
-		// this.dominationPoints.add(neutralDomPoint);
+		 IDominationPoint redDomPoint = new DominationPoint(48.19636, 11.79894);
+		 redDomPoint.setOwner(ScoreManager.Teams.RED);
+		 IDominationPoint blueDomPoint = new DominationPoint(48.1966, 11.79894);
+		 blueDomPoint.setOwner(ScoreManager.Teams.BLUE);
+		 IDominationPoint neutralDomPoint = new DominationPoint(48.1962, 11.7986);
+		 neutralDomPoint.setOwner(null);
+		 this.dominationPoints.add(redDomPoint);
+		 this.dominationPoints.add(blueDomPoint);
+		 this.dominationPoints.add(neutralDomPoint);
 	}
 
 	@Override
