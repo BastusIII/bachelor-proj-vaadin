@@ -12,6 +12,11 @@ import edu.hm.webtech.domination.model.Player;
 import edu.hm.webtech.domination.model.Team;
 import edu.hm.webtech.domination.model.TeamIdentifier;
 
+/**
+ * A Factory creating dummy games for testing reasons.
+ * @author Maximilian Briglmeier
+ *
+ */
 public class GameFactory {
 
 	/**
