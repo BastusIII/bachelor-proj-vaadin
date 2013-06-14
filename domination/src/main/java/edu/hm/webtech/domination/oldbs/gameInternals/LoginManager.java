@@ -35,17 +35,15 @@ public class LoginManager implements LoginListener{
 	@Override
 	public void onLogin(LoginEvent event) {
 		//TODO Hier nur Testgame, ich brauche Referenz zum echten Game, um die Spieler anzulegen...!
-		IGame game = new Game(tka);
+		IGame game = new Game();
 		IPlayer iplay = new Player(ScoreManager.Teams.BLUE,event.getLoginParameter("username"));
-		game.addPlayer(iplay);
-		game.setSelf(iplay);
 		
 		
 		
 		
 //		String username = event.getLoginParameter("username");
 //        String password = event.getLoginParameter("password");
-        loginNavigationView.getWindow().showNotification("Added Player:  " + game.getSelf().getName());
+       // loginNavigationView.getWindow().showNotification("Added Player:  " + game.getSelf().getName());
         loginNavigationView.getWindow().setContent(mainTabView);
 		
 	}

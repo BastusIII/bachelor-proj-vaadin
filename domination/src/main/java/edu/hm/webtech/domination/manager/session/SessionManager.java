@@ -36,7 +36,7 @@ public class SessionManager implements ISessionManager, LoginListener {
 			Player player = new Player(0, 0, identifier);
 			lobbyManager.addWaitingPlayer(player);
 			MyVaadinApplication.getApp().getMainWindow().getApplication().setUser(player);
-			// TODO Create and open Lobby View 
+			// TODO Create? and open Lobby View 
 		} catch (ModelException me) {
 			System.out.println(me.getMessage());
 		}		
