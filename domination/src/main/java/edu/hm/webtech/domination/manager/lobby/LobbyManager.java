@@ -10,6 +10,12 @@ import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.IGameConfiguration;
 import edu.hm.webtech.domination.model.Player;
 
+/**
+ * This class manages the players waiting in the lobby.
+ * 
+ * @author Daniel Brielbeck
+ * 
+ */
 public class LobbyManager implements ILobbyManager {
 
 	private List<Player> waitingPlayers;

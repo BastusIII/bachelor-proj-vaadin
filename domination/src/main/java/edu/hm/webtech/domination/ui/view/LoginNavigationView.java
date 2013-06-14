@@ -9,19 +9,20 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.LoginForm;
+
+import edu.hm.webtech.domination.MyVaadinApplication;
+import edu.hm.webtech.domination.manager.session.SessionManager;
 import edu.hm.webtech.domination.oldbs.gameInternals.LoginManager;
 
 /**
  * This {@link NavigationView} provides a user interface for login.
  * 
- * @author Marco Wolff
+ * @author Marco Wolff, Daniel Brielbeck
  * 
  */
 @SuppressWarnings("serial")
 public class LoginNavigationView extends AbstractNavigationView {
 	
-	private TouchKitApplication tka;
-
 	private MainTabView mainTabView;
 	
 	/**
@@ -32,11 +33,6 @@ public class LoginNavigationView extends AbstractNavigationView {
 	 */
 	public LoginNavigationView(String caption) {
 		super(caption);
-	}
-	
-	public LoginNavigationView(String caption, TouchKitApplication tka) {
-		super(caption);
-		this.tka = tka;
 	}
 
 	@Override
@@ -76,7 +72,7 @@ public class LoginNavigationView extends AbstractNavigationView {
 				componentGroup.addComponent(login);
 				        
 				// Handle form submits
-				login.addListener(new LoginManager(this,mainTabView,tka));	
+				login.addListener((SessionManager)MyVaadinApplication.getSm());	
 				
 		
 		/*Label usernameLabel = new Label("username:");

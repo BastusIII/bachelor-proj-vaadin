@@ -15,10 +15,6 @@ public class Game implements IGame {
 	public Game() {
 	}
 
-	public Game(TouchKitApplication tka) {
-		this.tka = tka;
-	}
-
 	@Override
 	public List<IPlayer> getPlayers() {
 		return this.players;
@@ -53,20 +49,5 @@ public class Game implements IGame {
 		 this.dominationPoints.add(redDomPoint);
 		 this.dominationPoints.add(blueDomPoint);
 		 this.dominationPoints.add(neutralDomPoint);
-	}
-
-	@Override
-	public IPlayer getSelf() {
-		return (IPlayer) tka.getMainWindow().getApplication().getUser();
-	}
-
-	@Override
-	public void addPlayer(IPlayer player) {
-		players.add(player);
-	}
-
-	@Override
-	public void setSelf(IPlayer player) {
-		tka.getMainWindow().getApplication().setUser(player);
 	}
 }
