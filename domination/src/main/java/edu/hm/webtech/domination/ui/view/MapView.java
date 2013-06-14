@@ -12,6 +12,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.exception.ModelException;
+import edu.hm.webtech.domination.model.ApplicationConfiguration;
 import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.IPlayer;
@@ -35,10 +36,14 @@ import org.vaadin.vol.VectorLayer.VectorSelectedListener;
 @SuppressWarnings("serial")
 public class MapView extends NavigationView implements PositionCallback {
 	
+	private static final int DOMINATION_POINT_ICON_SIZE = 20;
+	private static final int PLAYER_ICON_SIZE = 10;
 	
 	//The icons displayed on the map
 	public static StyleMap MY_LOCATION_POINT; 
-	public static StyleMap TEAM_MEMBERS_LOCATION_POINT;
+	public static StyleMap MY_LOCATION_RING;
+	public static StyleMap PLAYER_BLUE;
+	public static StyleMap PLAYER_RED;
 	public static StyleMap DOMINATION_POINT_LOCATION_POINT_RED;
 	public static StyleMap DOMINATION_POINT_LOCATION_POINT_BLUE;
 	public static StyleMap DOMINATION_POINT_LOCATION_POINT_NEUTRAL;
@@ -61,8 +66,9 @@ public class MapView extends NavigationView implements PositionCallback {
 	private double latestLatitude;
 	
 	// Mapping between objects and icons
-	private VectorLayer myLocationVector = new VectorLayer();
-	private VectorLayer teamMemberLocationVector = new VectorLayer();
+	private VectorLayer playerRedLocationVector = new VectorLayer();
+	private VectorLayer playerBlueLocationVector = new VectorLayer();
+	private VectorLayer myLocationRingVector = new VectorLayer();
 	private VectorLayer dominationPointLocationVector_red = new VectorLayer();
 	private VectorLayer dominationPointLocationVector_blue = new VectorLayer();
 	private VectorLayer dominationPointLocationVector_neutral = new VectorLayer();
@@ -76,13 +82,8 @@ public class MapView extends NavigationView implements PositionCallback {
 		ITeam team = null;
 		Collection<ITeam> teams = game.getTeams();
 		for(ITeam aTeam: teams){
-			try {
-				if(aTeam.getTeamIdentifier().equals(TeamIdentifier.BLUE))
-					team = aTeam;
-			} catch (ModelException e) {
-				// Should not occur
-				e.printStackTrace();
-			}
+			if(aTeam.getTeamIdentifier().equals(TeamIdentifier.BLUE))
+				team = aTeam;
 		}
 		refresher = new Refresher();
 		refresher.setRefreshInterval(500);
@@ -102,61 +103,54 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Generates the icons of the player and domination points.
 	 */
 	private static void generateStyleMaps() {
-		if(MY_LOCATION_POINT == null) {
+		if(MY_LOCATION_RING == null) {
 			synchronized (MapView.class) {
-				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/my_location_point.png");
-				style.setGraphicHeight(10);
-				style.setGraphicWidth(10);
-				style.setFillOpacity(1);
-				MY_LOCATION_POINT = new StyleMap(style);
-				MY_LOCATION_POINT.setExtendDefault(true);
+				MY_LOCATION_RING = createStyleMap(PLAYER_ICON_SIZE + 10, PLAYER_ICON_SIZE + 10, ApplicationConfiguration.MY_LOCATION_RING_ICON);
 			}
 		}
-		if(TEAM_MEMBERS_LOCATION_POINT == null) {
+		if(PLAYER_RED == null) {
 			synchronized (MapView.class) {
-				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/team_member_location_point.png");
-				style.setGraphicHeight(10);
-				style.setGraphicWidth(10);
-				style.setFillOpacity(1);
-				TEAM_MEMBERS_LOCATION_POINT = new StyleMap(style);
-				TEAM_MEMBERS_LOCATION_POINT.setExtendDefault(true);
+				PLAYER_RED = createStyleMap(PLAYER_ICON_SIZE, PLAYER_ICON_SIZE, ApplicationConfiguration.PLAYER_RED_ICON_PATH);
+			}
+		}
+		if(PLAYER_BLUE == null) {
+			synchronized (MapView.class) {
+				PLAYER_BLUE = createStyleMap(PLAYER_ICON_SIZE, PLAYER_ICON_SIZE, ApplicationConfiguration.PLAYER_BLUE_ICON_PATH);
 			}
 		}
 		if(DOMINATION_POINT_LOCATION_POINT_RED == null) {
 			synchronized (MapView.class) {
-				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/domination_point_location_point(red).png");
-				style.setGraphicHeight(20);
-				style.setGraphicWidth(20);
-				style.setFillOpacity(1);
-				DOMINATION_POINT_LOCATION_POINT_RED = new StyleMap(style);
-				DOMINATION_POINT_LOCATION_POINT_RED.setExtendDefault(true);
+				DOMINATION_POINT_LOCATION_POINT_RED = createStyleMap(DOMINATION_POINT_ICON_SIZE, DOMINATION_POINT_ICON_SIZE, ApplicationConfiguration.DOMINATION_POINT_RED);
 			}
 		}
 		if(DOMINATION_POINT_LOCATION_POINT_BLUE == null) {
 			synchronized (MapView.class) {
-				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/domination_point_location_point(blue).png");
-				style.setGraphicHeight(20);
-				style.setGraphicWidth(20);
-				style.setFillOpacity(1);
-				DOMINATION_POINT_LOCATION_POINT_BLUE = new StyleMap(style);
-				DOMINATION_POINT_LOCATION_POINT_BLUE.setExtendDefault(true);
+				DOMINATION_POINT_LOCATION_POINT_BLUE = createStyleMap(DOMINATION_POINT_ICON_SIZE, DOMINATION_POINT_ICON_SIZE, ApplicationConfiguration.DOMINATION_POINT_BLUE);
 			}
 		}
 		if(DOMINATION_POINT_LOCATION_POINT_NEUTRAL == null) {
 			synchronized (MapView.class) {
-				Style style = new Style();
-				style.setExternalGraphic(MyVaadinApplication.getApp().getURL() + "VAADIN/themes/domination/images/domination_point_location_point(neutral).png");
-				style.setGraphicHeight(20);
-				style.setGraphicWidth(20);
-				style.setFillOpacity(1);
-				DOMINATION_POINT_LOCATION_POINT_NEUTRAL = new StyleMap(style);
-				DOMINATION_POINT_LOCATION_POINT_NEUTRAL.setExtendDefault(true);
+				DOMINATION_POINT_LOCATION_POINT_NEUTRAL = createStyleMap(DOMINATION_POINT_ICON_SIZE, DOMINATION_POINT_ICON_SIZE, ApplicationConfiguration.DOMINATION_POINT_NEUTRAL);
 			}
 		}
+	}
+	
+	/**
+	 * Loads the given icon and creates a Style Map out of it.
+	 * @param graphicHeight the height of the icon 
+	 * @param graphicWidth the width of the icon
+	 * @param graphicPath the path of the icon
+	 * @return the created Style Map
+	 */
+	private static StyleMap createStyleMap(int graphicHeight, int graphicWidth, String graphicPath) {
+		Style style = new Style();
+		style.setExternalGraphic(graphicPath);
+		style.setGraphicHeight(graphicHeight);
+		style.setGraphicWidth(graphicWidth);
+		style.setFillOpacity(1);
+		StyleMap styleMap = new StyleMap(style);
+		styleMap.setExtendDefault(true);
+		return styleMap;
 	}
 	
 	@Override
@@ -187,11 +181,7 @@ public class MapView extends NavigationView implements PositionCallback {
 			openLayersMap.addLayer(new OpenStreetMapLayer());
 
 			openLayersMap.setSizeFull();
-			try {
-				openLayersMap.setZoom(game.getMap().getZoomFactor());
-			} catch (ModelException e) {
-				openLayersMap.setZoom(18);
-			}
+			openLayersMap.setZoom(game.getMap().getZoomFactor());
 			setContent(openLayersMap);
 			TouchKitWindow window = (TouchKitWindow) getWindow();
 			if (latestLatitude != 0) {
@@ -203,11 +193,14 @@ public class MapView extends NavigationView implements PositionCallback {
 				window.detectCurrentPosition(this);
 			}
 			
-			myLocationVector.setStyleMap(MY_LOCATION_POINT);
-			myLocationVector.setSelectionMode(SelectionMode.SIMPLE);
+			myLocationRingVector.setStyleMap(MY_LOCATION_RING);
+			myLocationRingVector.setSelectionMode(SelectionMode.SIMPLE);
 			
-			teamMemberLocationVector.setStyleMap(TEAM_MEMBERS_LOCATION_POINT);
-			teamMemberLocationVector.setSelectionMode(SelectionMode.SIMPLE);
+			playerRedLocationVector.setStyleMap(PLAYER_RED);
+			playerRedLocationVector.setSelectionMode(SelectionMode.SIMPLE);
+			
+			playerBlueLocationVector.setStyleMap(PLAYER_BLUE);
+			playerBlueLocationVector.setSelectionMode(SelectionMode.SIMPLE);
 			
 			dominationPointLocationVector_red.setStyleMap(DOMINATION_POINT_LOCATION_POINT_RED);
 			dominationPointLocationVector_red.setSelectionMode(SelectionMode.SIMPLE);
@@ -243,17 +236,28 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Updates the map by drawing the icons to the new position of the elements.
 	 */
 	private void updateLocations() {
-		myLocationVector.removeAllComponents();
+		/*myLocationVector.removeAllComponents();
 		PointVector myLocation = new PointVector(me.getLongitude(), me.getLatitude());
-		myLocationVector.addVector(myLocation);		
+		myLocationVector.addVector(myLocation);*/
 		
-		teamMemberLocationVector.removeAllComponents();
+		myLocationRingVector.removeAllComponents();
+		PointVector myRing = new PointVector(me.getLongitude(), me.getLatitude());
+		myLocationRingVector.addVector(myRing);
+		
+		playerBlueLocationVector.removeAllComponents();
+		playerRedLocationVector.removeAllComponents();
 		for(IPlayer player: game.getPlayers()) {
-			if(me.getTeam().equals(player.getTeam()) && (!me.equals(player))) {
-				//TODO  The '(0.001 * counter)' part makes the teammembers run. Only for testing. Has to be removed.
-				//PointVector location = new PointVector(player.getLongitude() + (0.001*counter), player.getLatitude());
+			ITeam myTeam = me.getTeam();
+			if(myTeam.equals(player.getTeam())) {
 				PointVector location = new PointVector(player.getLongitude(), player.getLatitude());
-				teamMemberLocationVector.addVector(location);
+				switch(myTeam.getTeamIdentifier()) {
+					case RED:
+						playerRedLocationVector.addVector(location);
+						break;
+					case BLUE:
+						playerBlueLocationVector.addVector(location);
+						break;
+				}
 			}
 		}
 		
@@ -267,21 +271,16 @@ public class MapView extends NavigationView implements PositionCallback {
 				dominationPointLocationVector_neutral.addVector(location);
 			else {
 				TeamIdentifier identifier;
-				try {
-					identifier = owner.getTeamIdentifier();
-					switch(identifier) {
-					case RED:
-						dominationPointLocationVector_red.addVector(location);
-						break;
-					case BLUE:
-						dominationPointLocationVector_blue.addVector(location);
-						break;
-					default:
-						dominationPointLocationVector_neutral.addVector(location);
-					}
-				} catch (ModelException e) {
-					// Should not occur
-					e.printStackTrace();
+				identifier = owner.getTeamIdentifier();
+				switch(identifier) {
+				case RED:
+					dominationPointLocationVector_red.addVector(location);
+					break;
+				case BLUE:
+					dominationPointLocationVector_blue.addVector(location);
+					break;
+				default:
+					dominationPointLocationVector_neutral.addVector(location);
 				}
 			}
 		}
@@ -291,10 +290,12 @@ public class MapView extends NavigationView implements PositionCallback {
 			openLayersMap.addLayer(dominationPointLocationVector_blue);
 		if(dominationPointLocationVector_neutral.getParent() == null) 
 			openLayersMap.addLayer(dominationPointLocationVector_neutral);
-		if(teamMemberLocationVector.getParent() == null) 
-			openLayersMap.addLayer(teamMemberLocationVector);
-		if(myLocationVector.getParent() == null) 
-			openLayersMap.addLayer(myLocationVector);
+		if(playerRedLocationVector.getParent() == null)
+			openLayersMap.addLayer(playerRedLocationVector);
+		if(playerBlueLocationVector.getParent() == null)
+			openLayersMap.addLayer(playerBlueLocationVector);
+		if(myLocationRingVector.getParent() == null)
+			openLayersMap.addLayer(myLocationRingVector);
 	}
 	
 	/**
@@ -315,16 +316,12 @@ public class MapView extends NavigationView implements PositionCallback {
 	 */
 	private void setCenter() {
 		if (openLayersMap != null) {
-			try {
-				openLayersMap.setCenter(game.getMap().getLongitude(), game.getMap().getLatitude());
-			} catch (ModelException e) {
-				openLayersMap.setCenter(latestLongitude, latestLatitude);
-			}
+			openLayersMap.setCenter(game.getMap().getLongitude(), game.getMap().getLatitude());
+
 		}
 	}
 
 	public void onFailure(int errorCode) {
 		// TODO Auto-generated method stub
-
 	}
 }

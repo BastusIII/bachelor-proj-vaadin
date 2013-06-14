@@ -46,12 +46,12 @@ public class Team implements ScorePublisher, ITeam {
 
     @Override
     public String getPlayerIcon() {
-        return ApplicationConfiguration.PLAYER_ICONS_PATH + ApplicationConfiguration.PLAYER_ICON_BASE_NAME + this.identifier.getPathExtension();
+        return this.identifier.getPlayerIconPath();
     }
 
     @Override
     public String getDominationPointIcon() {
-        return ApplicationConfiguration.DOMINATION_POINT_ICONS_PATH + ApplicationConfiguration.DOMINATION_POINT_ICON_BASE_NAME + this.identifier.getPathExtension();
+        return this.identifier.getDominationPointIconPath();
     }
 
     @Override
