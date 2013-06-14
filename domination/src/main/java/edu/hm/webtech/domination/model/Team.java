@@ -1,6 +1,5 @@
 package edu.hm.webtech.domination.model;
 
-import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScorePublisher;
 
@@ -64,9 +63,7 @@ public class Team implements ScorePublisher, ITeam {
     }
 
     @Override
-    public TeamIdentifier getTeamIdentifier() throws ModelException {
-        if (this.identifier == null)
-            throw new ModelException("Team identifier is not yet initialized. Initialize before use.");
+    public TeamIdentifier getTeamIdentifier() {
         return identifier;
     }
 

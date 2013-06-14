@@ -21,7 +21,7 @@ public class LocationObject implements ILocationObject {
      * Creates a new {@link LocationObject} with given longitude and latitude.
      *
      * @param longitude The longitude.
-     * @param latitude The latitude.
+     * @param latitude  The latitude.
      */
     public LocationObject(final double longitude, final double latitude) {
         this.longitude = longitude;

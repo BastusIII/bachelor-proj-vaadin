@@ -1,6 +1,5 @@
 package edu.hm.webtech.domination.model;
 
-import edu.hm.webtech.domination.exception.ModelException;
 
 /**
  * Defines methods for a object representing a player in domination.
@@ -12,9 +11,8 @@ public interface IPlayer extends ILocationObject, IScoreObject {
 
     /**
      * @return {@link String} representing the identifier of the player.
-     * @throws ModelException if the player identifier is not initialized.
      */
-    public String getIdentifier() throws ModelException;
+    public String getIdentifier();
 
     /**
      * Sets the identifer of the player.

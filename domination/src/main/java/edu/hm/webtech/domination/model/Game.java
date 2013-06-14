@@ -10,7 +10,7 @@ import java.util.Collection;
  *
  * @author Sebastian Stumpf
  */
-public class Game extends LocationObject implements IGame {
+public class Game implements IGame {
     /**
      * Die Spielerliste.
      */
@@ -40,12 +40,10 @@ public class Game extends LocationObject implements IGame {
     /**
      * Konstruktor.
      *
-     * @param longitude Längengrad.
-     * @param latitude  Breitengrad.
-     * @param map       Die Spielkarte.
+     * @param map    Die Spielkarte.
+     * @param config Die Konfigurationsdatei
      */
-    public Game(final double longitude, final double latitude, final IMap map, final IPlayer owner, final IGameConfiguration config) {
-        super(longitude, latitude);
+    public Game(final IMap map, final IPlayer owner, final IGameConfiguration config) {
         this.players = new ArrayList<IPlayer>();
         this.teams = new ArrayList<ITeam>();
         this.dominationPoints = new ArrayList<IDominationPoint>();
@@ -55,12 +53,8 @@ public class Game extends LocationObject implements IGame {
 
     /**
      * Konstruktor.
-     *
-     * @param longitude Längengrad.
-     * @param latitude  Breitengrad.
      */
-    public Game(final double longitude, final double latitude) {
-        super(longitude, latitude);
+    public Game() {
         this.players = new ArrayList<IPlayer>();
         this.teams = new ArrayList<ITeam>();
         this.dominationPoints = new ArrayList<IDominationPoint>();
@@ -111,17 +105,13 @@ public class Game extends LocationObject implements IGame {
     }
 
     @Override
-    public IMap getMap() throws ModelException {
-        if (this.map == null)
-            throw new ModelException("Map is not yet initialized. Initialize before use.");
+    public IMap getMap() {
         return this.map;
     }
 
 
     @Override
-    public IPlayer getOwner() throws ModelException {
-        if (this.owner == null)
-            throw new ModelException("Owner is not yet initialized. Initialize before use.");
+    public IPlayer getOwner() {
         return this.owner;
     }
 
@@ -131,9 +121,7 @@ public class Game extends LocationObject implements IGame {
     }
 
     @Override
-    public IGameConfiguration getGameConfiguration() throws ModelException {
-        if (this.config == null)
-            throw new ModelException("Configuration is not yet initialized. Please use default configuration");
+    public IGameConfiguration getGameConfiguration() {
         return this.config;
     }
 
