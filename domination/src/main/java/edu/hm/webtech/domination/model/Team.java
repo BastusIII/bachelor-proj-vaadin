@@ -1,6 +1,5 @@
 package edu.hm.webtech.domination.model;
 
-import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScorePublisher;
 
@@ -47,12 +46,12 @@ public class Team implements ScorePublisher, ITeam {
 
     @Override
     public String getPlayerIcon() {
-        return ApplicationConfiguration.PLAYER_ICONS_PATH + ApplicationConfiguration.PLAYER_ICON_BASE_NAME + this.identifier.getPathExtension();
+        return this.identifier.getPlayerIconPath();
     }
 
     @Override
     public String getDominationPointIcon() {
-        return ApplicationConfiguration.DOMINATION_POINT_ICONS_PATH + ApplicationConfiguration.DOMINATION_POINT_ICON_BASE_NAME + this.identifier.getPathExtension();
+        return this.identifier.getDominationPointIconPath();
     }
 
     @Override
@@ -64,9 +63,7 @@ public class Team implements ScorePublisher, ITeam {
     }
 
     @Override
-    public TeamIdentifier getTeamIdentifier() throws ModelException {
-        if (this.identifier == null)
-            throw new ModelException("Team identifier is not yet initialized. Initialize before use.");
+    public TeamIdentifier getTeamIdentifier() {
         return identifier;
     }
 

@@ -22,10 +22,10 @@ public class GameFactory {
 	/**
 	 * Serves as dummy and exists for testing reasons. Represents a domination points 
 	 * and simulated movement of players in the HM garden.
-	 * @return
+	 * @return the created dummy game
 	 */
 	public static IGame GetHMGarden() {
-		IGame game = new Game(11.556062, 48.153991);
+		IGame game = new Game();
 		game.setMap(new Map(11.556062, 48.153991, 18));
 
 		IDominationPoint[] dominationPoints = new IDominationPoint[3];
