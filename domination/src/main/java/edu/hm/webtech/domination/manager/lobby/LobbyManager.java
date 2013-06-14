@@ -2,6 +2,7 @@ package edu.hm.webtech.domination.manager.lobby;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.hm.webtech.domination.exception.ModelException;
@@ -25,8 +26,11 @@ public class LobbyManager implements ILobbyManager {
 
 	@Override
 	public Collection<IGameManager> getGames() {
-		// TODO Auto-generated method stub
-		return null;
+        try {
+            throw new NullPointerException();
+        } finally {
+            return new LinkedList<IGameManager>();
+        }
 	}
 
 
