@@ -53,6 +53,12 @@ public class Game extends LocationObject implements IGame {
         this.owner = owner;
     }
 
+
+    public Game(final IGameConfiguration config) {
+        super(0,0);
+        // TODO implement me!
+    }
+
     /**
      * Konstruktor.
      *

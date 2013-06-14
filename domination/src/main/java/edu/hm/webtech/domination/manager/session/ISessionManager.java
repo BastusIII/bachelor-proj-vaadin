@@ -1,6 +1,7 @@
 package edu.hm.webtech.domination.manager.session;
 
 import com.vaadin.service.ApplicationContext;
+import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.model.IPlayer;
 
 /**
@@ -19,4 +20,13 @@ public interface ISessionManager {
 	 *            uniquely identifying the new {@link IPlayer}.
 	 */
 	public void createAndRegisterPlayer(String identifier);
+
+    /**
+     * Adds a new Player to the list of known players
+     * @param player
+     * 			username to check, if already exists
+     * @author Daniel Brielbeck
+     */
+    public void addPlayer(IPlayer player) throws ModelException;
+
 }

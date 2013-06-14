@@ -1,6 +1,7 @@
 package edu.hm.webtech.domination.manager.game;
 
 import edu.hm.webtech.domination.model.IGame;
+import edu.hm.webtech.domination.model.IGameConfiguration;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
 
@@ -11,6 +12,10 @@ import edu.hm.webtech.domination.model.ITeam;
  * 
  */
 public class GameManagerImpl implements IGameManager {
+
+    public GameManagerImpl(final IGame game) {
+       // TODO implement me!
+    }
 
 	@Override
 	public void joinGame(IPlayer player) {
