@@ -28,6 +28,7 @@ public class LoginNavigationView extends AbstractNavigationView {
      */
     public LoginNavigationView(String caption) {
         super(caption);
+        init();
     }
 
     @Override

@@ -8,6 +8,7 @@ import edu.hm.webtech.domination.manager.lobby.LobbyManager;
 import edu.hm.webtech.domination.manager.session.ISessionManager;
 import edu.hm.webtech.domination.manager.session.SessionManager;
 import edu.hm.webtech.domination.ui.view.AbstractNavigationView;
+import edu.hm.webtech.domination.ui.view.LobbyView;
 import edu.hm.webtech.domination.ui.view.LoginNavigationView;
 
 /**
@@ -51,6 +52,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 		this.lm=new LobbyManager();
 		this.sm = new SessionManager(lm);
 		this.loginNaviView = new LoginNavigationView("Login");
+        //this.loginNaviView = new LobbyView("Game Lobby", new SessionManager(new LobbyManager()));
 		setTheme("domination");
 		getMainWindow().setContent(loginNaviView);
 	}

@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class SessionManager implements ISessionManager, LoginListener {
 
+    // TODO: Getter für LobbyManager
+
 	private ILobbyManager lobbyManager;
 
     /**

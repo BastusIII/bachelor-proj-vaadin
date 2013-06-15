@@ -16,13 +16,13 @@ public abstract class AbstractNavigationView extends NavigationView {
 
 	/**
 	 * Constructor, initializing this {@link NavigationView}.
+     * aufruf von init() bitte in der subclass!! zu wenig Kontrolle sonst. Probleme mit initialisierung der Manager.
 	 * 
 	 * @param caption
 	 *            caption of the {@link NavigationView}.
 	 */
 	public AbstractNavigationView(String caption) {
 		super(caption);
-		init();
 	}
 
 	/**

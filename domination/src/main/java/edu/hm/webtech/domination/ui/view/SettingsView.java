@@ -21,6 +21,7 @@ public class SettingsView extends AbstractNavigationView {
 	 */
 	public SettingsView(String caption) {
 		super(caption);
+        init();
 	}
 
 	/**
