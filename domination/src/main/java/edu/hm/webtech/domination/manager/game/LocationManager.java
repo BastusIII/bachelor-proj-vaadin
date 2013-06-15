@@ -27,11 +27,11 @@ public class LocationManager implements ILocationManager {
 
     @Override
     public void updateLocation(final ILocationObject locationObject, final double longitude, final double latitude) {
-        // TODO: implementation
+        locationObject.setGeoCoordinates(longitude, latitude);
     }
 
     @Override
     public void tick() {
-        // TODO: implementation
+        // TODO: Not needed?
     }
 }

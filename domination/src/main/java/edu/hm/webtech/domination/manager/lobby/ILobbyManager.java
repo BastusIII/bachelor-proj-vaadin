@@ -1,10 +1,8 @@
 package edu.hm.webtech.domination.manager.lobby;
 
-import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.IGameConfiguration;
-import edu.hm.webtech.domination.model.Player;
 
 import java.util.Collection;
 
@@ -25,20 +23,19 @@ public interface ILobbyManager {
 	 *            {@link IGameConfiguration} for the new {@link IGame} object.
 	 * @return {@link IGameManager} handling the created {@link IGame}.
 	 */
-	public IGameManager createGame(IGameConfiguration gameConfiguration);
+	public IGameManager createGame(final IGameConfiguration gameConfiguration);
+
+    /**
+     * Removes a game manager from the lobby.
+     * @param gameManager The game to remove.
+     */
+    public void removeGame(final IGameManager gameManager);
 
 	/**
 	 * @return {@link Collection} containing all {@link IGameManager}s which are
 	 *         representing currently existing {@link IGame}s.
 	 */
 	public Collection<IGameManager> getGames();
-		
-	/**
-	 * Adds a new Player to the list of waiting players
-	 * @param player
-	 * 			username to check, if already exists
-	 * @author Daniel Brielbeck
-	 */
-	public void addWaitingPlayer(Player player) throws ModelException;
-	
+
+
 }

@@ -53,6 +53,17 @@ public class Game implements IGame {
 
     /**
      * Konstruktor.
+     *
+     * @param config Die Konfigurationsdatei
+     */
+    public Game(final IGameConfiguration config) {
+        this.players = new ArrayList<IPlayer>();
+        this.teams = new ArrayList<ITeam>();
+        this.dominationPoints = new ArrayList<IDominationPoint>();
+    }
+
+    /**
+     * Konstruktor.
      */
     public Game() {
         this.players = new ArrayList<IPlayer>();

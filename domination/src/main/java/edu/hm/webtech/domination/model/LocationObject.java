@@ -29,23 +29,19 @@ public class LocationObject implements ILocationObject {
     }
 
     @Override
-    public double getLongitude() {
+    synchronized public double getLongitude() {
         return longitude;
     }
 
     @Override
-    public void setLongitude(final double longitude) {
+    synchronized public void setGeoCoordinates(final double longitude, final double latitude) {
         this.longitude = longitude;
-    }
-
-    @Override
-    public double getLatitude() {
-        return latitude;
-    }
-
-    @Override
-    public void setLatitude(final double latitude) {
         this.latitude = latitude;
+    }
+
+    @Override
+    synchronized public double getLatitude() {
+        return latitude;
     }
 
     @Override
