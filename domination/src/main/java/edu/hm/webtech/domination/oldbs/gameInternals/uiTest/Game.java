@@ -15,10 +15,6 @@ public class Game implements IGame {
 	public Game() {
 	}
 
-	public Game(TouchKitApplication tka) {
-		this.tka = tka;
-	}
-
 	@Override
 	public List<IPlayer> getPlayers() {
 		return this.players;
@@ -44,32 +40,14 @@ public class Game implements IGame {
 			players.add(player);
 		}
 		// Location of 'Pliening'
-		// IDominationPoint redDomPoint = new DominationPoint(48.19636,
-		// 11.79894);
-		// redDomPoint.setOwner(ScoreManager.Teams.RED);
-		// IDominationPoint blueDomPoint = new DominationPoint(48.1966,
-		// 11.79894);
-		// blueDomPoint.setOwner(ScoreManager.Teams.BLUE);
-		// IDominationPoint neutralDomPoint = new DominationPoint(48.1962,
-		// 11.7986);
-		// neutralDomPoint.setOwner(null);
-		// this.dominationPoints.add(redDomPoint);
-		// this.dominationPoints.add(blueDomPoint);
-		// this.dominationPoints.add(neutralDomPoint);
-	}
-
-	@Override
-	public IPlayer getSelf() {
-		return (IPlayer) tka.getMainWindow().getApplication().getUser();
-	}
-
-	@Override
-	public void addPlayer(IPlayer player) {
-		players.add(player);
-	}
-
-	@Override
-	public void setSelf(IPlayer player) {
-		tka.getMainWindow().getApplication().setUser(player);
+		 IDominationPoint redDomPoint = new DominationPoint(48.19636, 11.79894);
+		 redDomPoint.setOwner(ScoreManager.Teams.RED);
+		 IDominationPoint blueDomPoint = new DominationPoint(48.1966, 11.79894);
+		 blueDomPoint.setOwner(ScoreManager.Teams.BLUE);
+		 IDominationPoint neutralDomPoint = new DominationPoint(48.1962, 11.7986);
+		 neutralDomPoint.setOwner(null);
+		 this.dominationPoints.add(redDomPoint);
+		 this.dominationPoints.add(blueDomPoint);
+		 this.dominationPoints.add(neutralDomPoint);
 	}
 }

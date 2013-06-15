@@ -1,8 +1,6 @@
 package edu.hm.webtech.domination.model;
 
 
-import edu.hm.webtech.domination.exception.ModelException;
-
 /**
  * Defines methods for a object representing a team in domination.
  *
@@ -12,9 +10,8 @@ public interface ITeam extends IScoreObject {
 
     /**
      * @return {@link TeamIdentifier} of the team.
-     * @throws ModelException if the Team Identifier is not initialized.
      */
-    public TeamIdentifier getTeamIdentifier() throws ModelException;
+    public TeamIdentifier getTeamIdentifier();
 
     /**
      * Sets the {@link TeamIdentifier} of the team.

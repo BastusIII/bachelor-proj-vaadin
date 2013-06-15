@@ -1,6 +1,5 @@
 package edu.hm.webtech.domination.model;
 
-import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScorePublisher;
 
@@ -72,9 +71,7 @@ public class Player extends LocationObject implements IPlayer, ScorePublisher {
 
 
     @Override
-    public String getIdentifier() throws ModelException {
-        if (this.name == null)
-            throw new ModelException("Player name is not yet initialized. Initialize before use.");
+    public String getIdentifier() {
         return this.name;
     }
 

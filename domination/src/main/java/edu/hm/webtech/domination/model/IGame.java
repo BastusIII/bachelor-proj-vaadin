@@ -14,9 +14,8 @@ public interface IGame {
 
     /**
      * @return {@link IGameConfiguration} of this game object.
-     * @throws ModelException if game configuration is not initialized.
      */
-    public IGameConfiguration getGameConfiguration() throws ModelException;
+    public IGameConfiguration getGameConfiguration();
 
     /**
      * Sets the {@link IGameConfiguration} to the given object.
@@ -94,9 +93,8 @@ public interface IGame {
 
     /**
      * @return {@link IMap} of this game.
-     * @throws ModelException if map is not initialized.
      */
-    public IMap getMap() throws ModelException;
+    public IMap getMap();
 
     /**
      * Sets the {@link IMap} of the game.
@@ -107,9 +105,8 @@ public interface IGame {
 
     /**
      * @return {@link IPlayer} owning this game, which means he created it.
-     * @throws ModelException if owner is not initialized.
      */
-    public IPlayer getOwner() throws ModelException;
+    public IPlayer getOwner();
 
     /**
      * Sets the {@link IPlayer} owning this game object.
