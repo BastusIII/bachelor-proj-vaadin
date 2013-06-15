@@ -51,10 +51,15 @@ public class Game implements IGame {
         this.owner = owner;
     }
 
-
+    /**
+     * Konstruktor.
+     *
+     * @param config Die Konfigurationsdatei
+     */
     public Game(final IGameConfiguration config) {
-        super(0,0);
-        // TODO implement me!
+        this.players = new ArrayList<IPlayer>();
+        this.teams = new ArrayList<ITeam>();
+        this.dominationPoints = new ArrayList<IDominationPoint>();
     }
 
     /**

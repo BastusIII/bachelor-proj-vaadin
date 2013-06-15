@@ -66,9 +66,9 @@ public class GameFactory {
 				while (true) {
 					for (IPlayer player : players) {
 						if (switcher)
-							player.setLongitude(player.getLongitude() + 0.0002);
+							player.setGeoCoordinates(player.getLongitude() + 0.0002, player.getLatitude());
 						else
-							player.setLongitude(player.getLongitude() - 0.0002);
+                            player.setGeoCoordinates(player.getLongitude() - 0.0002, player.getLatitude());
 					}
 					try {
 						Thread.sleep(2000);
