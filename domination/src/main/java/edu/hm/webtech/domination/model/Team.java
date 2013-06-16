@@ -84,4 +84,21 @@ public class Team implements ScorePublisher, ITeam {
     public void subscribeScoreChange(ScoreListener scoreListener) {
         scoreListeners.add(scoreListener);
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Team team = (Team) o;
+
+        if (identifier != team.identifier) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return identifier != null ? identifier.hashCode() : 0;
+    }
 }

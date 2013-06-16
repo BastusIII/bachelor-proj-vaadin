@@ -46,6 +46,9 @@ public class GameFactory {
 		dominationPoints[0].setOwnerTeam(teamRed);
 		dominationPoints[2].setOwnerTeam(teamBlue);
 
+        // Sebastian Stumpf -> need Owner ;)
+        game.setOwner(players[0]);
+
 		try {
 			for (IPlayer player : players)
 				game.addPlayer(player);

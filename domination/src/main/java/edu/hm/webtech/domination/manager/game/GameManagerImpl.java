@@ -4,6 +4,7 @@ import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.IGameConfiguration;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
+import edu.hm.webtech.test.GameFactory;
 
 /**
  * Default implementaton of {@link IGameManager}.
@@ -32,7 +33,7 @@ public class GameManagerImpl implements IGameManager {
 	@Override
 	public IGame getGame() {
         // TODO: Implement!!!
-		return null;
+		return GameFactory.GetHMGarden();
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import edu.hm.webtech.domination.MyVaadinApplication;
  * @author Sebastian Stumpf
  */
 public interface ApplicationConfiguration {
-	public static final String ROOT_PATH = MyVaadinApplication.getApp().getURL().toString();
+    public static final String ROOT_PATH = MyVaadinApplication.getApp().getURL().toString();
     public static final String IMAGES_PATH = ROOT_PATH + "VAADIN/themes/domination/images/";
     public static final String PLAYER_ICON_BASE_NAME = IMAGES_PATH + "player_icons/";
     public static final String DOMINATION_POINT_ICON_BASE_NAME = IMAGES_PATH + "domination_point_icons/";

@@ -49,10 +49,10 @@ public class MyVaadinApplication extends TouchKitApplication {
 	@Override
 	public void init() {
 		super.init();
-		this.lm=new LobbyManager();
+		this.lm = new LobbyManager();
 		this.sm = new SessionManager(lm);
-		this.loginNaviView = new LoginNavigationView("Login");
-        //this.loginNaviView = new LobbyView("Game Lobby", new SessionManager(new LobbyManager()));
+		//this.loginNaviView = new LoginNavigationView("Login");
+        this.loginNaviView = new LobbyView("Game Lobby");
 		setTheme("domination");
 		getMainWindow().setContent(loginNaviView);
 	}
