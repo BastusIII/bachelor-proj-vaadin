@@ -10,14 +10,14 @@ public interface IDominationPoint extends ILocationObject {
     /**
      * @return radius of the domination point.
      */
-    public int getRadius();
+    public double getRadius();
 
     /**
      * Sets the radius of the domination point.
      *
      * @param radius of the domination point.
      */
-    public void setRadius(int radius);
+    public void setRadius(double radius);
 
     /**
      * @return {@link ITeam} currently capturing the domination point.

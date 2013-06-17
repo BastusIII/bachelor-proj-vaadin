@@ -1,17 +1,15 @@
 package edu.hm.webtech.domination.manager.game;
 
-import edu.hm.webtech.domination.listener.IGameTickListener;
 import edu.hm.webtech.domination.model.ILocationObject;
 import edu.hm.webtech.domination.model.IPlayer;
 
 /**
- * Defines methods for handling and updating {@link ILocationObject}s based on
- * game ticks by {@link IGameManager}.
+ * Defines methods for handling and updating {@link ILocationObject}s.
  * 
  * @author Marco Wolff
  * 
  */
-public interface ILocationManager extends IGameTickListener {
+public interface ILocationManager {
 
 	/**
 	 * Updates the location on given {@link IPlayer} to given value of longitude

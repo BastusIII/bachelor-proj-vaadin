@@ -63,4 +63,10 @@ public interface IGameManager {
 	 */
 	public void updateLocation(IPlayer player, double longitude, double latitude);
 
+	/**
+	 * @return {@link ITeam} which is the winner of the game, or 'null' if there
+	 *         is no winner yet.
+	 */
+	public ITeam getWinnerTeam();
+
 }

@@ -89,7 +89,7 @@ public class Logger {
 	/**
 	 * Describes the log level of the logger.
 	 * 
-	 * @author mrblob
+	 * @author Marco Wolff
 	 * 
 	 */
 	public enum LogLevel {
@@ -109,6 +109,7 @@ public class Logger {
 
 		private String toString;
 
+		@Override
 		public String toString() {
 			return toString;
 		}

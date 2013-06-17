@@ -7,6 +7,11 @@ package edu.hm.webtech.domination.model;
  * @author Marco Wolff
  */
 public interface ILocationObject {
+	
+	/**
+	 * Radius of the equator.
+	 */
+	public static final double EQUATOR_RADIUS = 6378137.0d;
 
     /**
      * @return longitude of the object.

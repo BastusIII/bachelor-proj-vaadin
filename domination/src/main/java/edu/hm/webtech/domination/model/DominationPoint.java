@@ -1,97 +1,121 @@
 package edu.hm.webtech.domination.model;
 
 /**
- * <h1>DominationPoint ist das Datenobjekt eines zu erobernden Punktes auf dem Map.</h1>
- *
+ * <h1>DominationPoint ist das Datenobjekt eines zu erobernden Punktes auf dem
+ * Map.</h1>
+ * 
  * @author Sebastian Stumpf
  */
 public class DominationPoint extends LocationObject implements IDominationPoint {
 
-    /**
-     * Radius, in dem man sich befinden muss, um zu erobern in Metern.
-     */
-    private int radius;
-    /**
-     * Der Stand der Eroberung in Prozent. 0<=progress<=100;
-     */
-    private int progress;
-    /**
-     * Das gerade erobernde Team. Kann null sein.
-     */
-    private ITeam capturingTeam;
-    /**
-     * Das gerade dominierende Team. Kann null sein.
-     */
-    private ITeam dominatingTeam;
+	/**
+	 * Radius, in dem man sich befinden muss, um zu erobern in Metern.
+	 */
+	private double radius;
+	/**
+	 * Der Stand der Eroberung in Prozent. 0<=progress<=100;
+	 */
+	private int progress;
+	/**
+	 * Das gerade erobernde Team. Kann null sein.
+	 */
+	private ITeam capturingTeam;
+	/**
+	 * Das gerade dominierende Team. Kann null sein.
+	 */
+	private ITeam dominatingTeam;
 
+	/**
+	 * Konstruktor.
+	 * 
+	 * @param longitude
+	 *            Längengrad.
+	 * @param latitude
+	 *            Breitengrad.
+	 * @param radius
+	 *            Der Radius.
+	 * @param progress
+	 *            Der Stand der Eroberung in Prozent. 0<=progress<=100.
+	 */
+	public DominationPoint(final double longitude, final double latitude,
+			final double radius, final int progress) {
+		super(longitude, latitude);
+		this.radius = radius;
+		this.progress = progress;
+	}
 
-    /**
-     * Konstruktor.
-     *
-     * @param longitude Längengrad.
-     * @param latitude  Breitengrad.
-     * @param radius    Der Radius.
-     * @param progress  Der Stand der Eroberung in Prozent. 0<=progress<=100.
-     */
-    public DominationPoint(final double longitude, final double latitude, final int radius, final int progress) {
-        super(longitude, latitude);
-        this.radius = radius;
-        this.progress = progress;
-    }
+	/**
+	 * Konstruktor.
+	 * 
+	 * @param longitude
+	 *            Längengrad.
+	 * @param latitude
+	 *            Breitengrad.
+	 * @param radius
+	 *            Der Radius.
+	 */
+	public DominationPoint(final double longitude, final double latitude,
+			final double radius) {
+		this(longitude, latitude, radius, 0);
+	}
 
-    /**
-     * Konstruktor.
-     *
-     * @param longitude Längengrad.
-     * @param latitude  Breitengrad.
-     * @param radius    Der Radius.
-     */
-    public DominationPoint(final double longitude, final double latitude, final int radius) {
-        this(longitude, latitude, radius, 0);
-    }
+	/**
+	 * Copy constructor, deep copying given {@link IDominationPoint}.
+	 * 
+	 * @author Marco Wolff
+	 * @param player
+	 *            {@link IDominationPoint} object that will be copied.
+	 */
+	public DominationPoint(IDominationPoint dominationPoint) {
+		this(dominationPoint.getLongitude(), dominationPoint.getLatitude(),
+				dominationPoint.getRadius(), dominationPoint
+						.getCaptureProgress());
+		this.capturingTeam = new Team(dominationPoint.getCaptureTeam());
+		this.dominatingTeam = new Team(dominationPoint.getOwnerTeam());
+	}
 
-    @Override
-    public int getRadius() {
-        return radius;
-    }
+	@Override
+	public double getRadius() {
+		return radius;
+	}
 
-    @Override
-    public void setRadius(final int radius) {
-        this.radius = radius;
-    }
+	@Override
+	public void setRadius(final double radius) {
+		this.radius = radius;
+	}
 
-    @Override
-    public ITeam getCaptureTeam() {
-        return capturingTeam;
-    }
+	@Override
+	public ITeam getCaptureTeam() {
+		return capturingTeam;
+	}
 
-    @Override
-    public void setCaptureTeam(final ITeam captureTeam) {
-        this.capturingTeam = captureTeam;
-    }
+	@Override
+	public void setCaptureTeam(final ITeam captureTeam) {
+		this.capturingTeam = captureTeam;
+	}
 
-    @Override
-    public ITeam getOwnerTeam() {
-        return this.dominatingTeam;
-    }
+	@Override
+	public ITeam getOwnerTeam() {
+		return this.dominatingTeam;
+	}
 
-    @Override
-    public void setOwnerTeam(final ITeam ownerTeam) {
-        this.dominatingTeam = ownerTeam;
-    }
+	@Override
+	public void setOwnerTeam(final ITeam ownerTeam) {
+		this.dominatingTeam = ownerTeam;
+	}
 
-    @Override
-    public int getCaptureProgress() {
-        return progress;
-    }
+	@Override
+	public int getCaptureProgress() {
+		return progress;
+	}
 
-    @Override
-    public void addCaptureProgress(final int captureProgress) {
-        this.progress += captureProgress;
-    }
+	@Override
+	public void addCaptureProgress(final int captureProgress) {
+		this.progress += captureProgress;
+	}
 
-    @Override
-    public void resetCaptureProgress() {
-        this.progress = 0;
-    }
+	@Override
+	public void resetCaptureProgress() {
+		this.progress = 0;
+	}
 }
