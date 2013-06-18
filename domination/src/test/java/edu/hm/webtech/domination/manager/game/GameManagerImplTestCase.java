@@ -1,18 +1,10 @@
 package edu.hm.webtech.domination.manager.game;
 
+import edu.hm.webtech.domination.model.*;
 import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import edu.hm.webtech.domination.model.Game;
-import edu.hm.webtech.domination.model.GameConfiguration;
-import edu.hm.webtech.domination.model.IGame;
-import edu.hm.webtech.domination.model.IPlayer;
-import edu.hm.webtech.domination.model.ITeam;
-import edu.hm.webtech.domination.model.Player;
-import edu.hm.webtech.domination.model.Team;
-import edu.hm.webtech.domination.model.TeamIdentifier;
 
 /**
  * {@link TestCase} for the {@link GameManagerImpl}.
@@ -29,7 +21,7 @@ public class GameManagerImplTestCase extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		game = new Game(new GameConfiguration(10));
+		game = new Game(new GameConfiguration(-1,-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY));
 		gameManager = new GameManagerImpl(game);
 		teamRed = new Team(TeamIdentifier.RED, 0);
 		teamBlue = new Team(TeamIdentifier.BLUE, 0);
