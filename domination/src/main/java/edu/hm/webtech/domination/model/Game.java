@@ -95,9 +95,24 @@ public class Game implements IGame {
 		if (game == null) {
 			throw new IllegalArgumentException("Game may not be null!");
 		}
-		this.map = new Map(game.getMap());
-		this.owner = new Player(game.getOwner());
-		this.config = new GameConfiguration(game.getGameConfiguration());
+		IMap gamesMap = game.getMap();
+		if (gamesMap == null) {
+			this.map = null;
+		} else {
+			this.map = new Map(gamesMap);
+		}
+		IPlayer gamesOwner = game.getOwner();
+		if (gamesOwner == null) {
+			this.owner = null;
+		} else {
+			this.owner = new Player(gamesOwner);
+		}
+		IGameConfiguration gamesConfig = game.getGameConfiguration();
+		if (gamesConfig == null) {
+			this.config = null;
+		} else {
+			this.config = new GameConfiguration(gamesConfig);
+		}
 		for (IPlayer player : game.getPlayers()) {
 			players.add(new Player(player));
 		}
