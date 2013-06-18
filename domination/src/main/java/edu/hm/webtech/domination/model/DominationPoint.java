@@ -67,11 +67,29 @@ public class DominationPoint extends LocationObject implements IDominationPoint 
 	 *            {@link IDominationPoint} object that will be copied.
 	 */
 	public DominationPoint(IDominationPoint dominationPoint) {
-		this(dominationPoint.getLongitude(), dominationPoint.getLatitude(),
-				dominationPoint.getRadius(), dominationPoint
-						.getCaptureProgress());
-		this.capturingTeam = new Team(dominationPoint.getCaptureTeam());
-		this.dominatingTeam = new Team(dominationPoint.getOwnerTeam());
+		// Location will be set to real values after object was checked
+		// for 'null'.
+		super(0.0d, 0.0d);
+		if (dominationPoint == null) {
+			throw new IllegalArgumentException(
+					"Domination point may not be null!");
+		}
+		this.radius = dominationPoint.getRadius();
+		this.progress = dominationPoint.getCaptureProgress();
+		// It is possible that a domination point is a 'virgin', meaning it has
+		// no capturing or owning team either. So check for null!
+		ITeam dominationPointsCapturingTeam = dominationPoint.getCaptureTeam();
+		if (dominationPointsCapturingTeam == null) {
+			this.capturingTeam = null;
+		} else {
+			this.capturingTeam = new Team(dominationPointsCapturingTeam);
+		}
+		ITeam dominationPointsDominatingTeam = dominationPoint.getOwnerTeam();
+		if (dominationPointsCapturingTeam == null) {
+			this.dominatingTeam = null;
+		} else {
+			this.dominatingTeam = new Team(dominationPointsDominatingTeam);
+		}
 	}
 
 	@Override

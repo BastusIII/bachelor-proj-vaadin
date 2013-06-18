@@ -37,7 +37,14 @@ public class Map extends LocationObject implements IMap {
 	 *            {@link IMap} object that will be copied.
 	 */
 	public Map(IMap map) {
-		this(map.getLongitude(), map.getLatitude(), map.getZoomFactor());
+		// Location will be set to real values after object was checked
+		// for 'null'.
+		super(0.0d, 0.0d);
+		if (map == null) {
+			throw new IllegalArgumentException("Map may not be null!");
+		}
+		setGeoCoordinates(map.getLongitude(), map.getLatitude());
+		this.zoomFactor = map.getZoomFactor();
 	}
 
 	/**

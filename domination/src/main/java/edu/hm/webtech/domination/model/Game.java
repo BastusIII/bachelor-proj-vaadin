@@ -62,8 +62,12 @@ public class Game implements IGame {
 	 *            {@link IGame} object that will be copied.
 	 */
 	public Game(IGame game) {
-		this(new Map(game.getMap()), new Player(game.getOwner()),
-				new GameConfiguration(game.getGameConfiguration()));
+		if (game == null) {
+			throw new IllegalArgumentException("Game may not be null!");
+		}
+		this.map = new Map(game.getMap());
+		this.owner = new Player(game.getOwner());
+		this.config = new GameConfiguration(game.getGameConfiguration());
 		for (IPlayer player : game.getPlayers()) {
 			players.add(new Player(player));
 		}

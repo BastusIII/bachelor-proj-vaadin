@@ -51,7 +51,11 @@ public class Team implements ScorePublisher, ITeam {
 	 *            {@link ITeam} object that will be copied.
 	 */
 	public Team(ITeam team) {
-		this(team.getTeamIdentifier(), team.getScore());
+		if (team == null) {
+			throw new IllegalArgumentException("Team may not be null!");
+		}
+		this.identifier = team.getTeamIdentifier();
+		this.score = team.getScore();
 	}
 
 	@Override

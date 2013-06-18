@@ -31,6 +31,9 @@ public class GameConfiguration implements IGameConfiguration {
 	 *            {@link IGameConfiguration} object that will be copied.
 	 */
 	public GameConfiguration(IGameConfiguration gameConfiguration) {
+		if (gameConfiguration == null) {
+			throw new IllegalArgumentException("Game configuration may not be null!");
+		}
 		this.scoreLimit = gameConfiguration.getScoreLimit();
 	}
 

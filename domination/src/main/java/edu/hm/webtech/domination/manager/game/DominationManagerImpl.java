@@ -52,6 +52,10 @@ public class DominationManagerImpl implements IDominationManager {
 
 	@Override
 	public void updateCapturing(IGame game) {
+		if (game == null) {
+			throw new IllegalArgumentException("Game may not be null");
+		}
+
 		List<IDominationPoint> dominationPoints = (List<IDominationPoint>) game
 				.getDominationPoints();
 		List<IPlayer> players = (List<IPlayer>) game.getPlayers();
@@ -246,6 +250,11 @@ public class DominationManagerImpl implements IDominationManager {
 	 */
 	protected List<IPlayer> retrievePlayersInReach(
 			IDominationPoint dominationPoint, List<IPlayer> considerablePlayers) {
+		if (dominationPoint == null || considerablePlayers == null) {
+			throw new IllegalArgumentException(
+					"Domination point nor considerable players may be null!");
+		}
+
 		List<IPlayer> playersInReach = new ArrayList<IPlayer>();
 		for (IPlayer player : considerablePlayers) {
 			double distance = Math.abs(dominationPoint.getDistance(
@@ -272,7 +281,10 @@ public class DominationManagerImpl implements IDominationManager {
 	 *         them.
 	 */
 	protected ITeam retrieveCurrentCapturingTeam(List<IPlayer> playersInReach) {
-
+		if (playersInReach == null) {
+			throw new IllegalArgumentException(
+					"Players in reach may not be null!");
+		}
 		/*
 		 * Take all teams, which have players in reach, in consideration in
 		 * order to determine the capturing team!

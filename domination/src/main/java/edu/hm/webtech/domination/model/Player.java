@@ -61,8 +61,22 @@ public class Player extends LocationObject implements IPlayer, ScorePublisher {
 	 *            {@link IPlayer} object that will be copied.
 	 */
 	public Player(IPlayer player) {
-		this(player.getLongitude(), player.getLatitude(), player
-				.getIdentifier(), new Team(player.getTeam()), player.getScore());
+		// Location will be set to real values after object was checked
+		// for 'null'.
+		super(0.0d, 0.0d);
+		if (player == null) {
+			throw new IllegalArgumentException("Player may not be null!");
+		}
+		setGeoCoordinates(player.getLongitude(), player.getLatitude());
+		this.name = player.getIdentifier();
+		this.score = player.getScore();
+		// Players are allowed to have no team, so check for this!
+		ITeam playersTeam = player.getTeam();
+		if (playersTeam == null) {
+			this.team = null;
+		} else {
+			this.team = new Team(player.getTeam());
+		}
 	}
 
 	/**
