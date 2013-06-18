@@ -51,7 +51,7 @@ public class LobbyView extends AbstractNavigationView {
         });
         VerticalComponentGroup createGameWrapper = new VerticalComponentGroup();
         createGameWrapper.addComponent(createGame);
-
+        // TODO: Sebastian Stumpf -> CreateCustomGame Vie mit personalisierten parametern (Center, dps, maxGameScore etc) / REQUIREMENT: Implementierte getGame(iConfig) in GameFactory
 
         this.base.addComponent(this.gamesContainer);
         this.gamesContainer.addComponent(this.noGamesAvailable);
@@ -92,7 +92,6 @@ public class LobbyView extends AbstractNavigationView {
                 noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
             }
         });
-
 
         gameContainer.addComponent(nameButton);
         gameContainer.addComponent(detailsButton);

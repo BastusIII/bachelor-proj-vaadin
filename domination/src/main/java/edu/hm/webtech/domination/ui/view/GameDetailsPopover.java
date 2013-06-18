@@ -9,6 +9,7 @@ import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
+import edu.hm.webtech.domination.model.Player;
 
 import java.util.Collection;
 
@@ -30,7 +31,11 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
      * @param name        Name des Spiels.
      */
     public GameDetailsPopover(final Window parent, final IGameManager gameManager, final String name) {
+        /* TODO: Sebastian Stumpf -> Set User to Current user set in App / REQUIREMENT: Login Manager implemented
+         * Current Workaround: Set dummy user manually
         this.currentPlayer = (IPlayer) MyVaadinApplication.getApp().getMainWindow().getApplication().getUser();
+         */
+        this.currentPlayer = new Player(0,0,"DummyUser");
         this.gameManager = gameManager;
         setStyleName("domination");
         setWidth("100%");
