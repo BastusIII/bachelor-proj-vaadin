@@ -76,23 +76,6 @@ public class MapView extends NavigationView implements PositionCallback {
 	 */
 	public MapView(IGameManager gameManager) {
 		gameManager.getGame();
-		/*
-		// TODO test
-		ITeam team = null;
-		Collection<ITeam> teams = game.getTeams();
-		for(ITeam aTeam: teams){
-			if(aTeam.getTeamIdentifier().equals(TeamIdentifier.BLUE))
-				team = aTeam;
-		}
-		me = new Player(11.556062, 48.153991, "Player One", team);
-		try {
-			game.addPlayer(me);
-		} catch (ModelException e) {
-			// TODO Should not occur
-			logger.errorLog("Error occured while adding the user to the game");
-		}
-		// test end
-		*/
 		refresher = new Refresher();
 		refresher.setRefreshInterval(500);
 		generateStyleMaps();
