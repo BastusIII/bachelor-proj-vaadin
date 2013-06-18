@@ -1,32 +1,25 @@
 package edu.hm.webtech.domination.ui.view;
 
-import java.util.Collection;
-
 import com.github.wolfie.refresher.Refresher;
 import com.github.wolfie.refresher.Refresher.RefreshListener;
 import com.vaadin.addon.touchkit.service.Position;
 import com.vaadin.addon.touchkit.service.PositionCallback;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TouchKitWindow;
-import com.vaadin.ui.VerticalLayout;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
-import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.ApplicationConfiguration;
 import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
-import edu.hm.webtech.domination.model.Player;
 import edu.hm.webtech.domination.model.TeamIdentifier;
 import edu.hm.webtech.domination.util.Logger;
 import edu.hm.webtech.test.GameFactory;
 
 import org.vaadin.vol.*;
 import org.vaadin.vol.VectorLayer.SelectionMode;
-import org.vaadin.vol.VectorLayer.VectorSelectedEvent;
-import org.vaadin.vol.VectorLayer.VectorSelectedListener;
 
 /**
  * This view shows the map with the current positions of the players to the
@@ -56,7 +49,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Containing all the important informations about the game.
 	 */
 	private IGame game = GameFactory.GetHMGarden();
-	private IPlayer me;
+	//private IPlayer me;
 	private boolean locked = false;
 	/**
 	 * Refreshes the screen constantly.
@@ -82,6 +75,8 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * automatic screen updating.  
 	 */
 	public MapView(IGameManager gameManager) {
+		gameManager.getGame();
+		/*
 		// TODO test
 		ITeam team = null;
 		Collection<ITeam> teams = game.getTeams();
@@ -89,8 +84,6 @@ public class MapView extends NavigationView implements PositionCallback {
 			if(aTeam.getTeamIdentifier().equals(TeamIdentifier.BLUE))
 				team = aTeam;
 		}
-		refresher = new Refresher();
-		refresher.setRefreshInterval(500);
 		me = new Player(11.556062, 48.153991, "Player One", team);
 		try {
 			game.addPlayer(me);
@@ -99,6 +92,9 @@ public class MapView extends NavigationView implements PositionCallback {
 			logger.errorLog("Error occured while adding the user to the game");
 		}
 		// test end
+		*/
+		refresher = new Refresher();
+		refresher.setRefreshInterval(500);
 		generateStyleMaps();
 		MyVaadinApplication.get().getMainWindow().detectCurrentPosition(this);
 	}
@@ -257,13 +253,18 @@ public class MapView extends NavigationView implements PositionCallback {
 	private void updateLocations() {
 		//Update the vectors
 		myLocationRingVector.removeAllComponents();
-		PointVector myRing = new PointVector(me.getLongitude(), me.getLatitude());
+		//TODO Takes always the owner of the game for testing reasons. Has to be removed at the time the user can be identified.
+		IPlayer dummy = game.getOwner();
+		PointVector myRing = new PointVector(dummy.getLongitude(), dummy.getLatitude());
 		myLocationRingVector.addVector(myRing);
+		// TODO end
 		
 		playerBlueLocationVector.removeAllComponents();
 		playerRedLocationVector.removeAllComponents();
 		for(IPlayer player: game.getPlayers()) {
-			ITeam myTeam = me.getTeam();
+			// TODO Takes always the team of the owner for testing reasons. Has to be removed at the time the user can be identified. 
+			//ITeam myTeam = me.getTeam();
+			ITeam myTeam = dummy.getTeam();
 			if(myTeam.equals(player.getTeam())) {
 				PointVector location = new PointVector(player.getLongitude(), player.getLatitude());
 				switch(myTeam.getTeamIdentifier()) {

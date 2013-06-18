@@ -27,12 +27,13 @@ public class GameFactory {
 		ITeam teamBlue = new Team(TeamIdentifier.BLUE, 0);
 		ITeam teamRed = new Team(TeamIdentifier.RED, 0);
 
-		final IPlayer[] players = new IPlayer[5];
-		players[0] = new Player(11.556209, 48.153543, "Player Two", teamBlue);
-		players[1] = new Player(11.555437, 48.154180, "Player Three", teamRed);
-		players[2] = new Player(11.555898, 48.154230, "Player Four", teamBlue);
-		players[3] = new Player(11.556300, 48.153790, "Player Five", teamRed);
-		players[4] = new Player(11.556711, 48.153617, "Player Six", teamRed);
+		final IPlayer[] players = new IPlayer[6];
+		players[0] = new Player(11.556062, 48.153991, "Player One", teamRed);
+		players[1] = new Player(11.556209, 48.153543, "Player Two", teamRed);
+		players[2] = new Player(11.555437, 48.154180, "Player Three", teamBlue);
+		players[3] = new Player(11.555898, 48.154230, "Player Four", teamRed);
+		players[4] = new Player(11.556300, 48.153790, "Player Five", teamBlue);
+		players[5] = new Player(11.556711, 48.153617, "Player Six", teamBlue);
 
 		dominationPoints[0].setOwnerTeam(teamRed);
 		dominationPoints[2].setOwnerTeam(teamBlue);
