@@ -27,14 +27,13 @@ public class LobbyManager implements ILobbyManager {
 	@Override
 	public IGameManager createGame(final IGameConfiguration gameConfiguration) {
 
-        // TODO: Define Methods in IGameConfiguration that are needed to create Custom Game here.
-        // TODO: Initialize Game before giving it to GameManager, maybe by a GameFactoryMethod taking the ConfigFile as a parameter
-        /* Workaround: use Game from GameFactory!
+        // TODO: Daniel Brielbeck -> Initialize Game before giving it to GameManager, maybe by a GameFactoryMethod taking the ConfigFile as a parameter
+        /* Workaround: use Game from GameFactory! Plz test functionality before removing.
         IGameManager gameManager;
         IGame game = new Game(gameConfiguration);
         gameManager = new GameManagerImpl(game);*/
         IGameManager gameManager = new GameManagerImpl(GameFactory.GetHMGarden());
-        gameManagers.add(new GameManagerImpl(GameFactory.GetHMGarden()));
+        gameManagers.add(gameManager);
         return gameManager;
 
 	}

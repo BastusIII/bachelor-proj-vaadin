@@ -78,4 +78,6 @@ public class GameFactory {
 
 		return game;
 	}
+
+    // TODO: Maximilian Briglmeier? -> Define Methods in IGameConfiguration that are needed to create Custom Game here.
 }
