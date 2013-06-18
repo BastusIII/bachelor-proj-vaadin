@@ -12,6 +12,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.exception.ModelException;
+import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.ApplicationConfiguration;
 import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
@@ -77,7 +78,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Constructor initializing the important member variables and sets up a refresher for 
 	 * automatic screen updating.  
 	 */
-	public MapView() {
+	public MapView(IGameManager gameManager) {
 		// TODO test
 		ITeam team = null;
 		Collection<ITeam> teams = game.getTeams();

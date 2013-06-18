@@ -48,7 +48,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
             @Override
             public void buttonClick(final Button.ClickEvent event) {
                 gameManager.joinGame(currentPlayer);
-                parent.setContent(new MainTabView());
+                parent.setContent(new MainTabView(gameManager));
                 close();
             }
         });

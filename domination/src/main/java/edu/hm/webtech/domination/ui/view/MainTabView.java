@@ -5,15 +5,16 @@ import com.vaadin.addon.touchkit.ui.TabBarView;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
+import edu.hm.webtech.domination.manager.game.IGameManager;
 
 
 @SuppressWarnings("serial")
 public class MainTabView extends TabBarView{
 
-	public MainTabView() {
+	public MainTabView(IGameManager gameManager) {
 		super();
 
-		Layout gameView = new GameView();
+		Layout gameView = new GameView(gameManager);
 
 		NavigationView settingsView = new SettingsView("Score");
 
