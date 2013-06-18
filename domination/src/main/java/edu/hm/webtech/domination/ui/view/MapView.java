@@ -48,7 +48,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	/**
 	 * Containing all the important informations about the game.
 	 */
-	private IGame game = GameFactory.GetHMGarden();
+	private IGame game;
 	//private IPlayer me;
 	private boolean locked = false;
 	/**
@@ -75,7 +75,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * automatic screen updating.  
 	 */
 	public MapView(IGameManager gameManager) {
-		gameManager.getGame();
+		game = gameManager.getGame();
 		refresher = new Refresher();
 		refresher.setRefreshInterval(500);
 		generateStyleMaps();

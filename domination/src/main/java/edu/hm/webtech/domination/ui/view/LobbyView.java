@@ -9,6 +9,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.game.IGameManager;
+import edu.hm.webtech.domination.model.GameConfiguration;
+import edu.hm.webtech.domination.model.GameType;
+import edu.hm.webtech.domination.model.IGameConfiguration;
+import edu.hm.webtech.domination.model.Player;
 
 /**
  * Die Lobby View kommt nach dem erfolgreichen Login eines Spielers.<br />
@@ -44,14 +48,15 @@ public class LobbyView extends AbstractNavigationView {
         createGame.addListener(new NavigationButton.ClickListener() {
             @Override
             public void buttonClick(final NavigationButton.ClickEvent event) {
-            IGameManager gameManager = MyVaadinApplication.getLm().createGame(null);
-            gamesContainer.addComponent(buildGameContainer(gameManager, "Game" + MyVaadinApplication.getLm().getGames().size()));
-            noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
+                // TODO: Sebastian Stumpf -> CreateCustomGame Vie mit personalisierten parametern (Center, dps, maxGameScore etc) / REQUIREMENT: Implementierte getGame(iConfig) in GameFactory
+                IGameConfiguration gameConfiguration = new GameConfiguration(-1,-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY);
+                IGameManager gameManager = MyVaadinApplication.getLm().createGame(gameConfiguration);
+                gamesContainer.addComponent(buildGameContainer(gameManager, "Game" + MyVaadinApplication.getLm().getGames().size()));
+                noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
             }
         });
         VerticalComponentGroup createGameWrapper = new VerticalComponentGroup();
         createGameWrapper.addComponent(createGame);
-        // TODO: Sebastian Stumpf -> CreateCustomGame Vie mit personalisierten parametern (Center, dps, maxGameScore etc) / REQUIREMENT: Implementierte getGame(iConfig) in GameFactory
 
         this.base.addComponent(this.gamesContainer);
         this.gamesContainer.addComponent(this.noGamesAvailable);

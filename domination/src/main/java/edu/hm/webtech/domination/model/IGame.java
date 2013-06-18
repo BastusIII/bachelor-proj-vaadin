@@ -7,8 +7,7 @@ import java.util.Collection;
 /**
  * Defines methods for a object representing a game in domination.
  *
- * @author Marco Wolff
- * @author Sebastian Stumpf
+ * @author Marco Wolff, Sebastian Stumpf
  */
 public interface IGame {
 
@@ -107,11 +106,4 @@ public interface IGame {
      * @return {@link IPlayer} owning this game, which means he created it.
      */
     public IPlayer getOwner();
-
-    /**
-     * Sets the {@link IPlayer} owning this game object.
-     *
-     * @param player {@link IPlayer} which is owning this game object.
-     */
-    public void setOwner(IPlayer player);
 }

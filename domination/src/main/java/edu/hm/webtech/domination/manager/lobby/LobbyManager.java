@@ -32,7 +32,7 @@ public class LobbyManager implements ILobbyManager {
         IGameManager gameManager;
         IGame game = new Game(gameConfiguration);
         gameManager = new GameManagerImpl(game);*/
-        IGameManager gameManager = new GameManagerImpl(GameFactory.GetHMGarden());
+        IGameManager gameManager = new GameManagerImpl(GameFactory.getGame(gameConfiguration));
         gameManagers.add(gameManager);
         return gameManager;
 
