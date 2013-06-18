@@ -44,9 +44,9 @@ public class LobbyView extends AbstractNavigationView {
         createGame.addListener(new NavigationButton.ClickListener() {
             @Override
             public void buttonClick(final NavigationButton.ClickEvent event) {
-                IGameManager gameManager = MyVaadinApplication.getLm().createGame(null);
-                gamesContainer.addComponent(buildGameContainer(gameManager, "Game" + MyVaadinApplication.getLm().getGames().size()));
-                noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
+            IGameManager gameManager = MyVaadinApplication.getLm().createGame(null);
+            gamesContainer.addComponent(buildGameContainer(gameManager, "Game" + MyVaadinApplication.getLm().getGames().size()));
+            noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
             }
         });
         VerticalComponentGroup createGameWrapper = new VerticalComponentGroup();
