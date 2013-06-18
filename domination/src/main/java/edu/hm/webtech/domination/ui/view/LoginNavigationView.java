@@ -52,7 +52,7 @@ public class LoginNavigationView extends AbstractNavigationView {
         }
 
 
-        this.mainTabView = new MainTabView();
+        //this.mainTabView = new MainTabView();
 
         // Create the form
         LoginForm login = new LoginForm();

@@ -82,7 +82,6 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * automatic screen updating.  
 	 */
 	public MapView(IGameManager gameManager) {
-		
 		// TODO test
 		ITeam team = null;
 		Collection<ITeam> teams = game.getTeams();
