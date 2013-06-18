@@ -113,14 +113,17 @@ public class Game implements IGame {
 		} else {
 			this.config = new GameConfiguration(gamesConfig);
 		}
+		this.players = new ArrayList<IPlayer>();
 		for (IPlayer player : game.getPlayers()) {
-			players.add(new Player(player));
+			this.players.add(new Player(player));
 		}
+		this.teams = new ArrayList<ITeam>();
 		for (ITeam team : game.getTeams()) {
-			teams.add(new Team(team));
+			this.teams.add(new Team(team));
 		}
+		this.dominationPoints = new ArrayList<IDominationPoint>();
 		for (IDominationPoint dominationPoint : game.getDominationPoints()) {
-			dominationPoints.add(new DominationPoint(dominationPoint));
+			this.dominationPoints.add(new DominationPoint(dominationPoint));
 		}
 	}
 
