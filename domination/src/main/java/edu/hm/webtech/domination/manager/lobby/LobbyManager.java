@@ -9,6 +9,7 @@ import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.manager.game.GameManagerImpl;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.*;
+import edu.hm.webtech.test.GameFactory;
 
 /**
  * This class manages the players waiting in the lobby.
@@ -25,10 +26,15 @@ public class LobbyManager implements ILobbyManager {
 
 	@Override
 	public IGameManager createGame(final IGameConfiguration gameConfiguration) {
+
+        // TODO: Define Methods in IGameConfiguration that are needed to create Custom Game here.
+        // TODO: Initialize Game before giving it to GameManager, maybe by a GameFactoryMethod taking the ConfigFile as a parameter
+        /* Workaround: use Game from GameFactory!
         IGameManager gameManager;
         IGame game = new Game(gameConfiguration);
-        gameManager = new GameManagerImpl(game);
-        gameManagers.add(gameManager);
+        gameManager = new GameManagerImpl(game);*/
+        IGameManager gameManager = new GameManagerImpl(GameFactory.GetHMGarden());
+        gameManagers.add(new GameManagerImpl(GameFactory.GetHMGarden()));
         return gameManager;
 
 	}

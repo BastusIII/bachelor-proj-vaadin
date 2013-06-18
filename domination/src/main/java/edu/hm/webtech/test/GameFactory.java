@@ -1,16 +1,7 @@
 package edu.hm.webtech.test;
 
 import edu.hm.webtech.domination.exception.ModelException;
-import edu.hm.webtech.domination.model.DominationPoint;
-import edu.hm.webtech.domination.model.Game;
-import edu.hm.webtech.domination.model.IDominationPoint;
-import edu.hm.webtech.domination.model.IGame;
-import edu.hm.webtech.domination.model.IPlayer;
-import edu.hm.webtech.domination.model.ITeam;
-import edu.hm.webtech.domination.model.Map;
-import edu.hm.webtech.domination.model.Player;
-import edu.hm.webtech.domination.model.Team;
-import edu.hm.webtech.domination.model.TeamIdentifier;
+import edu.hm.webtech.domination.model.*;
 
 /**
  * A Factory creating dummy games for testing reasons.
@@ -27,7 +18,7 @@ public class GameFactory {
 	public static IGame GetHMGarden() {
 		IGame game = new Game();
 		game.setMap(new Map(11.556062, 48.153991, 18));
-
+        game.setGameConfiguration(new GameConfiguration(500));
 		IDominationPoint[] dominationPoints = new IDominationPoint[3];
 		dominationPoints[0] = new DominationPoint(11.555418, 48.154221, 10, 50);
 		dominationPoints[1] = new DominationPoint(11.556129, 48.154171, 10, 100);

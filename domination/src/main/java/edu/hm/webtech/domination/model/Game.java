@@ -39,11 +39,40 @@ public class Game implements IGame {
 
 	/**
 	 * Konstruktor.
+	 */
+	public Game() {
+		this.players = new ArrayList<IPlayer>();
+		this.teams = new ArrayList<ITeam>();
+		this.dominationPoints = new ArrayList<IDominationPoint>();
+		this.map = null;
+		this.owner = null;
+		this.config = null;
+	}
+
+	/**
+	 * Konstruktor. Konfigurationsdatei wird nicht verwendet um das model zu
+	 * erstellen!!.
 	 * 
-	 * @param map
-	 *            Die Spielkarte.
 	 * @param config
 	 *            Die Konfigurationsdatei
+	 */
+	public Game(final IGameConfiguration config) {
+		this.players = new ArrayList<IPlayer>();
+		this.teams = new ArrayList<ITeam>();
+		this.dominationPoints = new ArrayList<IDominationPoint>();
+		this.config = config;
+	}
+
+	/**
+	 * Konstruktor. Konfigurationsdatei wird nicht verwendet um das model zu
+	 * erstellen!!.
+	 * 
+	 * @param config
+	 *            Die Konfigurationsdatei
+	 * @param owner
+	 *            The Owner
+	 * @param map
+	 *            The Map
 	 */
 	public Game(final IMap map, final IPlayer owner,
 			final IGameConfiguration config) {
@@ -52,6 +81,7 @@ public class Game implements IGame {
 		this.dominationPoints = new ArrayList<IDominationPoint>();
 		this.map = map;
 		this.owner = owner;
+		this.config = config;
 	}
 
 	/**
@@ -77,30 +107,6 @@ public class Game implements IGame {
 		for (IDominationPoint dominationPoint : game.getDominationPoints()) {
 			dominationPoints.add(new DominationPoint(dominationPoint));
 		}
-	}
-
-	/**
-	 * Konstruktor.
-	 * 
-	 * @param config
-	 *            Die Konfigurationsdatei
-	 */
-	public Game(final IGameConfiguration config) {
-		this.players = new ArrayList<IPlayer>();
-		this.teams = new ArrayList<ITeam>();
-		this.dominationPoints = new ArrayList<IDominationPoint>();
-	}
-
-	/**
-	 * Konstruktor.
-	 */
-	public Game() {
-		this.players = new ArrayList<IPlayer>();
-		this.teams = new ArrayList<ITeam>();
-		this.dominationPoints = new ArrayList<IDominationPoint>();
-		this.map = null;
-		this.owner = null;
-		this.config = null;
 	}
 
 	@Override
