@@ -1,6 +1,7 @@
 package edu.hm.webtech.domination.ui.view;
 
 import com.vaadin.ui.AbsoluteLayout;
+import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.ui.component.ScoreBoard;
 
 /**
@@ -10,8 +11,8 @@ import edu.hm.webtech.domination.ui.component.ScoreBoard;
  */
 public class GameView  extends AbsoluteLayout{
 
-	public GameView() {
-        MapView mapView = new MapView();
+	public GameView(IGameManager gameManager) {
+        MapView mapView = new MapView(gameManager);
         mapView.setSizeFull();
 		addComponent(mapView, "left: 0%; right: 0%; top: 0%; bottom: 0%;");
 		addComponent(new ScoreBoard(), "top: 1%;");

@@ -12,6 +12,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.exception.ModelException;
+import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.ApplicationConfiguration;
 import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
@@ -19,6 +20,7 @@ import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
 import edu.hm.webtech.domination.model.Player;
 import edu.hm.webtech.domination.model.TeamIdentifier;
+import edu.hm.webtech.domination.util.Logger;
 import edu.hm.webtech.test.GameFactory;
 
 import org.vaadin.vol.*;
@@ -35,6 +37,8 @@ import org.vaadin.vol.VectorLayer.VectorSelectedListener;
  */
 @SuppressWarnings("serial")
 public class MapView extends NavigationView implements PositionCallback {
+	
+	private static Logger logger = new Logger(MapView.class.toString());
 	
 	private static final int DOMINATION_POINT_ICON_SIZE = 20;
 	private static final int PLAYER_ICON_SIZE = 10;
@@ -77,7 +81,8 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Constructor initializing the important member variables and sets up a refresher for 
 	 * automatic screen updating.  
 	 */
-	public MapView() {
+	public MapView(IGameManager gameManager) {
+		
 		// TODO test
 		ITeam team = null;
 		Collection<ITeam> teams = game.getTeams();
@@ -92,7 +97,7 @@ public class MapView extends NavigationView implements PositionCallback {
 			game.addPlayer(me);
 		} catch (ModelException e) {
 			// TODO Should not occur
-			e.printStackTrace();
+			logger.errorLog("Error occured while adding the user to the game");
 		}
 		// test end
 		generateStyleMaps();
@@ -100,7 +105,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	}
 
 	/**
-	 * Generates the icons of the player and domination points.
+	 * Generates the icons of the players and domination points.
 	 */
 	private static void generateStyleMaps() {
 		if(MY_LOCATION_RING == null) {
@@ -169,6 +174,7 @@ public class MapView extends NavigationView implements PositionCallback {
 				@Override
 				protected void updateExtent(java.util.Map<String, Object> variables) {
 					super.updateExtent(variables);
+					// Sets the border of the game, thus forbids the user to scroll away from the map
 					if(!locked){
 						locked = true;
 						openLayersMap.setRestrictedExtent(openLayersMap.getExtend());
@@ -176,13 +182,9 @@ public class MapView extends NavigationView implements PositionCallback {
 				}
 			};
 
-			configureMapControls();
-			openLayersMap.setImmediate(true);
-			openLayersMap.addLayer(new OpenStreetMapLayer());
-
-			openLayersMap.setSizeFull();
-			openLayersMap.setZoom(game.getMap().getZoomFactor());
+			initOpenLayersMap();
 			setContent(openLayersMap);
+			
 			TouchKitWindow window = (TouchKitWindow) getWindow();
 			if (latestLatitude != 0) {
 				setCenter();
@@ -193,26 +195,10 @@ public class MapView extends NavigationView implements PositionCallback {
 				window.detectCurrentPosition(this);
 			}
 			
-			myLocationRingVector.setStyleMap(MY_LOCATION_RING);
-			myLocationRingVector.setSelectionMode(SelectionMode.SIMPLE);
+			initVectors();
 			
-			playerRedLocationVector.setStyleMap(PLAYER_RED);
-			playerRedLocationVector.setSelectionMode(SelectionMode.SIMPLE);
-			
-			playerBlueLocationVector.setStyleMap(PLAYER_BLUE);
-			playerBlueLocationVector.setSelectionMode(SelectionMode.SIMPLE);
-			
-			dominationPointLocationVector_red.setStyleMap(DOMINATION_POINT_LOCATION_POINT_RED);
-			dominationPointLocationVector_red.setSelectionMode(SelectionMode.SIMPLE);
-			
-			dominationPointLocationVector_blue.setStyleMap(DOMINATION_POINT_LOCATION_POINT_BLUE);
-			dominationPointLocationVector_blue.setSelectionMode(SelectionMode.SIMPLE);
-			
-			dominationPointLocationVector_neutral.setStyleMap(DOMINATION_POINT_LOCATION_POINT_NEUTRAL);
-			dominationPointLocationVector_neutral.setSelectionMode(SelectionMode.SIMPLE);
-			
-			refresher.addListener(new RefreshListener() {
-				
+			// Add refresher, which updates the UI to the current situation.
+			refresher.addListener(new RefreshListener() {				
 				@Override
 				public void refresh(Refresher source) {
 					updateLocations();	
@@ -224,6 +210,17 @@ public class MapView extends NavigationView implements PositionCallback {
 	}
 
 	/**
+	 * Initializes the member variable 'openLayersMap'.
+	 */
+	private void initOpenLayersMap() {
+		configureMapControls();
+		openLayersMap.setImmediate(true);
+		openLayersMap.addLayer(new OpenStreetMapLayer());
+		openLayersMap.setSizeFull();
+		openLayersMap.setZoom(game.getMap().getZoomFactor());
+	}
+
+	/**
 	 * Configuring the controls of the map.
 	 */
 	private void configureMapControls() {
@@ -231,15 +228,35 @@ public class MapView extends NavigationView implements PositionCallback {
 		openLayersMap.addControl(Control.Attribution);
 		openLayersMap.addControl(Control.TouchNavigation);
 	}
-
+	
+	/**
+	 * Initializes the 'Vector's
+	 */
+	private void initVectors() {
+		myLocationRingVector.setStyleMap(MY_LOCATION_RING);
+		myLocationRingVector.setSelectionMode(SelectionMode.SIMPLE);
+		
+		playerRedLocationVector.setStyleMap(PLAYER_RED);
+		playerRedLocationVector.setSelectionMode(SelectionMode.SIMPLE);
+		
+		playerBlueLocationVector.setStyleMap(PLAYER_BLUE);
+		playerBlueLocationVector.setSelectionMode(SelectionMode.SIMPLE);
+		
+		dominationPointLocationVector_red.setStyleMap(DOMINATION_POINT_LOCATION_POINT_RED);
+		dominationPointLocationVector_red.setSelectionMode(SelectionMode.SIMPLE);
+		
+		dominationPointLocationVector_blue.setStyleMap(DOMINATION_POINT_LOCATION_POINT_BLUE);
+		dominationPointLocationVector_blue.setSelectionMode(SelectionMode.SIMPLE);
+		
+		dominationPointLocationVector_neutral.setStyleMap(DOMINATION_POINT_LOCATION_POINT_NEUTRAL);
+		dominationPointLocationVector_neutral.setSelectionMode(SelectionMode.SIMPLE);
+	}
+	
 	/**
 	 * Updates the map by drawing the icons to the new position of the elements.
 	 */
 	private void updateLocations() {
-		/*myLocationVector.removeAllComponents();
-		PointVector myLocation = new PointVector(me.getLongitude(), me.getLatitude());
-		myLocationVector.addVector(myLocation);*/
-		
+		//Update the vectors
 		myLocationRingVector.removeAllComponents();
 		PointVector myRing = new PointVector(me.getLongitude(), me.getLatitude());
 		myLocationRingVector.addVector(myRing);
@@ -256,6 +273,9 @@ public class MapView extends NavigationView implements PositionCallback {
 						break;
 					case BLUE:
 						playerBlueLocationVector.addVector(location);
+						break;
+					default:
+						logger.errorLog("Given Color can not be used yet(not implemented yet).");
 						break;
 				}
 			}
@@ -284,6 +304,7 @@ public class MapView extends NavigationView implements PositionCallback {
 				}
 			}
 		}
+		// Add the vectors to the 'openLayersMap'
 		if(dominationPointLocationVector_red.getParent() == null) 
 			openLayersMap.addLayer(dominationPointLocationVector_red);
 		if(dominationPointLocationVector_blue.getParent() == null) 
@@ -321,7 +342,10 @@ public class MapView extends NavigationView implements PositionCallback {
 		}
 	}
 
+	/**
+	 * Gets called, if the position of the user can not be determined.
+	 */
 	public void onFailure(int errorCode) {
-		// TODO Auto-generated method stub
+		logger.infoLog("Location detection failed with code: " + errorCode);
 	}
 }
