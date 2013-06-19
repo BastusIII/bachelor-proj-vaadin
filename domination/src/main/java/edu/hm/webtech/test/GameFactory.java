@@ -11,9 +11,9 @@ import edu.hm.webtech.domination.model.*;
 public class GameFactory {
 
 	/**
-	 * Serves as dummy and exists for testing reasons. Represents a domination points 
-	 * and simulated movement of players in the HM garden.
-	 * @return the created dummy game
+	 * Creates games and out of the given {@link GameConfiguration}.
+	 * @param gameConfiguration gives the configurations and settings for the game to be created
+	 * @return the created game
 	 */
 	public static IGame getGame(IGameConfiguration gameConfiguration) {
 
@@ -22,8 +22,15 @@ public class GameFactory {
 		
         switch(gameConfiguration.getGameType()) {
             case HM_BACKYARD :
-                //TODO: MAXI Briglmeier -> Implemement Custom Game with Game Config options
+            	game = new Game(gameConfiguration);
+            	// Location for the HM Garden
+            	IMap map = new Map(11.556062, 48.153991,18);
+            	game.setMap(map);
                 break;
+            /**
+             * Serves as dummy and exists for testing reasons. Represents a domination points 
+             * and simulated movement of players in the HM garden.
+             */
             case HM_BACKYARD_DUMMY:
                 IDominationPoint[] dominationPoints = new IDominationPoint[3];
                 dominationPoints[0] = new DominationPoint(11.555418, 48.154221, 10, 50);
@@ -41,9 +48,9 @@ public class GameFactory {
                 players[4] = new Player(11.556300, 48.153790, "Player Five", teamBlue);
                 players[5] = new Player(11.556711, 48.153617, "Player Six", teamBlue);
 
-                game = new Game(new GameConfiguration(-1,-1,-1,-1,-1,players[0],null));
+                game = new Game(new GameConfiguration(250,18,2,players.length / 2,dominationPoints.length,players[0],null));
                 game.setMap(new Map(11.556062, 48.153991, 18));
-
+                
                 dominationPoints[0].setOwnerTeam(teamRed);
                 dominationPoints[2].setOwnerTeam(teamBlue);
 

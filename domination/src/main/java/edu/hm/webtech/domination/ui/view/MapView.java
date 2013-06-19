@@ -1,5 +1,8 @@
 package edu.hm.webtech.domination.ui.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.wolfie.refresher.Refresher;
 import com.github.wolfie.refresher.Refresher.RefreshListener;
 import com.vaadin.addon.touchkit.service.Position;
@@ -22,8 +25,8 @@ import org.vaadin.vol.*;
 import org.vaadin.vol.VectorLayer.SelectionMode;
 
 /**
- * This view shows the map with the current positions of the players to the
- * user.
+ * This view shows the map with the current positions of the players and the domination points
+ * to the user.
  * 
  * @author Maximlian Briglmeier
  * 
@@ -33,23 +36,26 @@ public class MapView extends NavigationView implements PositionCallback {
 	
 	private static Logger logger = new Logger(MapView.class.toString());
 	
+	// The size of the icons
 	private static final int DOMINATION_POINT_ICON_SIZE = 20;
 	private static final int PLAYER_ICON_SIZE = 10;
 	
 	//The icons displayed on the map
-	public static StyleMap MY_LOCATION_POINT; 
-	public static StyleMap MY_LOCATION_RING;
-	public static StyleMap PLAYER_BLUE;
-	public static StyleMap PLAYER_RED;
-	public static StyleMap DOMINATION_POINT_LOCATION_POINT_RED;
-	public static StyleMap DOMINATION_POINT_LOCATION_POINT_BLUE;
-	public static StyleMap DOMINATION_POINT_LOCATION_POINT_NEUTRAL;
+	private StyleMap MY_LOCATION_RING;
+	private StyleMap PLAYER_BLUE;
+	private StyleMap PLAYER_RED;
+	private StyleMap DOMINATION_POINT_LOCATION_POINT_RED;
+	private StyleMap DOMINATION_POINT_LOCATION_POINT_BLUE;
+	private StyleMap DOMINATION_POINT_LOCATION_POINT_NEUTRAL;
 	
 	/**
 	 * Containing all the important informations about the game.
 	 */
 	private IGame game;
-	//private IPlayer me;
+	
+	/**
+	 * Needed for locking the screen.
+	 */
 	private boolean locked = false;
 	/**
 	 * Refreshes the screen constantly.
@@ -59,13 +65,12 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * The OpenStreetMap
 	 */
 	private OpenLayersMap openLayersMap;
-	private double latestLongitude;
-	private double latestLatitude;
 	
 	// Mapping between objects and icons
 	private VectorLayer playerRedLocationVector = new VectorLayer();
 	private VectorLayer playerBlueLocationVector = new VectorLayer();
 	private VectorLayer myLocationRingVector = new VectorLayer();
+	private List<VectorLayer> areas = new ArrayList<VectorLayer>();
 	private VectorLayer dominationPointLocationVector_red = new VectorLayer();
 	private VectorLayer dominationPointLocationVector_blue = new VectorLayer();
 	private VectorLayer dominationPointLocationVector_neutral = new VectorLayer();
@@ -85,34 +90,24 @@ public class MapView extends NavigationView implements PositionCallback {
 	/**
 	 * Generates the icons of the players and domination points.
 	 */
-	private static void generateStyleMaps() {
-		if(MY_LOCATION_RING == null) {
-			synchronized (MapView.class) {
+	private void generateStyleMaps() {
+		synchronized (MapView.class) {
+			if(MY_LOCATION_RING == null) {
 				MY_LOCATION_RING = createStyleMap(PLAYER_ICON_SIZE + 10, PLAYER_ICON_SIZE + 10, ApplicationConfiguration.MY_LOCATION_RING_ICON);
 			}
-		}
-		if(PLAYER_RED == null) {
-			synchronized (MapView.class) {
+			if(PLAYER_RED == null) {
 				PLAYER_RED = createStyleMap(PLAYER_ICON_SIZE, PLAYER_ICON_SIZE, ApplicationConfiguration.PLAYER_RED_ICON_PATH);
 			}
-		}
-		if(PLAYER_BLUE == null) {
-			synchronized (MapView.class) {
+			if(PLAYER_BLUE == null) {
 				PLAYER_BLUE = createStyleMap(PLAYER_ICON_SIZE, PLAYER_ICON_SIZE, ApplicationConfiguration.PLAYER_BLUE_ICON_PATH);
 			}
-		}
-		if(DOMINATION_POINT_LOCATION_POINT_RED == null) {
-			synchronized (MapView.class) {
+			if(DOMINATION_POINT_LOCATION_POINT_RED == null) {
 				DOMINATION_POINT_LOCATION_POINT_RED = createStyleMap(DOMINATION_POINT_ICON_SIZE, DOMINATION_POINT_ICON_SIZE, ApplicationConfiguration.DOMINATION_POINT_RED);
 			}
-		}
-		if(DOMINATION_POINT_LOCATION_POINT_BLUE == null) {
-			synchronized (MapView.class) {
+			if(DOMINATION_POINT_LOCATION_POINT_BLUE == null) {
 				DOMINATION_POINT_LOCATION_POINT_BLUE = createStyleMap(DOMINATION_POINT_ICON_SIZE, DOMINATION_POINT_ICON_SIZE, ApplicationConfiguration.DOMINATION_POINT_BLUE);
 			}
-		}
-		if(DOMINATION_POINT_LOCATION_POINT_NEUTRAL == null) {
-			synchronized (MapView.class) {
+			if(DOMINATION_POINT_LOCATION_POINT_NEUTRAL == null) {
 				DOMINATION_POINT_LOCATION_POINT_NEUTRAL = createStyleMap(DOMINATION_POINT_ICON_SIZE, DOMINATION_POINT_ICON_SIZE, ApplicationConfiguration.DOMINATION_POINT_NEUTRAL);
 			}
 		}
@@ -125,7 +120,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * @param graphicPath the path of the icon
 	 * @return the created Style Map
 	 */
-	private static StyleMap createStyleMap(int graphicHeight, int graphicWidth, String graphicPath) {
+	private StyleMap createStyleMap(int graphicHeight, int graphicWidth, String graphicPath) {
 		Style style = new Style();
 		style.setExternalGraphic(graphicPath);
 		style.setGraphicHeight(graphicHeight);
@@ -164,14 +159,8 @@ public class MapView extends NavigationView implements PositionCallback {
 			setContent(openLayersMap);
 			
 			TouchKitWindow window = (TouchKitWindow) getWindow();
-			if (latestLatitude != 0) {
-				setCenter();
-			} else {
-				latestLatitude = 60;
-				latestLongitude = 22.3;
-				setCenter();
-				window.detectCurrentPosition(this);
-			}
+			setCenter();
+			window.detectCurrentPosition(this);
 			
 			initVectors();
 			
@@ -248,6 +237,7 @@ public class MapView extends NavigationView implements PositionCallback {
 			// TODO Takes always the team of the owner for testing reasons. Has to be removed at the time the user can be identified. 
 			//ITeam myTeam = me.getTeam();
 			ITeam myTeam = dummy.getTeam();
+			//logger.infoLog("Player location: " + player.getLongitude() + ", " + player.getLatitude());
 			if(myTeam.equals(player.getTeam())) {
 				PointVector location = new PointVector(player.getLongitude(), player.getLatitude());
 				switch(myTeam.getTeamIdentifier()) {
@@ -267,27 +257,42 @@ public class MapView extends NavigationView implements PositionCallback {
 		dominationPointLocationVector_red.removeAllComponents();
 		dominationPointLocationVector_blue.removeAllComponents();
 		dominationPointLocationVector_neutral.removeAllComponents();
+		for(VectorLayer vLayer: areas)
+			vLayer.removeAllComponents();
 		for(IDominationPoint dominationPoint: game.getDominationPoints()) {
-			PointVector location = new PointVector(dominationPoint.getLongitude(), dominationPoint.getLatitude());
+			PointVector pointLocation = new PointVector(dominationPoint.getLongitude(), dominationPoint.getLatitude());
+			PointVector areaLocation = new PointVector(dominationPoint.getLongitude(), dominationPoint.getLatitude());
+
+			// 50 has to be replaced with radius
+			StyleMap areaStyle = createStyleMap(50, 50, ApplicationConfiguration.DOMINATION_POINT_AREA);
+			VectorLayer areaVector = new VectorLayer();
+			areaVector.setStyleMap(areaStyle);
+			areaVector.addVector(areaLocation);
+			areas.add(areaVector);
+			
 			ITeam owner = dominationPoint.getOwnerTeam();
 			if(owner == null)
-				dominationPointLocationVector_neutral.addVector(location);
+				dominationPointLocationVector_neutral.addVector(pointLocation);
 			else {
 				TeamIdentifier identifier;
 				identifier = owner.getTeamIdentifier();
 				switch(identifier) {
 				case RED:
-					dominationPointLocationVector_red.addVector(location);
+					dominationPointLocationVector_red.addVector(pointLocation);
 					break;
 				case BLUE:
-					dominationPointLocationVector_blue.addVector(location);
+					dominationPointLocationVector_blue.addVector(pointLocation);
 					break;
 				default:
-					dominationPointLocationVector_neutral.addVector(location);
+					dominationPointLocationVector_neutral.addVector(pointLocation);
 				}
 			}
 		}
 		// Add the vectors to the 'openLayersMap'
+		for(VectorLayer vLayer: areas){
+			if (vLayer.getParent() == null)
+				openLayersMap.addLayer(vLayer);
+		}
 		if(dominationPointLocationVector_red.getParent() == null) 
 			openLayersMap.addLayer(dominationPointLocationVector_red);
 		if(dominationPointLocationVector_blue.getParent() == null) 
@@ -304,11 +309,9 @@ public class MapView extends NavigationView implements PositionCallback {
 	
 	/**
 	 * Gets the current location from the user.
+	 * @param position the location, which got determined
 	 */
 	public void onSuccess(Position position) {
-		latestLatitude = position.getLatitude();
-		latestLongitude = position.getLongitude();
-
 		MyVaadinApplication touchKitApplication = (MyVaadinApplication) MyVaadinApplication
 				.get();
 		touchKitApplication.setCurrentLatitude(position.getLatitude());
@@ -327,6 +330,7 @@ public class MapView extends NavigationView implements PositionCallback {
 
 	/**
 	 * Gets called, if the position of the user can not be determined.
+	 * @ errorCode the error Code determining the kind of error, which occurred
 	 */
 	public void onFailure(int errorCode) {
 		logger.infoLog("Location detection failed with code: " + errorCode);

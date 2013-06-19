@@ -7,6 +7,7 @@ import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.*;
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.game.IGameManager;
+import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
 import edu.hm.webtech.domination.model.Player;

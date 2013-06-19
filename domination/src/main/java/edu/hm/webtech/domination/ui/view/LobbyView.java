@@ -48,7 +48,8 @@ public class LobbyView extends AbstractNavigationView {
         createGame.addListener(new NavigationButton.ClickListener() {
             @Override
             public void buttonClick(final NavigationButton.ClickEvent event) {
-                // TODO: Sebastian Stumpf -> CreateCustomGame Vie mit personalisierten parametern (Center, dps, maxGameScore etc) / REQUIREMENT: Implementierte getGame(iConfig) in GameFactory
+                // TODO: Sebastian Stumpf -> CreateCustomGame Vie mit personalisierten parametern (Center, dps, maxGameScore etc)
+            	// TODO: Requirement implemented. Now it's your turn. ;)
                 IGameConfiguration gameConfiguration = new GameConfiguration(-1,-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY);
                 IGameManager gameManager = MyVaadinApplication.getLm().createGame(gameConfiguration);
                 gamesContainer.addComponent(buildGameContainer(gameManager, "Game" + MyVaadinApplication.getLm().getGames().size()));
