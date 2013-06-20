@@ -450,6 +450,45 @@ public class MapView extends NavigationView implements PositionCallback {
 	}
 	
 	/**
+	 * Calculates the longitude of a point moved by the given meters in longitude direction.
+	 * This is only an approximation.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new longitude
+	 */
+	private double getLongitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / (earthRadius * Math.cos(Math.PI * latitude / 180));
+		double result = longitude + (offset * 180/Math.PI);
+		*/
+		final double factor = 1 / (111.111 * Math.cos(latitude));
+		double result = factor * meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
+	}
+	
+	/**
+	 * Calculates the latitude of a point moved by the given meters in latitude direction.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new latitude
+	 */
+	private double getLatitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / earthRadius;
+		double result = latitude + offset * 180 / Math.PI;
+		*/
+		final double factor = 1 / 111.111;
+		double result = factor* meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
+	}
+	
+	/**
 	 * Gets the current location from the user.
 	 * @param position the location, which got determined
 	 */
