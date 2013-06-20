@@ -15,7 +15,7 @@ public class GameView  extends AbsoluteLayout{
         MapView mapView = new MapView(gameManager);
         mapView.setSizeFull();
 		addComponent(mapView, "left: 0%; right: 0%; top: 0%; bottom: 0%;");
-		addComponent(new ScoreBoard(), "top: 1%;");
+		addComponent(new ScoreBoard(gameManager), "top: 1%;");
 	}
 
 }

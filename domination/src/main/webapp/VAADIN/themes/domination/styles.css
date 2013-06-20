@@ -13,12 +13,36 @@
   padding: 2px;
 }
 
-.blue-score {
-   background-color:#2044de;
-   border-radius: 14px 0px 0px 14px;
+.score-bg div div:first-child div div {
+  border-radius: 14px 0px 0px 14px;
 }
 
-.red-score {
-   background-color:#D0242e;
-   border-radius: 0px 14px 14px 0px;
+/* Taking second last element, last is an empty div from vaadin magic */
+.score-bg div div:nth-last-child(2) div div {
+  border-radius: 0px 14px 14px 0px;
 }
+
+.Red-score {
+  background-color:#D0242e;
+}
+
+.Green-score {
+  background-color:#14a32d;
+}
+
+.Blue-score {
+   background-color:#2044de;
+}
+
+.Pink-score {
+   background-color:#fb46e2;
+}
+
+.Purple-score {
+   background-color:#9b17de;
+}
+
+.Black-score {
+   background-color:#0a010e;
+}
+

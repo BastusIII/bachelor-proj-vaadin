@@ -3,8 +3,14 @@ package edu.hm.webtech.domination.ui.component;
 import com.github.wolfie.refresher.Refresher;
 import com.github.wolfie.refresher.Refresher.RefreshListener;
 import com.vaadin.ui.*;
+import edu.hm.webtech.domination.manager.game.IGameManager;
+import edu.hm.webtech.domination.model.ITeam;
+import edu.hm.webtech.domination.model.TeamIdentifier;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -15,14 +21,14 @@ import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 public class ScoreBoard extends CustomComponent implements ScoreListener{
 
     /**
-     * Label for blue teams score.
+     * Map with labels for all teams.
      */
-    private Label blueScore;
+    private final Map<TeamIdentifier, Label> labelMap = new HashMap<>();
 
     /**
-     * Label for red teams score.
+     * The game manager from which the score is read.
      */
-    private Label redScore;
+    private final IGameManager gameManager;
 
     /**
      * The score manager attached to this Score board.
@@ -49,9 +55,12 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
     }
 
     /**
-     * Dummy ScoreBoard for Game with two teams, red vs. blue.
+     * ScoreBoard for domination games.
+     *
+     * @param gameManager The game manager from which the score is read.
      */
-	public ScoreBoard() {
+    public ScoreBoard(final IGameManager gameManager) {
+        this.gameManager = gameManager;
         initLayout();
     }
 
@@ -59,33 +68,31 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
      * Initializes the ScoreBoards layout.
      */
     private void initLayout() {
+
     	Refresher refresher = new Refresher();
 		refresher.setRefreshInterval(500);
-		refresher.addListener(new RefreshListener(){
+        final ScoreBoard thisBoard = this;
+		refresher.addListener(new RefreshListener() {
 			@Override
 			public void refresh(Refresher source) {
-				blueScore.setValue(getTeamScore(ScoreManager.Teams.BLUE));
-				redScore.setValue(getTeamScore(ScoreManager.Teams.RED));
-				blueScore.requestRepaint();
-				redScore.requestRepaint();
+                thisBoard.redrawScores();
 			}
 			
 		});
         HorizontalLayout scoreLayout = new HorizontalLayout();
-        scoreLayout.addComponent(refresher);
         scoreLayout.setStyleName("score-bg");
 
-        blueScore = new Label(getTeamScore(ScoreManager.Teams.BLUE));
-        blueScore.setStyleName("blue-score");
-
-        redScore = new Label(getTeamScore(ScoreManager.Teams.RED));
-        redScore.setStyleName("red-score");
-
-        scoreLayout.addComponent(blueScore);
-        scoreLayout.addComponent(redScore);
+        /* Create a label for each team. */
+        for(ITeam team: gameManager.getGame().getTeams()) {
+            Label teamLabel = new Label(Integer.toString(team.getScore()));
+            teamLabel.setStyleName(getTeamStyleClass(team));
+            labelMap.put(team.getTeamIdentifier(), teamLabel);
+            scoreLayout.addComponent(teamLabel);
+        }
 
         VerticalLayout mainLayout = new VerticalLayout();
         mainLayout.setSizeFull();
+        mainLayout.addComponent(refresher);
         mainLayout.addComponent(scoreLayout);
         mainLayout.setComponentAlignment(scoreLayout, Alignment.MIDDLE_CENTER);
 
@@ -94,20 +101,28 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
         this.scoreManager.subscribeScoreChange(this);
     }
 
-    /**
-     * Return a String with the teams score.
-     * @param team The team.
-     * @return The score as a String.
-     */
-    private String getTeamScore(ScoreManager.Teams team) {
-       return String.valueOf(scoreManager.getScore(team));
-    }
-
     @Override
     public void ScoreChanged() {
-        blueScore.setValue(getTeamScore(ScoreManager.Teams.BLUE));
-        redScore.setValue(getTeamScore(ScoreManager.Teams.RED));
-        blueScore.requestRepaint();
-        redScore.requestRepaint();
+        redrawScores();
+    }
+
+    /**
+     * Redraws the team scores.
+     */
+    public void redrawScores() {
+        for(ITeam team: gameManager.getGame().getTeams()) {
+            Label scoreLabel = labelMap.get(team.getTeamIdentifier());
+            scoreLabel.setValue(team.getScore());
+            scoreLabel.requestRepaint();
+        }
+    }
+
+    /**
+     * Get the css class name for the team.
+     * @param team The team.
+     * @return The css class name.
+     */
+    public String getTeamStyleClass(final ITeam team) {
+        return team.getTeamIdentifier().toString() + "-score";
     }
 }

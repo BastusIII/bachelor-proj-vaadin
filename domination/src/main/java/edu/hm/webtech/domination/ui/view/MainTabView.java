@@ -16,7 +16,7 @@ public class MainTabView extends TabBarView{
 
 		Layout gameView = new GameView(gameManager);
 
-		NavigationView settingsView = new SettingsView("Score");
+		NavigationView settingsView = new SettingsView(gameManager);
 
 		TabSheet.Tab mapTab = addTab(gameView, "Map");
 

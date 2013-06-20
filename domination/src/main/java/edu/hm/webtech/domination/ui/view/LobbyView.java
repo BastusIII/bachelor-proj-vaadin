@@ -28,12 +28,25 @@ public class LobbyView extends AbstractNavigationView {
     Label noGamesAvailable;
 
     /**
+     * The lobby views default caption.
+     */
+    private static final String CAPTION = "Lobby";
+
+    /**
+     * LobbyView with default caption.
+     */
+    public LobbyView() {
+        super(CAPTION);
+        init();
+    }
+
+    /**
      * Konstruktor.
      *
      * @param caption Name der View.
      */
     public LobbyView(final String caption) {
-        super(caption);
+        super(CAPTION);
         init();
     }
 
