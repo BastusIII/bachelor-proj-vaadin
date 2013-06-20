@@ -36,7 +36,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
          * Current Workaround: Set dummy user manually
         this.currentPlayer = (IPlayer) MyVaadinApplication.getApp().getMainWindow().getApplication().getUser();
          */
-        this.currentPlayer = new Player(0,0,"DummyUser");
+        this.currentPlayer = (IPlayer)MyVaadinApplication.getApp().getUser();
         this.gameManager = gameManager;
         setStyleName("domination");
         setWidth("100%");

@@ -3,6 +3,16 @@ package edu.hm.webtech.domination.ui.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.vaadin.vol.Bounds;
+import org.vaadin.vol.Control;
+import org.vaadin.vol.OpenLayersMap;
+import org.vaadin.vol.OpenStreetMapLayer;
+import org.vaadin.vol.PointVector;
+import org.vaadin.vol.Style;
+import org.vaadin.vol.StyleMap;
+import org.vaadin.vol.VectorLayer;
+import org.vaadin.vol.VectorLayer.SelectionMode;
+
 import com.github.wolfie.refresher.Refresher;
 import com.github.wolfie.refresher.Refresher.RefreshListener;
 import com.vaadin.addon.touchkit.service.Position;
@@ -19,10 +29,6 @@ import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
 import edu.hm.webtech.domination.model.TeamIdentifier;
 import edu.hm.webtech.domination.util.Logger;
-import edu.hm.webtech.test.GameFactory;
-
-import org.vaadin.vol.*;
-import org.vaadin.vol.VectorLayer.SelectionMode;
 
 /**
  * This view shows the map with the current positions of the players and the domination points
@@ -233,10 +239,10 @@ public class MapView extends NavigationView implements PositionCallback {
 		
 		playerBlueLocationVector.removeAllComponents();
 		playerRedLocationVector.removeAllComponents();
+		// TODO Takes always the team of the owner for testing reasons. Has to be removed at the time the user can be identified. 
+		//ITeam myTeam = me.getTeam();
+		ITeam myTeam = dummy.getTeam();
 		for(IPlayer player: game.getPlayers()) {
-			// TODO Takes always the team of the owner for testing reasons. Has to be removed at the time the user can be identified. 
-			//ITeam myTeam = me.getTeam();
-			ITeam myTeam = dummy.getTeam();
 			//logger.infoLog("Player location: " + player.getLongitude() + ", " + player.getLatitude());
 			if(myTeam.equals(player.getTeam())) {
 				PointVector location = new PointVector(player.getLongitude(), player.getLatitude());
@@ -254,6 +260,14 @@ public class MapView extends NavigationView implements PositionCallback {
 			}
 		}
 		
+		TouchKitWindow window = (TouchKitWindow) getWindow();
+		float windowWidth = window.getWidth();
+		float windowHeight = window.getHeight();
+		
+		Bounds bounds= openLayersMap.getExtend();
+		double longitudeDifference = bounds.getMaxLon() - bounds.getMinLon();
+		double latitudeDifference = bounds.getMaxLat() - bounds.getMinLat();
+		
 		dominationPointLocationVector_red.removeAllComponents();
 		dominationPointLocationVector_blue.removeAllComponents();
 		dominationPointLocationVector_neutral.removeAllComponents();
@@ -263,7 +277,16 @@ public class MapView extends NavigationView implements PositionCallback {
 			PointVector pointLocation = new PointVector(dominationPoint.getLongitude(), dominationPoint.getLatitude());
 			PointVector areaLocation = new PointVector(dominationPoint.getLongitude(), dominationPoint.getLatitude());
 
-			// 50 has to be replaced with radius
+			// size of the area graphic is been calculated by converting the location and the radius into pixels with the help of the window size
+			double latitudeOffset = getLatitudeDistance(dominationPoint.getLongitude(), dominationPoint.getLatitude(), 2 * dominationPoint.getRadius());
+			double longitudeOffset = getLongitudeDistance(dominationPoint.getLongitude(), dominationPoint.getLatitude(), 2 * dominationPoint.getRadius());
+			//System.out.println("Distance: " + dominationPoint.getDistance(dominationPoint.getLongitude() + longitudeOffset, dominationPoint.getLatitude()+ latitudeOffset));
+			//System.out.println("window height: " + windowHeight + ", lat Dif: " + latitudeDifference + ", lat offset: " + latitudeOffset);
+			int graphicHeight = (int )(windowHeight / (latitudeDifference * latitudeOffset));
+			int graphicWidth = (int) (windowWidth / (longitudeDifference * longitudeOffset));
+			//System.out.println("Graphic Height: " + graphicHeight + ", Graphic Width: " + graphicWidth);
+			
+			// TODO 50 has to be replaced
 			StyleMap areaStyle = createStyleMap(50, 50, ApplicationConfiguration.DOMINATION_POINT_AREA);
 			VectorLayer areaVector = new VectorLayer();
 			areaVector.setStyleMap(areaStyle);
@@ -305,6 +328,125 @@ public class MapView extends NavigationView implements PositionCallback {
 			openLayersMap.addLayer(playerBlueLocationVector);
 		if(myLocationRingVector.getParent() == null)
 			openLayersMap.addLayer(myLocationRingVector);
+		
+		((TouchKitWindow) getWindow()).detectCurrentPosition(this);
+	}
+	
+	/**
+	 * Calculates the longitude of a point moved by the given meters in longitude direction.
+	 * This is only an approximation.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new longitude
+	 */
+	private double getLongitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / (earthRadius * Math.cos(Math.PI * latitude / 180));
+		double result = longitude + (offset * 180/Math.PI);
+		*/
+		final double factor = 1 / (111.111 * Math.cos(latitude));
+		double result = factor * meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
+	}
+	
+	/**
+	 * Calculates the latitude of a point moved by the given meters in latitude direction.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new latitude
+	 */
+	private double getLatitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / earthRadius;
+		double result = latitude + offset * 180 / Math.PI;
+		*/
+		final double factor = 1 / 111.111;
+		double result = factor* meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
+	}
+	
+	/**
+	 * Calculates the longitude of a point moved by the given meters in longitude direction.
+	 * This is only an approximation.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new longitude
+	 */
+	private double getLongitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / (earthRadius * Math.cos(Math.PI * latitude / 180));
+		double result = longitude + (offset * 180/Math.PI);
+		*/
+		final double factor = 1 / (111.111 * Math.cos(latitude));
+		double result = factor * meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
+	}
+	
+	/**
+	 * Calculates the latitude of a point moved by the given meters in latitude direction.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new latitude
+	 */
+	private double getLatitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / earthRadius;
+		double result = latitude + offset * 180 / Math.PI;
+		*/
+		final double factor = 1 / 111.111;
+		double result = factor* meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
+	}
+	
+	/**
+	 * Calculates the longitude of a point moved by the given meters in longitude direction.
+	 * This is only an approximation.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new longitude
+	 */
+	private double getLongitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / (earthRadius * Math.cos(Math.PI * latitude / 180));
+		double result = longitude + (offset * 180/Math.PI);
+		*/
+		final double factor = 1 / (111.111 * Math.cos(latitude));
+		double result = factor * meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
+	}
+	
+	/**
+	 * Calculates the latitude of a point moved by the given meters in latitude direction.
+	 * @param longitude the longitude of the base location
+	 * @param latitude the latitude of the base location
+	 * @param meters the distance
+	 * @return the new latitude
+	 */
+	private double getLatitudeDistance(double longitude, double latitude, double meters) {
+		/*final int earthRadius = 6378137;
+		double offset = meters / earthRadius;
+		double result = latitude + offset * 180 / Math.PI;
+		*/
+		final double factor = 1 / 111.111;
+		double result = factor* meters;
+		result = result * Math.PI/ 180;
+		
+		return result;
 	}
 	
 	/**
@@ -312,10 +454,8 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * @param position the location, which got determined
 	 */
 	public void onSuccess(Position position) {
-		MyVaadinApplication touchKitApplication = (MyVaadinApplication) MyVaadinApplication
-				.get();
-		touchKitApplication.setCurrentLatitude(position.getLatitude());
-		touchKitApplication.setCurrentLongitude(position.getLongitude());
+		IPlayer player = (IPlayer) MyVaadinApplication.getApp().getUser();
+		player.setGeoCoordinates(position.getLongitude(), position.getLatitude());
 	}
 
 	/**

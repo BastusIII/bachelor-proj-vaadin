@@ -1,5 +1,11 @@
 package edu.hm.webtech.domination.manager.session;
 
+import com.vaadin.addon.touchkit.ui.TouchKitApplication;
+import com.vaadin.server.AbstractCommunicationManager;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.LoginForm.LoginEvent;
 import com.vaadin.ui.LoginForm.LoginListener;
 
@@ -9,7 +15,9 @@ import edu.hm.webtech.domination.manager.lobby.ILobbyManager;
 import edu.hm.webtech.domination.manager.lobby.LobbyManager;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.Player;
+import edu.hm.webtech.domination.ui.view.LobbyView;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,15 +49,19 @@ public class SessionManager implements ISessionManager, LoginListener {
 	}
 	
 	@Override
-	public void createAndRegisterPlayer(String identifier) {
+	public boolean createAndRegisterPlayer(String identifier) {
 		try {
 			Player player = new Player(0, 0, identifier);
 			addPlayer(player);
-			MyVaadinApplication.getApp().getMainWindow().getApplication().setUser(player);
+			MyVaadinApplication.getApp().setUser(player);
+			System.out.println("DEBUG-----------------------------------------");
+			//MyVaadinApplication.getApp().getMainWindow().getApplication().setUser(player);
 			// TODO Create? and open Lobby View 
+			return true;
 		} catch (ModelException me) {
 			System.out.println(me.getMessage());
 		}		
+		return false;
 	}
 
 	/**
@@ -59,7 +71,13 @@ public class SessionManager implements ISessionManager, LoginListener {
 	 */
 	@Override
 	public void onLogin(LoginEvent event) {
-		createAndRegisterPlayer(event.getLoginParameter("username"));
+		if(createAndRegisterPlayer(event.getLoginParameter("username"))){
+			System.out.println("Create User "+event.getLoginParameter("username")+" Successful");
+			MyVaadinApplication.getApp().getMainWindow().setContent(new LobbyView("Game Lobby"));
+		}
+		else{
+			//Show that username is already in use
+		}
 	}
 
 

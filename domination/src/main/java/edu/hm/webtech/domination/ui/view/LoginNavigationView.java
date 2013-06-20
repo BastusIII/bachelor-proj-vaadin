@@ -8,6 +8,8 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.LoginForm;
+import com.vaadin.ui.Panel;
+
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.session.SessionManager;
 
@@ -44,16 +46,9 @@ public class LoginNavigationView extends AbstractNavigationView {
 
         VerticalComponentGroup componentGroup = new VerticalComponentGroup("Character");
         componentGroup.addComponent(welcomeLabel);
-        // Generate 6 players. Easier to test in the beginning. May be replaced with login mechanism later.
-        for (int i = 1; i <= 6; i++) {
-            Button playerButton = new Button("Player" + i);
-            playerButton.addListener(getClickListener());
-            componentGroup.addComponent(playerButton);
-        }
-
-
         //this.mainTabView = new MainTabView();
 
+        
         // Create the form
         LoginForm login = new LoginForm();
         login.setSizeFull();

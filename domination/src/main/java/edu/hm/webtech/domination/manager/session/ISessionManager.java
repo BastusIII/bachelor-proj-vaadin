@@ -19,7 +19,7 @@ public interface ISessionManager {
 	 * @param identifier
 	 *            uniquely identifying the new {@link IPlayer}.
 	 */
-	public void createAndRegisterPlayer(String identifier);
+	public boolean createAndRegisterPlayer(String identifier);
 
     /**
      * Adds a new Player to the list of known players

@@ -24,11 +24,9 @@ public class MyVaadinApplication extends TouchKitApplication {
 	 */
 	private AbstractNavigationView loginNaviView;
 	
-	private static ISessionManager sm;
-	private static ILobbyManager lm;
+	private static final ILobbyManager lm = new LobbyManager();
+	private static final ISessionManager sm = new SessionManager(lm);
 
-	private double currentLatitude;
-	private double currentLongitude;
 	
 	/**
 	 * @author Daniel Briebeck
@@ -39,7 +37,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 	}
 
 	/**
-	 * @author Daniel Briebeck
+	 * @author Daniel Briebeck!
 	 * @return the LobbyManager
 	 */
 	public static ILobbyManager getLm() {
@@ -49,10 +47,8 @@ public class MyVaadinApplication extends TouchKitApplication {
 	@Override
 	public void init() {
 		super.init();
-		this.lm = new LobbyManager();
-		this.sm = new SessionManager(lm);
-		//this.loginNaviView = new LoginNavigationView("Login");
-        this.loginNaviView = new LobbyView("Game Lobby");
+		this.loginNaviView = new LoginNavigationView("Login");
+        //this.loginNaviView = new LobbyView("Game Lobby");
 		setTheme("domination");
 		getMainWindow().setContent(loginNaviView);
 	}
@@ -60,22 +56,6 @@ public class MyVaadinApplication extends TouchKitApplication {
 	@Override
 	public void onBrowserDetailsReady() {
 		getMainWindow().setContent(loginNaviView);
-	}
-	
-	public double getCurrentLongitude() {
-		return this.currentLongitude;
-	}
-
-	public double getCurrentLatitude() {
-		return this.currentLatitude;
-	}
-	
-	public void setCurrentLongitude(double currentLongitude) {
-		this.currentLongitude = currentLongitude;
-	}
-	
-	public void setCurrentLatitude(double currentLatitude) {
-		this.currentLatitude = currentLatitude;
 	}
 	
 	public static MyVaadinApplication getApp(){

@@ -12,7 +12,7 @@ import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.GameConfiguration;
 import edu.hm.webtech.domination.model.GameType;
 import edu.hm.webtech.domination.model.IGameConfiguration;
-import edu.hm.webtech.domination.model.Player;
+import edu.hm.webtech.domination.model.IPlayer;
 
 /**
  * Die Lobby View kommt nach dem erfolgreichen Login eines Spielers.<br />
@@ -50,7 +50,7 @@ public class LobbyView extends AbstractNavigationView {
             public void buttonClick(final NavigationButton.ClickEvent event) {
                 // TODO: Sebastian Stumpf -> CreateCustomGame Vie mit personalisierten parametern (Center, dps, maxGameScore etc)
             	// TODO: Requirement implemented. Now it's your turn. ;)
-                IGameConfiguration gameConfiguration = new GameConfiguration(-1,-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY);
+                IGameConfiguration gameConfiguration = new GameConfiguration(-1,-1,-1,-1,-1,(IPlayer)MyVaadinApplication.getApp().getUser(), GameType.HM_BACKYARD_DUMMY);
                 IGameManager gameManager = MyVaadinApplication.getLm().createGame(gameConfiguration);
                 gamesContainer.addComponent(buildGameContainer(gameManager, "Game" + MyVaadinApplication.getLm().getGames().size()));
                 noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
@@ -63,7 +63,7 @@ public class LobbyView extends AbstractNavigationView {
         this.gamesContainer.addComponent(this.noGamesAvailable);
         this.base.addComponent(createGameWrapper);
         int gameCounter = 0;
-        for (IGameManager gameManager : MyVaadinApplication.getLm().getGames()) {
+		for (IGameManager gameManager : MyVaadinApplication.getApp().getLm().getGames()) {
             Component gameTab = buildGameContainer(gameManager, "Game " + ++gameCounter);
             this.gamesContainer.addComponent(gameTab);
         }

@@ -271,7 +271,7 @@ public class GameManagerImpl implements IGameManager {
 			while (winnerTeam == null) {
 				synchronized (game) {
 					dominationManager.updateCapturing(game);
-					scoreManager.checkForWinner(game);
+					winnerTeam = scoreManager.checkForWinner(game);
 				}
 				try {
 					Thread.sleep(TICK_DELAY);
