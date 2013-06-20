@@ -63,7 +63,7 @@ public class LobbyView extends AbstractNavigationView {
         this.gamesContainer.addComponent(this.noGamesAvailable);
         this.base.addComponent(createGameWrapper);
         int gameCounter = 0;
-		for (IGameManager gameManager : MyVaadinApplication.getApp().getLm().getGames()) {
+		for (IGameManager gameManager : MyVaadinApplication.getLm().getGames()) {
             Component gameTab = buildGameContainer(gameManager, "Game " + ++gameCounter);
             this.gamesContainer.addComponent(gameTab);
         }

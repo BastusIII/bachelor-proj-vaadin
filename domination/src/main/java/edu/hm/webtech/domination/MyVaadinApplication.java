@@ -41,6 +41,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 	 * @return the LobbyManager
 	 */
 	public static ILobbyManager getLm() {
+		System.out.println("Open Games: "+lm.getGames().size());
 		return lm;
 	}
 
