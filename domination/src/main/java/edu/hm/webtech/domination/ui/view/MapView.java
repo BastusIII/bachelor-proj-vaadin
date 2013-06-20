@@ -68,6 +68,10 @@ public class MapView extends NavigationView implements PositionCallback {
 	 */
 	private Refresher refresher;
 	/**
+	 * The user of the application.
+	 */
+	private IPlayer user;
+	/**
 	 * The OpenStreetMap
 	 */
 	private OpenLayersMap openLayersMap;
@@ -229,21 +233,17 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Updates the map by drawing the icons to the new position of the elements.
 	 */
 	private void updateLocations() {
+		((TouchKitWindow) getWindow()).detectCurrentPosition(this);
 		//Update the vectors
 		myLocationRingVector.removeAllComponents();
-		//TODO Takes always the owner of the game for testing reasons. Has to be removed at the time the user can be identified.
-		IPlayer dummy = game.getOwner();
-		PointVector myRing = new PointVector(dummy.getLongitude(), dummy.getLatitude());
+		PointVector myRing = new PointVector(user.getLongitude(), user.getLatitude());
 		myLocationRingVector.addVector(myRing);
-		// TODO end
 		
 		playerBlueLocationVector.removeAllComponents();
 		playerRedLocationVector.removeAllComponents();
-		// TODO Takes always the team of the owner for testing reasons. Has to be removed at the time the user can be identified. 
-		//ITeam myTeam = me.getTeam();
-		ITeam myTeam = dummy.getTeam();
+
+		ITeam myTeam = user.getTeam();
 		for(IPlayer player: game.getPlayers()) {
-			//logger.infoLog("Player location: " + player.getLongitude() + ", " + player.getLatitude());
 			if(myTeam.equals(player.getTeam())) {
 				PointVector location = new PointVector(player.getLongitude(), player.getLatitude());
 				switch(myTeam.getTeamIdentifier()) {
@@ -328,8 +328,6 @@ public class MapView extends NavigationView implements PositionCallback {
 			openLayersMap.addLayer(playerBlueLocationVector);
 		if(myLocationRingVector.getParent() == null)
 			openLayersMap.addLayer(myLocationRingVector);
-		
-		((TouchKitWindow) getWindow()).detectCurrentPosition(this);
 	}
 
 	
@@ -379,6 +377,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	public void onSuccess(Position position) {
 		IPlayer player = (IPlayer) MyVaadinApplication.getApp().getUser();
 		player.setGeoCoordinates(position.getLongitude(), position.getLatitude());
+		this.user = player;
 	}
 
 	/**
