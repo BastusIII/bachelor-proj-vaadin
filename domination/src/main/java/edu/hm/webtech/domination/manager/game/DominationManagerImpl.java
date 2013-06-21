@@ -50,8 +50,16 @@ public class DominationManagerImpl implements IDominationManager {
 	 */
 	public static final int OVER_OWNING_THRESHOLD = 30;
 
-	@Override
-	public void updateCapturing(IGame game) {
+	/**
+	 * Uses given {@link IGame} object in order to calculate the capturing
+	 * progresses on the {@link IDominationPoint}s in relation to team players
+	 * in reach of said point.
+	 * 
+	 * @param game
+	 *            {@link IGame} object which will provide the model of
+	 *            consideration.
+	 */
+	protected void updateCapturing(IGame game) {
 		if (game == null) {
 			throw new IllegalArgumentException("Game may not be null");
 		}
@@ -80,11 +88,6 @@ public class DominationManagerImpl implements IDominationManager {
 			 * players in the reach of the domination point.
 			 */
 			if (currentCapturingTeam != null) {
-				/*
-				 * This flag insures that players and team don't get any points
-				 * for over over owning the domination point!
-				 */
-				boolean overOverOwning = false;
 				/*
 				 * First, check if there is a owning team in order to calculate
 				 * the capture progress.
@@ -128,8 +131,6 @@ public class DominationManagerImpl implements IDominationManager {
 								+ OVER_OWNING_THRESHOLD) {
 							dominationPoint
 									.addCaptureProgress(CAPTURE_PROGRESS_INCREMENT);
-						} else {
-							overOverOwning = true;
 						}
 					}
 				}
@@ -205,32 +206,6 @@ public class DominationManagerImpl implements IDominationManager {
 						 * already reached...
 						 */
 					}
-				}
-
-				/*
-				 * While team is not over over owning, give them the score they
-				 * earned!
-				 */
-				if (!overOverOwning) {
-					/*
-					 * Now add the scores for capturing team and its directly
-					 * involved players.
-					 */
-					for (IPlayer player : playersInReach) {
-						if (player.getTeam().equals(currentCapturingTeam)) {
-							player.addScore(CAPTURE_PROGRESS_INCREMENT);
-							logger.infoLog("Player '" + player.getIdentifier()
-									+ "' from team '"
-									+ currentCapturingTeam.getTeamIdentifier()
-									+ "' increased score by '"
-									+ CAPTURE_PROGRESS_INCREMENT + "'!");
-						}
-					}
-					currentCapturingTeam.addScore(CAPTURE_PROGRESS_INCREMENT);
-					logger.infoLog("Team '"
-							+ currentCapturingTeam.getTeamIdentifier()
-							+ "' increased score by '"
-							+ CAPTURE_PROGRESS_INCREMENT + "'!");
 				}
 			}
 		}
@@ -320,5 +295,10 @@ public class DominationManagerImpl implements IDominationManager {
 		}
 
 		return currentCapturingTeam;
+	}
+
+	@Override
+	public void tick(IGame game) {
+		updateCapturing(game);
 	}
 }
