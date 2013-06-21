@@ -52,4 +52,13 @@ public enum TeamIdentifier {
     public String toString() {
         return this.name;
     }
+
+    /**
+     * Get css class for a team colored background..
+     * @return The css class name.
+     */
+    public String getBgStyleClass() {
+        return "team-" + this.toString() + "-bg";
+    }
+
 }
