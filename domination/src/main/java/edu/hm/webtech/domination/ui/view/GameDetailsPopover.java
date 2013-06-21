@@ -27,10 +27,9 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
     /**
      * Konstruktor.
      *
-     * @param parent      Benötigt das aufrufende Window, um in diesem den Content ändern zu können.
      * @param gameManager Der Game Manager aus dem Die verwendeten Spielinfos kommen.
      */
-    public GameDetailsPopover(final Window parent, final IGameManager gameManager) {
+    public GameDetailsPopover(final IGameManager gameManager) {
 
         this.currentPlayer = (IPlayer)MyVaadinApplication.getApp().getUser();
         this.gameManager = gameManager;
@@ -45,7 +44,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
             @Override
             public void buttonClick(final Button.ClickEvent event) {
                 gameManager.joinGame(currentPlayer);
-                parent.setContent(new MainTabView(gameManager));
+                getParent().setContent(new MainTabView(gameManager));
                 close();
             }
         });
@@ -95,7 +94,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
                 sb.append(player.getIdentifier() + " | ");
             }
         }
-        sb.delete(sb.length() - 3, sb.length() - 1);
+        if(sb.length() >=3) sb.delete(sb.length() - 3, sb.length() - 1);
         Label players = new Label("<u>Players</u>: " + sb.toString(), Label.CONTENT_XHTML);
 
         content.addComponent(name);

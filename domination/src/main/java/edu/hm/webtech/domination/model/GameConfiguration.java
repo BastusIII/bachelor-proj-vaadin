@@ -51,7 +51,7 @@ public class GameConfiguration implements IGameConfiguration {
 
     /**
      * Constructor, setting all game config options at once.<br />
-     * If numbers are set to -1 or gameType is null the default value will be taken.
+     * If numbers are set <= 0 or gameType is null the default value will be taken.
      *
      *
      * @param scoreLimit               Score limit which a team needs to hit in order to win!
@@ -67,11 +67,11 @@ public class GameConfiguration implements IGameConfiguration {
             throw new IllegalArgumentException("Owner and identifier must not be null.");
         }
 
-        this.scoreLimit = scoreLimit != -1 ? scoreLimit : SCORE_LIMIT_DEFAULT;
-        this.zoomFactor = zoomFactor != -1 ? zoomFactor : ZOOM_FACTOR_DEFAULT;
-        this.numberOfTeams = numberOfTeams != -1 ? numberOfTeams : NUMBER_OF_TEAMS_DEFAULT;
-        this.maxPlayersPerTeam = maxPlayersPerTeam != -1 ? maxPlayersPerTeam : MAX_PLAYERS_PER_TEAM_DEFAULT;
-        this.numberOfDominationPoints = numberOfDominationPoints != -1 ? numberOfDominationPoints : NUMBER_OF_DOMINATION_POINTS;
+        this.scoreLimit = scoreLimit <= 0 ? scoreLimit : SCORE_LIMIT_DEFAULT;
+        this.zoomFactor = zoomFactor <= 0 ? zoomFactor : ZOOM_FACTOR_DEFAULT;
+        this.numberOfTeams = numberOfTeams <= 0 ? numberOfTeams : NUMBER_OF_TEAMS_DEFAULT;
+        this.maxPlayersPerTeam = maxPlayersPerTeam <= 0 ? maxPlayersPerTeam : MAX_PLAYERS_PER_TEAM_DEFAULT;
+        this.numberOfDominationPoints = numberOfDominationPoints <= 0 ? numberOfDominationPoints : NUMBER_OF_DOMINATION_POINTS;
         this.owner = owner;
         this.gameType = gameType != null ? gameType : GAME_TYPE_DEFAULT;
         this.identifier = identifier;

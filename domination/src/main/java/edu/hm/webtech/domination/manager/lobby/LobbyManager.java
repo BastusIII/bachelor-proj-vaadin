@@ -2,6 +2,7 @@ package edu.hm.webtech.domination.manager.lobby;
 
 import java.util.*;
 
+import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.manager.game.GameManagerImpl;
 import edu.hm.webtech.domination.manager.game.IGameManager;
@@ -36,9 +37,13 @@ public class LobbyManager implements ILobbyManager {
 	}
 
     @Override
-    synchronized public void removeGame(IGameManager gameManager) {
-        gameManagers.remove(gameManager);
-        createdGames.remove(gameManager.getGame().getName());
+    synchronized public boolean removeGame(IGameManager gameManager) {
+        if(gameManager.getGame().getPlayers().isEmpty()) {
+            gameManagers.remove(gameManager);
+            createdGames.remove(gameManager.getGame().getName());
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -26,10 +26,11 @@ public interface ILobbyManager {
 	public IGameManager createGame(final IGameConfiguration gameConfiguration);
 
     /**
-     * Removes a game manager from the lobby.
+     * Removes a game manager from the lobby. Only games with no players can be deleted.
      * @param gameManager The game to remove.
+*                    @return true if the game was sucessfully removed
      */
-    public void removeGame(final IGameManager gameManager);
+    public boolean removeGame(final IGameManager gameManager);
 
 	/**
 	 * @return {@link Collection} containing all {@link IGameManager}s which are
