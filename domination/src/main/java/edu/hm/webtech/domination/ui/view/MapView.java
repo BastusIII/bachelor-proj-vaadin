@@ -58,7 +58,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	/**
 	 * Containing all the important informations about the game.
 	 */
-	private IGame game;
+	private IGameManager gameManager;
 	
 	/**
 	 * Needed for locking the screen.
@@ -91,7 +91,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * automatic screen updating.  
 	 */
 	public MapView(IGameManager gameManager) {
-		game = gameManager.getGame();
+		this.gameManager = gameManager;
 		refresher = new Refresher();
 		refresher.setRefreshInterval(500);
 		generateStyleMaps();
@@ -195,7 +195,7 @@ public class MapView extends NavigationView implements PositionCallback {
 		openLayersMap.setImmediate(true);
 		openLayersMap.addLayer(new OpenStreetMapLayer());
 		openLayersMap.setSizeFull();
-		openLayersMap.setZoom(game.getMap().getZoomFactor());
+		openLayersMap.setZoom(gameManager.getGame().getMap().getZoomFactor());
 	}
 
 	/**
@@ -234,6 +234,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Updates the map by drawing the icons to the new position of the elements.
 	 */
 	private void updateLocations() {
+		IGame game = this.gameManager.getGame();
 		((TouchKitWindow) getWindow()).detectCurrentPosition(this);
 		//Update the vectors
 		myLocationRingVector.removeAllComponents();
@@ -388,6 +389,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Forces the map to show the center of the game.
 	 */
 	private void setCenter() {
+		IGame game = this.gameManager.getGame();
 		if (openLayersMap != null) {
 			openLayersMap.setCenter(game.getMap().getLongitude(), game.getMap().getLatitude());
 
