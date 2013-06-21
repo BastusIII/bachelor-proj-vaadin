@@ -190,9 +190,6 @@ public class GameManagerImpl implements IGameManager {
 		}
 
 		synchronized (game) {
-			// TODO Could be problematic with synchronization. (e.g. new player joined)
-			// TODO: UPDATE: Did not return the copy, because the ui doesn't get all informations then.
-			//return game;
 			return new Game(game);
 		}
 	}
