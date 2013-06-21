@@ -61,11 +61,11 @@ public class LobbyView extends AbstractNavigationView {
         createGame.addListener(new NavigationButton.ClickListener() {
             @Override
             public void buttonClick(final NavigationButton.ClickEvent event) {
-                // TODO: Sebastian Stumpf -> CreateCustomGame Vie mit personalisierten parametern (Center, dps, maxGameScore etc)
+                // TODO: Sebastian Stumpf -> CreateCustomGame View mit personalisierten parametern (Center, dps, maxGameScore etc)
             	// TODO: Requirement implemented. Now it's your turn. ;)
-                IGameConfiguration gameConfiguration = new GameConfiguration(-1,-1,-1,-1,-1,(IPlayer)MyVaadinApplication.getApp().getUser(), GameType.HM_BACKYARD_DUMMY);
+                IGameConfiguration gameConfiguration = new GameConfiguration(-1,-1,-1,-1,-1,(IPlayer)MyVaadinApplication.getApp().getUser(), GameType.HM_BACKYARD_DUMMY, "Game " + MyVaadinApplication.getLm().getMaxGameCounter());
                 IGameManager gameManager = MyVaadinApplication.getLm().createGame(gameConfiguration);
-                gamesContainer.addComponent(buildGameContainer(gameManager, "Game" + MyVaadinApplication.getLm().getGames().size()));
+                gamesContainer.addComponent(buildGameContainer(gameManager));
                 noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
             }
         });
@@ -75,9 +75,8 @@ public class LobbyView extends AbstractNavigationView {
         this.base.addComponent(this.gamesContainer);
         this.gamesContainer.addComponent(this.noGamesAvailable);
         this.base.addComponent(createGameWrapper);
-        int gameCounter = 0;
 		for (IGameManager gameManager : MyVaadinApplication.getLm().getGames()) {
-            Component gameTab = buildGameContainer(gameManager, "Game " + ++gameCounter);
+            Component gameTab = buildGameContainer(gameManager);
             this.gamesContainer.addComponent(gameTab);
         }
 
@@ -88,17 +87,16 @@ public class LobbyView extends AbstractNavigationView {
      * Hilfsmethode, die Spielreihe baut.
      *
      * @param gameManager Der Game Manager.
-     * @param name        Name des Spiels.
      * @return Die gebaute Component.
      */
-    private Component buildGameContainer(final IGameManager gameManager, final String name) {
+    private Component buildGameContainer(final IGameManager gameManager) {
         HorizontalComponentGroup gameContainer = new HorizontalComponentGroup();
-        Button nameButton = new Button(name);
+        Button nameButton = new Button(gameManager.getGame().getName());
         Button detailsButton = new Button("Show Details");
         detailsButton.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
-                GameDetailsPopover gameDetailsPopover = new GameDetailsPopover(getWindow(), gameManager, name);
+                GameDetailsPopover gameDetailsPopover = new GameDetailsPopover(getWindow(), gameManager);
                 gameDetailsPopover.showRelativeTo(getNavigationBar());
             }
         });

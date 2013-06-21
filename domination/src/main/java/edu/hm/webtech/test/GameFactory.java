@@ -48,7 +48,7 @@ public class GameFactory {
                 players[4] = new Player(11.556300, 48.153790, "Player Five", teamBlue);
                 players[5] = new Player(11.556711, 48.153617, "Player Six", teamBlue);
 
-                game = new Game(new GameConfiguration(250,18,2,players.length / 2,dominationPoints.length,players[0],null));
+                game = new Game(new GameConfiguration(250,18,2,players.length / 2,dominationPoints.length,players[0],null,gameConfiguration.getName()));
                 game.setMap(new Map(11.556062, 48.153991, 18));
                 
                 dominationPoints[0].setOwnerTeam(teamRed);

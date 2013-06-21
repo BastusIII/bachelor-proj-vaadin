@@ -29,9 +29,8 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
      *
      * @param parent      Benötigt das aufrufende Window, um in diesem den Content ändern zu können.
      * @param gameManager Der Game Manager aus dem Die verwendeten Spielinfos kommen.
-     * @param name        Name des Spiels.
      */
-    public GameDetailsPopover(final Window parent, final IGameManager gameManager, final String name) {
+    public GameDetailsPopover(final Window parent, final IGameManager gameManager) {
         /* TODO: Sebastian Stumpf -> Set User to Current user set in App / REQUIREMENT: Login Manager implemented
          * Current Workaround: Set dummy user manually
         this.currentPlayer = (IPlayer) MyVaadinApplication.getApp().getMainWindow().getApplication().getUser();
@@ -65,7 +64,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
 
         // Decorate with navigation view
         NavigationView navigationViewWrapper = new NavigationView(content);
-        navigationViewWrapper.setCaption("Details of " + name);
+        navigationViewWrapper.setCaption("Details of " + gameManager.getGame().getName());
         setContent(navigationViewWrapper);
 
         // Have a close button

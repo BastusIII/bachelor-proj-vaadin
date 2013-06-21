@@ -174,4 +174,9 @@ public class Game implements IGame {
     public Collection<IDominationPoint> getDominationPoints() {
         return this.dominationPoints;
     }
+
+    @Override
+    public String getName() {
+        return this.config.getName();
+    }
 }

@@ -1,11 +1,19 @@
 package edu.hm.webtech.domination.ui.view;
 
+import java.lang.ProcessBuilder.Redirect;
+
+import com.vaadin.addon.touchkit.service.Position;
+import com.vaadin.addon.touchkit.service.PositionCallback;
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.LoginForm;
 import com.vaadin.ui.Panel;
@@ -19,7 +27,7 @@ import edu.hm.webtech.domination.manager.session.SessionManager;
  * @author Marco Wolff, Daniel Brielbeck
  */
 @SuppressWarnings("serial")
-public class LoginNavigationView extends AbstractNavigationView {
+public class LoginNavigationView extends AbstractNavigationView implements PositionCallback {
 
     private MainTabView mainTabView;
 
@@ -35,6 +43,9 @@ public class LoginNavigationView extends AbstractNavigationView {
 
     @Override
     protected Component initializeComponent() {
+    	
+		MyVaadinApplication.getApp().getMainWindow().detectCurrentPosition(this);
+    	
         //VerticalComponentGroup vertCompGroup = new VerticalComponentGroup();
 
 		/*Label welcomeLabel = new Label(
@@ -75,6 +86,16 @@ public class LoginNavigationView extends AbstractNavigationView {
 		vertCompGroup.addComponent(loginButton);*/
 
         return componentGroup;
+    }
+    
+    @Override
+	public void onSuccess(Position position) {
+		//do nothing
+    }
+
+    @Override
+    public void onFailure(int errorCode) {
+    	getWindow().showNotification("Error", "Allow location tracking to play domination!", 2);
     }
 
     private ClickListener getClickListener() {

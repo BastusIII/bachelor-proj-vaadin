@@ -44,4 +44,9 @@ public interface IGameConfiguration {
      * @return the type of the game.
      */
     GameType getGameType();
+
+    /**
+     * @return the identifier of the game.
+     */
+    String getName();
 }
