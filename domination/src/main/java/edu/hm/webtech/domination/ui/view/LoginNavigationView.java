@@ -125,7 +125,7 @@ public class LoginNavigationView extends AbstractNavigationView implements Posit
     
     @Override
 	public void onSuccess(Position position) {
-    	logger.errorLog("Success! GPS tracking activated!");
+    	// do nothing
     }
 
     @Override
