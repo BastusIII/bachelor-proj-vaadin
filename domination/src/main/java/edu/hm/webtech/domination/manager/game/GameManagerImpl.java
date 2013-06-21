@@ -173,15 +173,12 @@ public class GameManagerImpl implements IGameManager {
 				if (currentPlayer.getIdentifier()
 						.equals(player.getIdentifier())) {
 					currentPlayer.setTeam(team);
+					logger.infoLog("Player '" + player.getIdentifier()
+							+ "' successfully changed to team '"
+							+ team.getTeamIdentifier() + "'!");
 					break;
 				}
-				logger.errorLog("Player '" + player.getIdentifier()
-						+ "' couldn't change to team '"
-						+ team.getTeamIdentifier() + "'!");
 			}
-			logger.infoLog("Player '" + player.getIdentifier()
-					+ "' successfully changed to team '"
-					+ team.getTeamIdentifier() + "'!");
 		}
 	}
 
@@ -193,10 +190,7 @@ public class GameManagerImpl implements IGameManager {
 		}
 
 		synchronized (game) {
-			// TODO Could be problematic with synchronization. (e.g. new player joined)
-			// TODO: UPDATE: Did not return the copy, because the ui doesn't get all informations then.
-			return game;
-			//return new Game(game);
+			return new Game(game);
 		}
 	}
 

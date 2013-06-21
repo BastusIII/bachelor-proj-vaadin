@@ -74,6 +74,7 @@ public class DominationPoint extends LocationObject implements IDominationPoint 
 			throw new IllegalArgumentException(
 					"Domination point may not be null!");
 		}
+		setGeoCoordinates(dominationPoint.getLongitude(), dominationPoint.getLatitude());
 		this.radius = dominationPoint.getRadius();
 		this.progress = dominationPoint.getCaptureProgress();
 		// It is possible that a domination point is a 'virgin', meaning it has
