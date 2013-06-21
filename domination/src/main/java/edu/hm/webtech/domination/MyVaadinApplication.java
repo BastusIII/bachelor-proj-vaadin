@@ -25,7 +25,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 	private AbstractNavigationView loginNaviView;
 	
 	private static final ILobbyManager lm = new LobbyManager();
-	private static final ISessionManager sm = new SessionManager(lm);
+	private static final ISessionManager sm = new SessionManager();
 
 	
 	/**

@@ -31,10 +31,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
      * @param gameManager Der Game Manager aus dem Die verwendeten Spielinfos kommen.
      */
     public GameDetailsPopover(final Window parent, final IGameManager gameManager) {
-        /* TODO: Sebastian Stumpf -> Set User to Current user set in App / REQUIREMENT: Login Manager implemented
-         * Current Workaround: Set dummy user manually
-        this.currentPlayer = (IPlayer) MyVaadinApplication.getApp().getMainWindow().getApplication().getUser();
-         */
+
         this.currentPlayer = (IPlayer)MyVaadinApplication.getApp().getUser();
         this.gameManager = gameManager;
         setStyleName("domination");

@@ -8,8 +8,6 @@ package edu.hm.webtech.domination.model;
  */
 public interface IGameConfiguration {
 
-    // TODO EXPAND ME IF NECESSARY!
-
     /**
      * @return score limit of the game for a {@link ITeam} in order to win!
      */

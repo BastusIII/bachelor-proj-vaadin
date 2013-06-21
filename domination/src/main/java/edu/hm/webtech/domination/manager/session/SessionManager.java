@@ -24,25 +24,12 @@ import java.util.List;
  */
 public class SessionManager implements ISessionManager, LoginListener {
 
-    // TODO: Getter für LobbyManager
-
-	private ILobbyManager lobbyManager;
 
     /**
      * List of all players known to the lobby.
      */
     private List<IPlayer> knownPlayers = new LinkedList<IPlayer>();
 
-	 /** Ctor, intializing this with the given lobbymanager.
-	  *  Lobby manager is needed to add Players to the lobby.
-	  * 
-	  * @param lm
-	  *            LobbyManager of the App
-	  */
-	public SessionManager(ILobbyManager lm){
-		this.lobbyManager = lm;
-	}
-	
 	@Override
 	public boolean createAndRegisterPlayer(String identifier) {
 		try {
@@ -52,7 +39,6 @@ public class SessionManager implements ISessionManager, LoginListener {
 			MyVaadinApplication.getApp().setUser(player);
 			System.out.println("DEBUG-----------------------------------------");
 			//MyVaadinApplication.getApp().getMainWindow().getApplication().setUser(player);
-			// TODO Create? and open Lobby View 
 			return true;
 		} catch (ModelException me) {
 			System.out.println(me.getMessage());

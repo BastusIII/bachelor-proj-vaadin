@@ -79,7 +79,6 @@ public class GameConfiguration implements IGameConfiguration {
 
     /**
      * Copy constructor, deep copying given {@link IGameConfiguration}.
-     * TODO: NOT NEEDED???
      * @param gameConfiguration {@link IGameConfiguration} object that will be copied.
      * @author Marco Wolff, Sebastian Stumpf
      */
