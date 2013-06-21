@@ -27,6 +27,7 @@ import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
+import edu.hm.webtech.domination.model.Player;
 import edu.hm.webtech.domination.model.TeamIdentifier;
 import edu.hm.webtech.domination.util.Logger;
 
@@ -57,7 +58,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	/**
 	 * Containing all the important informations about the game.
 	 */
-	private IGame game;
+	private IGameManager gameManager;
 	
 	/**
 	 * Needed for locking the screen.
@@ -70,7 +71,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	/**
 	 * The user of the application.
 	 */
-	private IPlayer user;
+	private IPlayer user = new Player(0,0,"Dummy");
 	/**
 	 * The OpenStreetMap
 	 */
@@ -90,13 +91,19 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * automatic screen updating.  
 	 */
 	public MapView(IGameManager gameManager) {
-		game = gameManager.getGame();
+		this.gameManager = gameManager;
 		refresher = new Refresher();
 		refresher.setRefreshInterval(500);
 		generateStyleMaps();
 		MyVaadinApplication.get().getMainWindow().detectCurrentPosition(this);
 	}
 
+	@Override
+	public void attach() {
+		buildView();
+		super.attach();
+	}
+	
 	/**
 	 * Generates the icons of the players and domination points.
 	 */
@@ -139,12 +146,6 @@ public class MapView extends NavigationView implements PositionCallback {
 		StyleMap styleMap = new StyleMap(style);
 		styleMap.setExtendDefault(true);
 		return styleMap;
-	}
-	
-	@Override
-	public void attach() {
-		buildView();
-		super.attach();
 	}
 	
 	/**
@@ -194,7 +195,7 @@ public class MapView extends NavigationView implements PositionCallback {
 		openLayersMap.setImmediate(true);
 		openLayersMap.addLayer(new OpenStreetMapLayer());
 		openLayersMap.setSizeFull();
-		openLayersMap.setZoom(game.getMap().getZoomFactor());
+		openLayersMap.setZoom(gameManager.getGame().getMap().getZoomFactor());
 	}
 
 	/**
@@ -233,12 +234,30 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Updates the map by drawing the icons to the new position of the elements.
 	 */
 	private void updateLocations() {
+		IGame game = this.gameManager.getGame();
 		((TouchKitWindow) getWindow()).detectCurrentPosition(this);
-		//Update the vectors
+		
+		updateMyPosition();
+		updatePlayerLocations(game);
+		updateDominationPoints(game);
+		
+		addVectorsToMap();		
+	}
+
+	/**
+	 * Updates the position of the user and sets a ring around his cursor.
+	 */
+	private void updateMyPosition() {
 		myLocationRingVector.removeAllComponents();
 		PointVector myRing = new PointVector(user.getLongitude(), user.getLatitude());
 		myLocationRingVector.addVector(myRing);
-		
+	}
+	
+	/**
+	 * Updates the locations of all users.
+	 * @param game contains the players.
+	 */
+	private void updatePlayerLocations(IGame game) {
 		playerBlueLocationVector.removeAllComponents();
 		playerRedLocationVector.removeAllComponents();
 
@@ -259,7 +278,13 @@ public class MapView extends NavigationView implements PositionCallback {
 				}
 			}
 		}
-		
+	}
+	
+	/**
+	 * Updates the status of all domination points. 
+	 * @param game contains the status of the domination points
+	 */
+	private void updateDominationPoints(IGame game) {
 		TouchKitWindow window = (TouchKitWindow) getWindow();
 		float windowWidth = window.getWidth();
 		float windowHeight = window.getHeight();
@@ -299,6 +324,7 @@ public class MapView extends NavigationView implements PositionCallback {
 			else {
 				TeamIdentifier identifier;
 				identifier = owner.getTeamIdentifier();
+				System.out.println(identifier);
 				switch(identifier) {
 				case RED:
 					dominationPointLocationVector_red.addVector(pointLocation);
@@ -311,7 +337,9 @@ public class MapView extends NavigationView implements PositionCallback {
 				}
 			}
 		}
-		// Add the vectors to the 'openLayersMap'
+	}
+	
+	private void addVectorsToMap() {
 		for(VectorLayer vLayer: areas){
 			if (vLayer.getParent() == null)
 				openLayersMap.addLayer(vLayer);
@@ -329,7 +357,6 @@ public class MapView extends NavigationView implements PositionCallback {
 		if(myLocationRingVector.getParent() == null)
 			openLayersMap.addLayer(myLocationRingVector);
 	}
-
 	
 	/**
 	 * Calculates the longitude of a point moved by the given meters in longitude direction.
@@ -376,7 +403,10 @@ public class MapView extends NavigationView implements PositionCallback {
 	 */
 	public void onSuccess(Position position) {
 		IPlayer player = (IPlayer) MyVaadinApplication.getApp().getUser();
-		player.setGeoCoordinates(position.getLongitude(), position.getLatitude());
+		if(player != null)
+			player.setGeoCoordinates(position.getLongitude(), position.getLatitude());
+		else
+			player = new Player(0,0,"Dummy");
 		this.user = player;
 	}
 
@@ -384,6 +414,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	 * Forces the map to show the center of the game.
 	 */
 	private void setCenter() {
+		IGame game = this.gameManager.getGame();
 		if (openLayersMap != null) {
 			openLayersMap.setCenter(game.getMap().getLongitude(), game.getMap().getLatitude());
 

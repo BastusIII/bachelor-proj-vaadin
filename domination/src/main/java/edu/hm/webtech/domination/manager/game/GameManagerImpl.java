@@ -1,5 +1,6 @@
 package edu.hm.webtech.domination.manager.game;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +8,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import edu.hm.webtech.domination.exception.ModelException;
+import edu.hm.webtech.domination.listener.IGameTickListener;
 import edu.hm.webtech.domination.model.Game;
 import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
+import edu.hm.webtech.domination.model.IGameConfiguration;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
 import edu.hm.webtech.domination.util.Logger;
@@ -48,6 +51,11 @@ public class GameManagerImpl implements IGameManager {
 	 * The winner {@link ITeam} of this game session.
 	 */
 	private ITeam winnerTeam;
+	/**
+	 * {@link List} containing {@link IGameTickListener}s that will be called
+	 * per game tick.
+	 */
+	private List<IGameTickListener> gameTickListeners;
 
 	/**
 	 * Creates a new {@link GameManagerImpl} with given {@link IGame}.
@@ -64,6 +72,9 @@ public class GameManagerImpl implements IGameManager {
 		this.scoreManager = new ScoreManagerImpl();
 		this.dominationManager = new DominationManagerImpl();
 		this.locationManger = new LocationManager();
+		this.gameTickListeners = new ArrayList<IGameTickListener>();
+		this.gameTickListeners.add((IGameTickListener) dominationManager);
+		this.gameTickListeners.add((IGameTickListener) scoreManager);
 	}
 
 	@Override
@@ -173,15 +184,12 @@ public class GameManagerImpl implements IGameManager {
 				if (currentPlayer.getIdentifier()
 						.equals(player.getIdentifier())) {
 					currentPlayer.setTeam(team);
+					logger.infoLog("Player '" + player.getIdentifier()
+							+ "' successfully changed to team '"
+							+ team.getTeamIdentifier() + "'!");
 					break;
 				}
-				logger.errorLog("Player '" + player.getIdentifier()
-						+ "' couldn't change to team '"
-						+ team.getTeamIdentifier() + "'!");
 			}
-			logger.infoLog("Player '" + player.getIdentifier()
-					+ "' successfully changed to team '"
-					+ team.getTeamIdentifier() + "'!");
 		}
 	}
 
@@ -193,10 +201,7 @@ public class GameManagerImpl implements IGameManager {
 		}
 
 		synchronized (game) {
-			// TODO Could be problematic with synchronization. (e.g. new player joined)
-			// TODO: UPDATE: Did not return the copy, because the ui doesn't get all informations then.
-			return game;
-			//return new Game(game);
+			return new Game(game);
 		}
 	}
 
@@ -270,8 +275,21 @@ public class GameManagerImpl implements IGameManager {
 		public void run() {
 			while (winnerTeam == null) {
 				synchronized (game) {
-					dominationManager.updateCapturing(game);
-					winnerTeam = scoreManager.checkForWinner(game);
+					for (IGameTickListener gameTickListener : gameTickListeners) {
+						gameTickListener.tick(game);
+					}
+					/*
+					 * After tick, check if there is a winner yet!
+					 */
+					IGameConfiguration gameConfiguration = game
+							.getGameConfiguration();
+					List<ITeam> teams = (List<ITeam>) game.getTeams();
+					for (ITeam team : teams) {
+						if (team.getScore() >= gameConfiguration
+								.getScoreLimit()) {
+							winnerTeam = team;
+						}
+					}
 				}
 				try {
 					Thread.sleep(TICK_DELAY);

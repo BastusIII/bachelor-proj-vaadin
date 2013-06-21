@@ -28,22 +28,32 @@ public class ChangeTeamSelector extends CustomComponent {
     }
 
     /**
+     * The layout containing the buttons.
+     */
+    private Layout buttonLayout;
+
+    /**
      * Initializes the ScoreBoards layout.
      */
     private void initLayout() {
-        VerticalLayout changeTeamLayout = new VerticalLayout();
+        Layout changeTeamLayout = new VerticalLayout();
         Label caption = new Label("Change to team:");
-        HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout = new HorizontalLayout();
 
-        for (ITeam team: gameManager.getGame().getTeams()) {
-            Button joinTeamButton = new JoinTeamButton((IPlayer) MyVaadinApplication.getApp().getUser(), team);
-            buttonLayout.addComponent(joinTeamButton);
-        }
+        refreshButtons();
 
         changeTeamLayout.addComponent(caption);
         changeTeamLayout.addComponent(buttonLayout);
 
         setCompositionRoot(changeTeamLayout);
+    }
+
+    private void refreshButtons() {
+        buttonLayout.removeAllComponents();
+        for (ITeam team: gameManager.getGame().getTeams()) {
+            Button joinTeamButton = new JoinTeamButton((IPlayer) MyVaadinApplication.getApp().getUser(), team);
+            buttonLayout.addComponent(joinTeamButton);
+        }
     }
 
     /**
@@ -53,12 +63,18 @@ public class ChangeTeamSelector extends CustomComponent {
 
         private JoinTeamButton(final IPlayer player, final ITeam team) {
             super(team.getTeamIdentifier().toString());
+            setStyleName(team.getTeamIdentifier().getBgStyleClass());
             addListener(new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     gameManager.changeTeam(player, team);
+                    refreshButtons();
                 }
             });
+            /* Disable button for current team of the player. */
+            if(team.getTeamIdentifier().equals(player.getTeam().getTeamIdentifier())) {
+                setEnabled(false);
+            }
         }
     }
 }

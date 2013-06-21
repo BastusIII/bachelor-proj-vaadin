@@ -74,6 +74,8 @@ public class DominationPoint extends LocationObject implements IDominationPoint 
 			throw new IllegalArgumentException(
 					"Domination point may not be null!");
 		}
+		setGeoCoordinates(dominationPoint.getLongitude(),
+				dominationPoint.getLatitude());
 		this.radius = dominationPoint.getRadius();
 		this.progress = dominationPoint.getCaptureProgress();
 		// It is possible that a domination point is a 'virgin', meaning it has
@@ -85,7 +87,7 @@ public class DominationPoint extends LocationObject implements IDominationPoint 
 			this.capturingTeam = new Team(dominationPointsCapturingTeam);
 		}
 		ITeam dominationPointsDominatingTeam = dominationPoint.getOwnerTeam();
-		if (dominationPointsCapturingTeam == null) {
+		if (dominationPointsDominatingTeam == null) {
 			this.dominatingTeam = null;
 		} else {
 			this.dominatingTeam = new Team(dominationPointsDominatingTeam);
