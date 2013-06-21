@@ -1,12 +1,14 @@
 package edu.hm.webtech.domination.model;
 
+import java.io.Serializable;
+
 
 /**
  * Defines methods for a object representing a team in domination.
  *
  * @author Marco Wolff
  */
-public interface ITeam extends IScoreObject {
+public interface ITeam extends IScoreObject, Serializable {
 
     /**
      * @return {@link TeamIdentifier} of the team.

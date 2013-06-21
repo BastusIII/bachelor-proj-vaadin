@@ -1,5 +1,7 @@
 package edu.hm.webtech.domination.model;
 
+import java.io.Serializable;
+
 
 /**
  * Defines methods for a object representing a player in domination.
@@ -7,7 +9,7 @@ package edu.hm.webtech.domination.model;
  * @author Marco Wolff
  * @author Sebastian Stumpf
  */
-public interface IPlayer extends ILocationObject, IScoreObject {
+public interface IPlayer extends ILocationObject, IScoreObject, Serializable{
 
     /**
      * @return {@link String} representing the identifier of the player.
