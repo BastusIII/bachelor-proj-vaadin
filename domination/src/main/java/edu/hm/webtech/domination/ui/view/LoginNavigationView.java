@@ -125,12 +125,13 @@ public class LoginNavigationView extends AbstractNavigationView implements Posit
     
     @Override
 	public void onSuccess(Position position) {
-		//do nothing
+    	logger.errorLog("Success! GPS tracking activated!");
     }
 
     @Override
     public void onFailure(int errorCode) {
     	getWindow().showNotification("Error", "Allow location tracking to play domination!", 2);
+    	logger.errorLog("FAIL! GPS tracking deactivated!");
     }
 
     private ClickListener getClickListener() {
