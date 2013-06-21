@@ -207,7 +207,7 @@ public class GameManagerImpl implements IGameManager {
 
 	@Override
 	public void startGame() {
-		if (!checkStartConditions()) {
+		if (!isGameReady()) {
 			logger.errorLog("Could not start game, not enough teams / players in game!");
 		} else if (getWinnerTeam() != null) {
 			logger.errorLog("Could not start game, since it is already over!");
@@ -227,12 +227,8 @@ public class GameManagerImpl implements IGameManager {
 		}
 	}
 
-	/**
-	 * Checks if the start criteria is fulfilled.
-	 * 
-	 * @return true, if the start criteria is fulfilled, else false.
-	 */
-	private boolean checkStartConditions() {
+	@Override
+	public boolean isGameReady() {
 		synchronized (game) {
 			/*
 			 * At the moment the criteria is, that two players with different
