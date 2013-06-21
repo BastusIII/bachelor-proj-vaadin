@@ -27,6 +27,7 @@ import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
+import edu.hm.webtech.domination.model.Player;
 import edu.hm.webtech.domination.model.TeamIdentifier;
 import edu.hm.webtech.domination.util.Logger;
 
@@ -376,7 +377,10 @@ public class MapView extends NavigationView implements PositionCallback {
 	 */
 	public void onSuccess(Position position) {
 		IPlayer player = (IPlayer) MyVaadinApplication.getApp().getUser();
-		player.setGeoCoordinates(position.getLongitude(), position.getLatitude());
+		if(player != null)
+			player.setGeoCoordinates(position.getLongitude(), position.getLatitude());
+		else
+			player = new Player(0,0,"Dummy");
 		this.user = player;
 	}
 
