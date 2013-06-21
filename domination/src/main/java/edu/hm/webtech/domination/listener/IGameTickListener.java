@@ -7,8 +7,6 @@ import edu.hm.webtech.domination.model.IGame;
  * Defines methods for objects which react to the game tick of the
  * {@link IGameManager}.
  * 
- * @deprecated WE DONT NEED IT AT ALL, DO WE?
- * 
  * @author Marco Wolff
  * 
  */
