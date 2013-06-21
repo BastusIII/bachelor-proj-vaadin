@@ -26,6 +26,6 @@ public class GameDetails extends CustomComponent {
      */
     private void initLayout() {
         HorizontalComponentGroup gameDetailsGroup = new HorizontalComponentGroup();
-         setCompositionRoot(gameDetailsGroup);
+        setCompositionRoot(gameDetailsGroup);
     }
 }

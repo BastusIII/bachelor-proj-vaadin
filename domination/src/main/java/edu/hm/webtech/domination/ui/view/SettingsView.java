@@ -67,7 +67,7 @@ public class SettingsView extends AbstractNavigationView {
     private class StartGameButton extends Button {
         private StartGameButton() {
             super("Start game");
-            if(gameManager.isGameRunning())  {
+            if(gameManager.isGameRunning() || !gameManager.isGameReady())  {
                 setEnabled(false);
             } else {
                 setDisableOnClick(true);
