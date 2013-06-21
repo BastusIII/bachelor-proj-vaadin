@@ -76,4 +76,10 @@ public interface IGameManager {
 	 */
 	public ITeam getWinnerTeam();
 
+	/**
+	 * Checks if the current {@link IGame} fulfills the starting criteria.
+	 * 
+	 * @return true, if starting criteria is fulfilled, else false.
+	 */
+	public boolean isGameReady();
 }
