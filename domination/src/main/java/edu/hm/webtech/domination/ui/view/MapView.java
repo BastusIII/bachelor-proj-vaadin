@@ -93,7 +93,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	public MapView(IGameManager gameManager) {
 		this.gameManager = gameManager;
 		refresher = new Refresher();
-		refresher.setRefreshInterval(500);
+		refresher.setRefreshInterval(2000);
 		generateStyleMaps();
 		MyVaadinApplication.get().getMainWindow().detectCurrentPosition(this);
 	}
@@ -237,11 +237,15 @@ public class MapView extends NavigationView implements PositionCallback {
 		IGame game = this.gameManager.getGame();
 		((TouchKitWindow) getWindow()).detectCurrentPosition(this);
 		
+		try {
 		updateMyPosition();
 		updatePlayerLocations(game);
 		updateDominationPoints(game);
 		
 		addVectorsToMap();		
+		}catch (NullPointerException ex) {
+			logger.errorLog("User could not be identified. Maybe the access of reading the location was refused.");
+		}
 	}
 
 	/**
@@ -324,7 +328,6 @@ public class MapView extends NavigationView implements PositionCallback {
 			else {
 				TeamIdentifier identifier;
 				identifier = owner.getTeamIdentifier();
-				System.out.println(identifier);
 				switch(identifier) {
 				case RED:
 					dominationPointLocationVector_red.addVector(pointLocation);
@@ -423,7 +426,7 @@ public class MapView extends NavigationView implements PositionCallback {
 
 	/**
 	 * Gets called, if the position of the user can not be determined.
-	 * @ errorCode the error Code determining the kind of error, which occurred
+	 * @param errorCode the error Code determining the kind of error, which occurred
 	 */
 	public void onFailure(int errorCode) {
 		logger.infoLog("Location detection failed with code: " + errorCode);
