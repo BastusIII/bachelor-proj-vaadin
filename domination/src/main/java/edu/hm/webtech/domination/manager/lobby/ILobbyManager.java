@@ -21,7 +21,7 @@ public interface ILobbyManager {
 	 * 
 	 * @param gameConfiguration
 	 *            {@link IGameConfiguration} for the new {@link IGame} object.
-	 * @return {@link IGameManager} handling the created {@link IGame}.
+	 * @return {@link IGameManager} handling the created {@link IGame}. Null if game name already in use.
 	 */
 	public IGameManager createGame(final IGameConfiguration gameConfiguration);
 
@@ -37,5 +37,9 @@ public interface ILobbyManager {
 	 */
 	public Collection<IGameManager> getGames();
 
-
+    /**
+     *
+     * @return the counter for all created games.
+     */
+    public int getMaxGameCounter();
 }

@@ -106,4 +106,10 @@ public interface IGame {
      * @return {@link IPlayer} owning this game, which means he created it.
      */
     public IPlayer getOwner();
+
+    /**
+     *
+     * @return the name of the game.
+     */
+    public String getName();
 }

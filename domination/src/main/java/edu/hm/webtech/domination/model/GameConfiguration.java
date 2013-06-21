@@ -44,6 +44,10 @@ public class GameConfiguration implements IGameConfiguration {
      * The game type.
      */
     private final GameType gameType;
+    /**
+     * The game name.
+     */
+    private final String identifier;
 
     /**
      * Constructor, setting all game config options at once.<br />
@@ -58,9 +62,9 @@ public class GameConfiguration implements IGameConfiguration {
      * @param owner                    the creator and owner of the game. must not be null!
      * @param gameType                 The game type.
      */
-    public GameConfiguration(final int scoreLimit, final int zoomFactor, final int numberOfTeams, final int maxPlayersPerTeam, final int numberOfDominationPoints, final IPlayer owner, final GameType gameType) {
-        if(owner == null) {
-            throw new IllegalArgumentException("Owner must not be null.");
+    public GameConfiguration(final int scoreLimit, final int zoomFactor, final int numberOfTeams, final int maxPlayersPerTeam, final int numberOfDominationPoints, final IPlayer owner, final GameType gameType, final String identifier) {
+        if(owner == null || identifier == null) {
+            throw new IllegalArgumentException("Owner and identifier must not be null.");
         }
 
         this.scoreLimit = scoreLimit != -1 ? scoreLimit : SCORE_LIMIT_DEFAULT;
@@ -70,6 +74,7 @@ public class GameConfiguration implements IGameConfiguration {
         this.numberOfDominationPoints = numberOfDominationPoints != -1 ? numberOfDominationPoints : NUMBER_OF_DOMINATION_POINTS;
         this.owner = owner;
         this.gameType = gameType != null ? gameType : GAME_TYPE_DEFAULT;
+        this.identifier = identifier;
     }
 
     /**
@@ -89,6 +94,7 @@ public class GameConfiguration implements IGameConfiguration {
         this.numberOfDominationPoints = gameConfiguration.getNumberOfDominationPoints();
         this.owner = gameConfiguration.getOwner();
         this.gameType = gameConfiguration.getGameType();
+        this.identifier = gameConfiguration.getName();
     }
 
     @Override
@@ -124,6 +130,11 @@ public class GameConfiguration implements IGameConfiguration {
     @Override
     public GameType getGameType() {
         return gameType;
+    }
+
+    @Override
+    public String getName() {
+        return this.identifier;
     }
 
 }
