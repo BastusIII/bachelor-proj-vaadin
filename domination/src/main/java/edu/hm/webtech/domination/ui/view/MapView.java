@@ -71,7 +71,7 @@ public class MapView extends NavigationView implements PositionCallback {
 	/**
 	 * The user of the application.
 	 */
-	private IPlayer user;
+	private IPlayer user = new Player(0,0,"Dummy");
 	/**
 	 * The OpenStreetMap
 	 */
@@ -236,11 +236,28 @@ public class MapView extends NavigationView implements PositionCallback {
 	private void updateLocations() {
 		IGame game = this.gameManager.getGame();
 		((TouchKitWindow) getWindow()).detectCurrentPosition(this);
-		//Update the vectors
+		
+		updateMyPosition();
+		updatePlayerLocations(game);
+		updateDominationPoints(game);
+		
+		addVectorsToMap();		
+	}
+
+	/**
+	 * Updates the position of the user and sets a ring around his cursor.
+	 */
+	private void updateMyPosition() {
 		myLocationRingVector.removeAllComponents();
 		PointVector myRing = new PointVector(user.getLongitude(), user.getLatitude());
 		myLocationRingVector.addVector(myRing);
-		
+	}
+	
+	/**
+	 * Updates the locations of all users.
+	 * @param game contains the players.
+	 */
+	private void updatePlayerLocations(IGame game) {
 		playerBlueLocationVector.removeAllComponents();
 		playerRedLocationVector.removeAllComponents();
 
@@ -261,7 +278,13 @@ public class MapView extends NavigationView implements PositionCallback {
 				}
 			}
 		}
-		
+	}
+	
+	/**
+	 * Updates the status of all domination points. 
+	 * @param game contains the status of the domination points
+	 */
+	private void updateDominationPoints(IGame game) {
 		TouchKitWindow window = (TouchKitWindow) getWindow();
 		float windowWidth = window.getWidth();
 		float windowHeight = window.getHeight();
@@ -301,6 +324,7 @@ public class MapView extends NavigationView implements PositionCallback {
 			else {
 				TeamIdentifier identifier;
 				identifier = owner.getTeamIdentifier();
+				System.out.println(identifier);
 				switch(identifier) {
 				case RED:
 					dominationPointLocationVector_red.addVector(pointLocation);
@@ -313,7 +337,9 @@ public class MapView extends NavigationView implements PositionCallback {
 				}
 			}
 		}
-		// Add the vectors to the 'openLayersMap'
+	}
+	
+	private void addVectorsToMap() {
 		for(VectorLayer vLayer: areas){
 			if (vLayer.getParent() == null)
 				openLayersMap.addLayer(vLayer);
@@ -331,7 +357,6 @@ public class MapView extends NavigationView implements PositionCallback {
 		if(myLocationRingVector.getParent() == null)
 			openLayersMap.addLayer(myLocationRingVector);
 	}
-
 	
 	/**
 	 * Calculates the longitude of a point moved by the given meters in longitude direction.
