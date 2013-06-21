@@ -1,23 +1,18 @@
 package edu.hm.webtech.domination.manager.session;
 
-import com.vaadin.addon.touchkit.ui.TouchKitApplication;
-import com.vaadin.server.AbstractCommunicationManager;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinService;
-import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.UI;
+import com.vaadin.addon.touchkit.service.Position;
+import com.vaadin.addon.touchkit.service.PositionCallback;
 import com.vaadin.ui.LoginForm.LoginEvent;
 import com.vaadin.ui.LoginForm.LoginListener;
+import com.vaadin.ui.Notification;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.manager.lobby.ILobbyManager;
-import edu.hm.webtech.domination.manager.lobby.LobbyManager;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.Player;
 import edu.hm.webtech.domination.ui.view.LobbyView;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,6 +47,7 @@ public class SessionManager implements ISessionManager, LoginListener {
 	public boolean createAndRegisterPlayer(String identifier) {
 		try {
 			Player player = new Player(0, 0, identifier);
+						
 			addPlayer(player);
 			MyVaadinApplication.getApp().setUser(player);
 			System.out.println("DEBUG-----------------------------------------");
