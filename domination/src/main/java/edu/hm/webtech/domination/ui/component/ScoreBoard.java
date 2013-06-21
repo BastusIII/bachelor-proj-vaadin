@@ -85,7 +85,7 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
         /* Create a label for each team. */
         for(ITeam team: gameManager.getGame().getTeams()) {
             Label teamLabel = new Label(Integer.toString(team.getScore()));
-            teamLabel.setStyleName(getTeamStyleClass(team));
+            teamLabel.setStyleName(team.getTeamIdentifier().getBgStyleClass());
             labelMap.put(team.getTeamIdentifier(), teamLabel);
             scoreLayout.addComponent(teamLabel);
         }
@@ -117,12 +117,4 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
         }
     }
 
-    /**
-     * Get the css class name for the team.
-     * @param team The team.
-     * @return The css class name.
-     */
-    public String getTeamStyleClass(final ITeam team) {
-        return team.getTeamIdentifier().toString() + "-score";
-    }
 }

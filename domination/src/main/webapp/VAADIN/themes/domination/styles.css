@@ -13,6 +13,7 @@
   padding: 2px;
 }
 
+/* Add round corner for first and last score. */
 .score-bg div div:first-child div div {
   border-radius: 14px 0px 0px 14px;
 }
@@ -22,27 +23,27 @@
   border-radius: 0px 14px 14px 0px;
 }
 
-.Red-score {
+.team-Red-bg, div.team-Red-bg {
   background-color:#D0242e;
 }
 
-.Green-score {
+.team-Green-bg, div.team-Green-bg {
   background-color:#14a32d;
 }
 
-.Blue-score {
+.team-Blue-bg, div.team-Blue-bg {
    background-color:#2044de;
 }
 
-.Pink-score {
+.team-Pink-bg, div.team-Pink-bg {
    background-color:#fb46e2;
 }
 
-.Purple-score {
+.team-Purple-bg, div.team-Purple-bg {
    background-color:#9b17de;
 }
 
-.Black-score {
+.team-Black-score, div.team-Black-score {
    background-color:#0a010e;
 }
 
