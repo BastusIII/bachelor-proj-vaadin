@@ -98,6 +98,12 @@ public class MapView extends NavigationView implements PositionCallback {
 		MyVaadinApplication.get().getMainWindow().detectCurrentPosition(this);
 	}
 
+	@Override
+	public void attach() {
+		buildView();
+		super.attach();
+	}
+	
 	/**
 	 * Generates the icons of the players and domination points.
 	 */
@@ -140,12 +146,6 @@ public class MapView extends NavigationView implements PositionCallback {
 		StyleMap styleMap = new StyleMap(style);
 		styleMap.setExtendDefault(true);
 		return styleMap;
-	}
-	
-	@Override
-	public void attach() {
-		buildView();
-		super.attach();
 	}
 	
 	/**
