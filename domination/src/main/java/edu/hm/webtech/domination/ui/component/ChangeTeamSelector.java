@@ -28,6 +28,16 @@ public class ChangeTeamSelector extends CustomComponent {
     }
 
     /**
+     * Css class for the change team button.
+     */
+    private static final String CHANGE_TEAM_BUTTON_CLASS = "change-team-button";
+
+    /**
+     * Css class for the change team caption.
+     */
+    private static final String CHANGE_TEAM_CAPTION = "change-team-caption";
+
+    /**
      * The layout containing the buttons.
      */
     private Layout buttonLayout;
@@ -38,6 +48,7 @@ public class ChangeTeamSelector extends CustomComponent {
     private void initLayout() {
         Layout changeTeamLayout = new VerticalLayout();
         Label caption = new Label("Change to team:");
+        caption.addStyleName(CHANGE_TEAM_CAPTION);
         buttonLayout = new HorizontalLayout();
 
         refreshButtons();
@@ -63,7 +74,8 @@ public class ChangeTeamSelector extends CustomComponent {
 
         private JoinTeamButton(final IPlayer player, final ITeam team) {
             super(team.getTeamIdentifier().toString());
-            setStyleName(team.getTeamIdentifier().getBgStyleClass());
+            addStyleName(CHANGE_TEAM_BUTTON_CLASS);
+            addStyleName(team.getTeamIdentifier().getBgStyleClass());
             addListener(new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {

@@ -50,6 +50,13 @@ public interface IGameManager {
 	 */
 	public void startGame();
 
+    /**
+     * Shows whether the game has started.
+     *
+     * @return true if the game has started.
+     */
+    public boolean isGameRunning();
+
 	/**
 	 * Updates the location on given {@link IPlayer} to given value of longitude
 	 * and latitude.

@@ -158,4 +158,21 @@ public class Player extends LocationObject implements IPlayer, ScorePublisher {
 	public void subscribeScoreChange(ScoreListener scoreListener) {
 		scoreListeners.add(scoreListener);
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (!name.equals(player.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

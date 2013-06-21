@@ -57,6 +57,11 @@ public class GameManagerImpl implements IGameManager {
 	 */
 	private List<IGameTickListener> gameTickListeners;
 
+    /**
+     * Shows if the game is running.
+     */
+    private boolean isGameRunning = false;
+
 	/**
 	 * Creates a new {@link GameManagerImpl} with given {@link IGame}.
 	 * 
@@ -185,8 +190,8 @@ public class GameManagerImpl implements IGameManager {
 						.equals(player.getIdentifier())) {
 					currentPlayer.setTeam(team);
 					logger.infoLog("Player '" + player.getIdentifier()
-							+ "' successfully changed to team '"
-							+ team.getTeamIdentifier() + "'!");
+                            + "' successfully changed to team '"
+                            + team.getTeamIdentifier() + "'!");
 					break;
 				}
 			}
@@ -211,13 +216,21 @@ public class GameManagerImpl implements IGameManager {
 			logger.errorLog("Could not start game, not enough teams / players in game!");
 		} else if (getWinnerTeam() != null) {
 			logger.errorLog("Could not start game, since it is already over!");
-		} else {
-			Thread gameThread = new Thread(new GameRunnable());
-			gameThread.start();
-		}
+		} else if (isGameRunning) {
+            logger.errorLog("Could not start game, since it is already running!");
+        } else {
+                Thread gameThread = new Thread(new GameRunnable());
+                gameThread.start();
+                isGameRunning = true;
+        }
 	}
 
-	@Override
+    @Override
+    public boolean isGameRunning() {
+        return isGameRunning;
+    }
+
+    @Override
 	public void updateLocation(IPlayer player, double longitude, double latitude) {
 		synchronized (game) {
 			locationManger.updateLocation(player, longitude, latitude);

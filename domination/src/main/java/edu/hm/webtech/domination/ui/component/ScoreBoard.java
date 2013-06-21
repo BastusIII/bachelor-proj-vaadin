@@ -31,28 +31,14 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
     private final IGameManager gameManager;
 
     /**
-     * The score manager attached to this Score board.
+     * The class name for the score board background.
      */
-    private static ScoreManager scoreManager = new ScoreManager();
-    static{
-        // start dummy game
-        Thread t = new Thread(new Runnable() {
+    private static final String SCOREBOARD_BG_CLASS = "score-bg";
 
-            @Override
-            public void run() {
-                while(true) {
-                    scoreManager.increaseScore(ScoreManager.Teams.BLUE, 10);
-                    scoreManager.increaseScore(ScoreManager.Teams.RED, 5);
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        t.start();
-    }
+    /**
+     * The css class for team score element.
+     */
+    private static final String TEAM_SCORE_CLASS = "team-score";
 
     /**
      * ScoreBoard for domination games.
@@ -80,12 +66,13 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
 			
 		});
         HorizontalLayout scoreLayout = new HorizontalLayout();
-        scoreLayout.setStyleName("score-bg");
+        scoreLayout.setStyleName(SCOREBOARD_BG_CLASS);
 
         /* Create a label for each team. */
         for(ITeam team: gameManager.getGame().getTeams()) {
             Label teamLabel = new Label(Integer.toString(team.getScore()));
-            teamLabel.setStyleName(team.getTeamIdentifier().getBgStyleClass());
+            teamLabel.addStyleName(TEAM_SCORE_CLASS);
+            teamLabel.addStyleName(team.getTeamIdentifier().getBgStyleClass());
             labelMap.put(team.getTeamIdentifier(), teamLabel);
             scoreLayout.addComponent(teamLabel);
         }
@@ -98,7 +85,6 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
 
         setCompositionRoot(mainLayout);
 
-        this.scoreManager.subscribeScoreChange(this);
     }
 
     @Override

@@ -23,6 +23,11 @@
   border-radius: 0px 14px 14px 0px;
 }
 
+.team-score {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
 .team-Red-bg, div.team-Red-bg {
   background-color:#D0242e;
 }
@@ -45,5 +50,14 @@
 
 .team-Black-score, div.team-Black-score {
    background-color:#0a010e;
+}
+
+.change-team-button, div.change-team-button {
+   margin-left: 4px;
+}
+
+.change-team-caption {
+   font-size: 16px;
+   padding: 4px;
 }
 

@@ -4,11 +4,14 @@ import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.manager.lobby.LobbyManager;
+import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 import edu.hm.webtech.domination.ui.component.ChangeTeamSelector;
+import edu.hm.webtech.domination.ui.component.GameDetails;
 import edu.hm.webtech.domination.ui.component.LeaveGameButton;
 
 /**
@@ -24,6 +27,9 @@ public class SettingsView extends AbstractNavigationView {
      */
     private static final String CAPTION = "Settings";
 
+    /**
+     * The game manager used to apply the settings.
+     */
     private final IGameManager gameManager;
 
 	/**
@@ -45,12 +51,36 @@ public class SettingsView extends AbstractNavigationView {
 		// Initialize container components
 		VerticalComponentGroup componentGroup = new VerticalComponentGroup();
 
+        /* Add a start game button for the game owner. */
+        if (MyVaadinApplication.getApp().getUser().equals(gameManager.getGame().getOwner())) {
+            componentGroup.addComponent(new StartGameButton());
+        }
+
+        componentGroup.addComponent(new GameDetails(gameManager.getGame()));
+
         componentGroup.addComponent(new ChangeTeamSelector(gameManager));
         componentGroup.addComponent(new LeaveGameButton(gameManager));
 
 		return componentGroup;
 	}
 
+    private class StartGameButton extends Button {
+        private StartGameButton() {
+            super("Start game");
+            if(gameManager.isGameRunning())  {
+                setEnabled(false);
+            } else {
+                setDisableOnClick(true);
+            }
+
+            addListener(new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    gameManager.startGame();
+                }
+            });
+        }
+    }
 
 
 }
