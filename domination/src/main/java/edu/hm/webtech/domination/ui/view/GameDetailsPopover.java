@@ -39,6 +39,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
         // build content
         Layout content = new FormLayout();
         Label owner = new Label("<u>Owner</u>: " + gameManager.getGame().getOwner().getIdentifier(), Label.CONTENT_XHTML);
+        Label map = new Label("<u>Map</u>: " + gameManager.getGame().getGameConfiguration().getGameType().getName(), Label.CONTENT_XHTML);
         NavigationButton join = new NavigationButton("Join this game");
         join.addListener(new Button.ClickListener() {
             @Override
@@ -52,6 +53,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
         joinButtonWrapper.addComponent(join);
 
         content.addComponent(owner);
+        content.addComponent(map);
         Collection<ITeam> teams = gameManager.getGame().getTeams();
         for (ITeam team : teams) {
             content.addComponent(buildTeamComponent(team));
