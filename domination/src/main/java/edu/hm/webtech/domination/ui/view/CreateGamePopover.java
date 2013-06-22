@@ -69,7 +69,7 @@ public class CreateGamePopover extends Popover implements Button.ClickListener {
                     else {
                         GameType gameType = GameType.getType((String) gameTypeSelect.getValue());
 
-                        IGameConfiguration config = new GameConfiguration(scoreLimit, -1, -1, maxPlayersPerTeam, -1, owner, gameType, identifier);
+                        IGameConfiguration config = new GameConfiguration(scoreLimit, -1, maxPlayersPerTeam, -1, owner, gameType, identifier);
                         if (MyVaadinApplication.getLm().createGame(config) == null) {
                             getWindow().showNotification("Error", "You either have already created a game or the name you chose is in use!", 2);
                         } else {
