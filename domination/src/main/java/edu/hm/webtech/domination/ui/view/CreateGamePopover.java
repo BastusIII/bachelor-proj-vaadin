@@ -63,7 +63,7 @@ public class CreateGamePopover extends Popover implements Button.ClickListener {
                     scoreLimit = Integer.parseInt((String) scoreLimitField.getValue());
                     maxPlayersPerTeam = Integer.parseInt((String) maxPlayersPerTeamField.getValue());
                     identifier = (String) identifierField.getValue();
-                    if (identifier == null) {
+                    if (identifier == "") {
                         getWindow().showNotification("Error", "Enter a name for your game!!", 2);
                     }
                     else {
