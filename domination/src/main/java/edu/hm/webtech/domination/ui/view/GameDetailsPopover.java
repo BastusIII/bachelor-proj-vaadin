@@ -11,6 +11,7 @@ import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
 import edu.hm.webtech.domination.model.Player;
+import edu.hm.webtech.domination.ui.component.TeamDetails;
 
 import java.util.Collection;
 
@@ -55,7 +56,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
         content.addComponent(owner);
         Collection<ITeam> teams = gameManager.getGame().getTeams();
         for (ITeam team : teams) {
-            content.addComponent(buildTeamComponent(team));
+            content.addComponent(new TeamDetails(gameManager.getGame(),team));
         }
         content.addComponent(joinButtonWrapper);
 
@@ -79,29 +80,4 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
         close();
     }
 
-    /**
-     * Hilfsmethode, die eine Component mit Team Infos baut.
-     *
-     * @param team Das Team.
-     * @return Die gebaute Component.
-     */
-    private Component buildTeamComponent(final ITeam team) {
-        Layout content = new VerticalComponentGroup();
-        Label name = new Label("<u>Team</u>: " + team.getTeamIdentifier(), Label.CONTENT_XHTML);
-        Label score = new Label("<u>Score</u>: " + String.valueOf(team.getScore()), Label.CONTENT_XHTML);
-        StringBuilder sb = new StringBuilder();
-        for (IPlayer player : gameManager.getGame().getPlayers()) {
-            if (player.getTeam().equals(team)) {
-                sb.append(player.getIdentifier() + " | ");
-            }
-        }
-        sb.delete(sb.length() - 3, sb.length() - 1);
-        Label players = new Label("<u>Players</u>: " + sb.toString(), Label.CONTENT_XHTML);
-
-        content.addComponent(name);
-        content.addComponent(score);
-        content.addComponent(players);
-
-        return content;
-    }
 }

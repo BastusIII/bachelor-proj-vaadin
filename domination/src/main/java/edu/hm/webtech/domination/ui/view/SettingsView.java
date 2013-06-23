@@ -56,10 +56,17 @@ public class SettingsView extends AbstractNavigationView {
             componentGroup.addComponent(new StartGameButton());
         }
 
-        componentGroup.addComponent(new GameDetails(gameManager.getGame()));
+        GameDetails gameDetails = new GameDetails(gameManager.getGame());
 
-        componentGroup.addComponent(new ChangeTeamSelector(gameManager));
-        componentGroup.addComponent(new LeaveGameButton(gameManager));
+        componentGroup.addComponent(gameDetails);
+
+        ChangeTeamSelector changeTeamSelector = new ChangeTeamSelector(gameManager);
+
+        componentGroup.addComponent(changeTeamSelector);
+        LeaveGameButton leaveGameButton = new LeaveGameButton(gameManager);
+
+        componentGroup.addComponent(leaveGameButton);
+
 
 		return componentGroup;
 	}

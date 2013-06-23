@@ -1,8 +1,12 @@
 package edu.hm.webtech.domination.ui.component;
 
-import com.vaadin.addon.touchkit.ui.HorizontalComponentGroup;
+import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import edu.hm.webtech.domination.model.IGame;
+import edu.hm.webtech.domination.model.ITeam;
 
 /**
  * Display component for domination game.
@@ -18,6 +22,7 @@ public class GameDetails extends CustomComponent {
 
     public GameDetails(final IGame game) {
         this.game = game;
+        setSizeUndefined();
         initLayout();
     }
 
@@ -25,7 +30,23 @@ public class GameDetails extends CustomComponent {
      * Initializes the ScoreBoards layout.
      */
     private void initLayout() {
-        HorizontalComponentGroup gameDetailsGroup = new HorizontalComponentGroup();
+        Layout gameDetailsGroup = new VerticalComponentGroup();
+
+        Label gameOwnerLabel = new Label("Game owner: " + game.getOwner().getIdentifier());
+        gameDetailsGroup.addComponent(gameOwnerLabel);
+        for (ITeam team: game.getTeams()) {
+            TeamDetails teamDetails = new TeamDetails(game, team);
+            gameDetailsGroup.addComponent(teamDetails);
+        }
+
+        /* Setting absolute height, because automatic height detection for VerticalComponentGroup is broken. */
+        setHeight("188px");
+
         setCompositionRoot(gameDetailsGroup);
+
     }
+
+
+
+
 }
