@@ -1,7 +1,6 @@
 package edu.hm.webtech.domination.ui.component;
 
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;

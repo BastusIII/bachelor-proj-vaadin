@@ -7,7 +7,6 @@ import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.ITeam;
 import edu.hm.webtech.domination.model.TeamIdentifier;
 import edu.hm.webtech.domination.oldbs.gameInternals.ScoreListener;
-import edu.hm.webtech.domination.oldbs.gameInternals.ScoreManager;
 
 import java.util.HashMap;
 import java.util.Map;
