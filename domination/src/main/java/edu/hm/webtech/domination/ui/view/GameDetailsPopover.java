@@ -28,10 +28,9 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
     /**
      * Konstruktor.
      *
-     * @param parent      Benötigt das aufrufende Window, um in diesem den Content ändern zu können.
      * @param gameManager Der Game Manager aus dem Die verwendeten Spielinfos kommen.
      */
-    public GameDetailsPopover(final Window parent, final IGameManager gameManager) {
+    public GameDetailsPopover(final IGameManager gameManager) {
 
         this.currentPlayer = (IPlayer)MyVaadinApplication.getApp().getUser();
         this.gameManager = gameManager;
@@ -41,12 +40,13 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
         // build content
         Layout content = new FormLayout();
         Label owner = new Label("<u>Owner</u>: " + gameManager.getGame().getOwner().getIdentifier(), Label.CONTENT_XHTML);
+        Label map = new Label("<u>Map</u>: " + gameManager.getGame().getGameConfiguration().getGameType().getName(), Label.CONTENT_XHTML);
         NavigationButton join = new NavigationButton("Join this game");
         join.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
                 gameManager.joinGame(currentPlayer);
-                parent.setContent(new MainTabView(gameManager));
+                getParent().setContent(new MainTabView(gameManager));
                 close();
             }
         });
@@ -54,6 +54,7 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
         joinButtonWrapper.addComponent(join);
 
         content.addComponent(owner);
+        content.addComponent(map);
         Collection<ITeam> teams = gameManager.getGame().getTeams();
         for (ITeam team : teams) {
             content.addComponent(new TeamDetails(gameManager.getGame(),team));

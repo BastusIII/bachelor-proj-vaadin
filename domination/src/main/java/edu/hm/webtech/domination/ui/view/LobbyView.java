@@ -3,10 +3,8 @@ package edu.hm.webtech.domination.ui.view;
 import com.vaadin.addon.touchkit.ui.HorizontalComponentGroup;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.server.Page;
+import com.vaadin.ui.*;
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.GameConfiguration;
@@ -61,11 +59,8 @@ public class LobbyView extends AbstractNavigationView {
         createGame.addListener(new NavigationButton.ClickListener() {
             @Override
             public void buttonClick(final NavigationButton.ClickEvent event) {
-                // TODO: Sebastian Stumpf -> CreateCustomGame View mit personalisierten parametern (Center, dps, maxGameScore etc)
-            	// TODO: Requirement implemented. Now it's your turn. ;)
-                IGameConfiguration gameConfiguration = new GameConfiguration(-1,-1,-1,-1,-1,(IPlayer)MyVaadinApplication.getApp().getUser(), GameType.HM_BACKYARD_DUMMY, "Game " + MyVaadinApplication.getLm().getMaxGameCounter());
-                IGameManager gameManager = MyVaadinApplication.getLm().createGame(gameConfiguration);
-                gamesContainer.addComponent(buildGameContainer(gameManager));
+                CreateGamePopover createGamePopover = new CreateGamePopover();
+                createGamePopover.showRelativeTo(getNavigationBar());
                 noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
             }
         });
@@ -76,8 +71,7 @@ public class LobbyView extends AbstractNavigationView {
         this.gamesContainer.addComponent(this.noGamesAvailable);
         this.base.addComponent(createGameWrapper);
 		for (IGameManager gameManager : MyVaadinApplication.getLm().getGames()) {
-            Component gameTab = buildGameContainer(gameManager);
-            this.gamesContainer.addComponent(gameTab);
+            addGameToContainer(gameManager);
         }
 
         return base;
@@ -89,14 +83,14 @@ public class LobbyView extends AbstractNavigationView {
      * @param gameManager Der Game Manager.
      * @return Die gebaute Component.
      */
-    private Component buildGameContainer(final IGameManager gameManager) {
+    public void addGameToContainer(final IGameManager gameManager) {
         HorizontalComponentGroup gameContainer = new HorizontalComponentGroup();
         Button nameButton = new Button(gameManager.getGame().getName());
         Button detailsButton = new Button("Show Details");
         detailsButton.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
-                GameDetailsPopover gameDetailsPopover = new GameDetailsPopover(getWindow(), gameManager);
+                GameDetailsPopover gameDetailsPopover = new GameDetailsPopover(gameManager);
                 gameDetailsPopover.showRelativeTo(getNavigationBar());
             }
         });
@@ -104,16 +98,19 @@ public class LobbyView extends AbstractNavigationView {
         removeButton.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
-                MyVaadinApplication.getLm().removeGame(gameManager);
-                gamesContainer.removeComponent(event.getComponent().getParent());
-                noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
+                if(MyVaadinApplication.getLm().removeGame(gameManager)) {
+                    gamesContainer.removeComponent(event.getComponent().getParent());
+                    noGamesAvailable.setVisible(MyVaadinApplication.getLm().getGames().size() <= 0);
+                }
+                else {
+                    getWindow().showNotification("Error", "Only empty games can be removed!", 2);
+                }
             }
         });
 
         gameContainer.addComponent(nameButton);
         gameContainer.addComponent(detailsButton);
         gameContainer.addComponent(removeButton);
-
-        return gameContainer;
+        this.gamesContainer.addComponent(gameContainer);
     }
 }

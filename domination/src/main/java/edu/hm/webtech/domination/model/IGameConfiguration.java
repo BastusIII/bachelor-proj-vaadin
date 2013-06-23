@@ -14,11 +14,6 @@ public interface IGameConfiguration {
     public int getScoreLimit();
 
     /**
-     * @return zoom factor of the game map.
-     */
-    int getZoomFactor();
-
-    /**
      * @return number of teams.
      */
     int getNumberOfTeams();
