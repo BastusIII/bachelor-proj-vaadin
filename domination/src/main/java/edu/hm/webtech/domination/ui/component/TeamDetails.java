@@ -45,16 +45,14 @@ public class TeamDetails extends CustomComponent {
                 sb.append(player.getIdentifier() + " | ");
             }
         }
-        sb.delete(sb.length() - 3, sb.length() - 1);
+        if(sb.length() > 4) {
+            sb.delete(sb.length() - 3, sb.length() - 1);
+        }
         Label players = new Label("<u>Players</u>: " + sb.toString(), Label.CONTENT_XHTML);
 
         content.addComponent(name);
         content.addComponent(score);
         content.addComponent(players);
-
-        /* Setting absolute height, because automatic height detection for VerticalComponentGroup is broken. */
-        setHeight("76px");
-
 
         setCompositionRoot(content);
     }

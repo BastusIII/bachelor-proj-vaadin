@@ -159,14 +159,15 @@ public class GameManagerImpl implements IGameManager {
 				 * Remove the player from game.
 				 */
 				game.removePlayer(player);
+                logger.infoLog("Player '" + player.getIdentifier()
+                        + "' successfully left the game!");
 			} catch (ModelException e) {
 				e.printStackTrace();
 				logger.errorLog("Player '" + player.getIdentifier()
 						+ "' wasn't able to leave the game from player '"
 						+ game.getOwner() + "'!");
 			}
-			logger.infoLog("Player '" + player.getIdentifier()
-					+ "' successfully left the game!");
+
 		}
 	}
 

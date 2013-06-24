@@ -38,9 +38,6 @@ public class GameDetails extends CustomComponent {
             gameDetailsGroup.addComponent(teamDetails);
         }
 
-        /* Setting absolute height, because automatic height detection for VerticalComponentGroup is broken. */
-        setHeight("188px");
-
         setCompositionRoot(gameDetailsGroup);
 
     }
