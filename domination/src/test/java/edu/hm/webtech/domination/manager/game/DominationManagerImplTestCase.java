@@ -27,7 +27,7 @@ public class DominationManagerImplTestCase extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		game = new Game(new GameConfiguration(-1,-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY, "schmarre")) {
+		game = new Game(new GameConfiguration(-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY, "schmarre")) {
 			@Override
 			public Collection<IDominationPoint> getDominationPoints() {
 				List<IDominationPoint> dominationPoints = new ArrayList<IDominationPoint>();

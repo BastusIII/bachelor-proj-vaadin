@@ -21,7 +21,7 @@ public class GameManagerImplTestCase extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		game = new Game(new GameConfiguration(-1,-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY, "schmarre"));
+		game = new Game(new GameConfiguration(-1,-1,-1,-1,new Player(0,0,"DummyOwner"), GameType.HM_BACKYARD_DUMMY, "schmarre"));
 		gameManager = new GameManagerImpl(game);
 		teamRed = new Team(TeamIdentifier.RED, 0);
 		teamBlue = new Team(TeamIdentifier.BLUE, 0);
