@@ -12,6 +12,7 @@ import edu.hm.webtech.domination.oldbs.gameInternals.ScorePublisher;
  * @author Sebastian Stumpf
  */
 public class Player extends LocationObject implements IPlayer, ScorePublisher {
+	private static final long serialVersionUID = 4418379320909070777L;
 	/**
 	 * Der eindeutige Name des Spielers.
 	 */

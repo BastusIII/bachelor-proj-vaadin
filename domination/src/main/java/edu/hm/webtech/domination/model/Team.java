@@ -13,7 +13,7 @@ import edu.hm.webtech.domination.oldbs.gameInternals.ScorePublisher;
  * @author Sebastian Stumpf
  */
 public class Team implements ScorePublisher, ITeam {
-
+	private static final long serialVersionUID = 4686583973164541581L;
 	/**
 	 * Der Identifier des Teams ist eine Farbe.
 	 */

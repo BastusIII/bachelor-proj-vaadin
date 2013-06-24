@@ -12,7 +12,6 @@ import edu.hm.webtech.domination.listener.IGameTickListener;
 import edu.hm.webtech.domination.model.Game;
 import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
-import edu.hm.webtech.domination.model.IGameConfiguration;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.ITeam;
 import edu.hm.webtech.domination.util.Logger;
@@ -29,10 +28,6 @@ public class GameManagerImpl implements IGameManager {
 	 * The {@link IGame} containing the actual game data.
 	 */
 	private IGame game;
-	/**
-	 * {@link ILocationManager} responsible for proper location management.
-	 */
-	private ILocationManager locationManger;
 	/**
 	 * {@link IDominationManager} responsible for proper domination point
 	 * management.
@@ -57,10 +52,10 @@ public class GameManagerImpl implements IGameManager {
 	 */
 	private List<IGameTickListener> gameTickListeners;
 
-    /**
-     * Shows if the game is running.
-     */
-    private boolean isGameRunning = false;
+	/**
+	 * Shows if the game is running.
+	 */
+	private boolean isGameRunning = false;
 
 	/**
 	 * Creates a new {@link GameManagerImpl} with given {@link IGame}.
@@ -76,7 +71,6 @@ public class GameManagerImpl implements IGameManager {
 		this.winnerTeam = null;
 		this.scoreManager = new ScoreManagerImpl();
 		this.dominationManager = new DominationManagerImpl();
-		this.locationManger = new LocationManager();
 		this.gameTickListeners = new ArrayList<IGameTickListener>();
 		this.gameTickListeners.add((IGameTickListener) dominationManager);
 		this.gameTickListeners.add((IGameTickListener) scoreManager);
@@ -159,8 +153,8 @@ public class GameManagerImpl implements IGameManager {
 				 * Remove the player from game.
 				 */
 				game.removePlayer(player);
-                logger.infoLog("Player '" + player.getIdentifier()
-                        + "' successfully left the game!");
+				logger.infoLog("Player '" + player.getIdentifier()
+						+ "' successfully left the game!");
 			} catch (ModelException e) {
 				e.printStackTrace();
 				logger.errorLog("Player '" + player.getIdentifier()
@@ -191,8 +185,8 @@ public class GameManagerImpl implements IGameManager {
 						.equals(player.getIdentifier())) {
 					currentPlayer.setTeam(team);
 					logger.infoLog("Player '" + player.getIdentifier()
-                            + "' successfully changed to team '"
-                            + team.getTeamIdentifier() + "'!");
+							+ "' successfully changed to team '"
+							+ team.getTeamIdentifier() + "'!");
 					break;
 				}
 			}
@@ -217,27 +211,49 @@ public class GameManagerImpl implements IGameManager {
 			logger.errorLog("Could not start game, not enough teams / players in game!");
 		} else if (getWinnerTeam() != null) {
 			logger.errorLog("Could not start game, since it is already over!");
-		} else if (isGameRunning) {
-            logger.errorLog("Could not start game, since it is already running!");
-        } else {
-                Thread gameThread = new Thread(new GameRunnable());
-                gameThread.start();
-                isGameRunning = true;
-        }
+		} else if (isGameRunning()) {
+			logger.errorLog("Could not start game, since it is already running!");
+		} else {
+			Thread gameThread = new Thread(new GameRunnable());
+			gameThread.start();
+			isGameRunning = true;
+			logger.infoLog("The game has been started!");
+		}
 	}
 
-    @Override
-    public boolean isGameRunning() {
-        return isGameRunning;
-    }
+	@Override
+	public boolean isGameRunning() {
+		return isGameRunning;
+	}
 
-    @Override
+	@Override
 	public void updateLocation(IPlayer player, double longitude, double latitude) {
+		if (player == null) {
+			throw new IllegalArgumentException("Player may not be null!");
+		}
 		synchronized (game) {
-			locationManger.updateLocation(player, longitude, latitude);
-			logger.infoLog("Player '" + player
-					+ "' successfully updated his location to '" + longitude
-					+ "' '" + latitude + "'!");
+			boolean locationUpdated = false;
+			List<IPlayer> players = (List<IPlayer>) game.getPlayers();
+			for (IPlayer playerToUpdate : players) {
+				if (playerToUpdate.equals(player)) {
+					playerToUpdate.setGeoCoordinates(longitude, latitude);
+					locationUpdated = true;
+					break;
+				}
+			}
+			if (locationUpdated) {
+				logger.infoLog("Player '" + player.getIdentifier()
+						+ "' successfully updated his location to '"
+						+ longitude + "' '" + latitude + "'!");
+			} else {
+				logger.errorLog("Player '"
+						+ player.getIdentifier()
+						+ "' could not updated his location to '"
+						+ longitude
+						+ "' '"
+						+ latitude
+						+ "', because there is no such player registered at the game!");
+			}
 		}
 	}
 
@@ -291,14 +307,12 @@ public class GameManagerImpl implements IGameManager {
 					/*
 					 * After tick, check if there is a winner yet!
 					 */
-					IGameConfiguration gameConfiguration = game
-							.getGameConfiguration();
-					List<ITeam> teams = (List<ITeam>) game.getTeams();
-					for (ITeam team : teams) {
-						if (team.getScore() >= gameConfiguration
-								.getScoreLimit()) {
-							winnerTeam = team;
-						}
+					winnerTeam = determineWinnerTeam();
+					if (winnerTeam != null) {
+						logger.infoLog("Team '"
+								+ winnerTeam.getTeamIdentifier()
+								+ "' has won the game with a score of '"
+								+ winnerTeam.getScore() + "'!");
 					}
 				}
 				try {
@@ -315,6 +329,46 @@ public class GameManagerImpl implements IGameManager {
 		synchronized (game) {
 			return winnerTeam;
 		}
+	}
+
+	/**
+	 * Determine, if there is a winner {@link ITeam}, meaning it has the highest
+	 * score in the game.
+	 * 
+	 * @return {@link ITeam} being the winner of this {@link IGame}, or null if
+	 *         there is no winner yet.
+	 */
+	private ITeam determineWinnerTeam() {
+		List<ITeam> teams = (List<ITeam>) game.getTeams();
+		List<ITeam> winningTeams = new ArrayList<ITeam>();
+		int scoreLimit = game.getGameConfiguration().getScoreLimit();
+
+		/*
+		 * Look up all teams, that are above the score limit.
+		 */
+		for (ITeam team : teams) {
+			if (team.getScore() >= scoreLimit) {
+				winningTeams.add(team);
+			}
+		}
+
+		/*
+		 * Now check, if there is a team, that has the absolute highest score.
+		 * If there is a draw, there will be no winner, leading to extended game
+		 * time in order to determine a absolute winner. There is no draw in
+		 * domination since it is named "DOMINATION" not "EVERYBODYISAWINNER".
+		 */
+		ITeam winningTeam = null;
+		int highestScore = Integer.MIN_VALUE;
+		for (ITeam team : winningTeams) {
+			if (team.getScore() > highestScore) {
+				winningTeam = team;
+			} else if (team.getScore() == highestScore) {
+				winningTeam = null;
+			}
+		}
+
+		return winningTeam;
 	}
 
 }

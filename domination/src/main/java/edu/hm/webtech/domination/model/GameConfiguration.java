@@ -61,12 +61,12 @@ public class GameConfiguration implements IGameConfiguration {
             throw new IllegalArgumentException("Owner and identifier must not be null.");
         }
 
-        this.scoreLimit = scoreLimit <= 0 ? scoreLimit : SCORE_LIMIT_DEFAULT;
-        this.numberOfTeams = numberOfTeams <= 0 ? numberOfTeams : NUMBER_OF_TEAMS_DEFAULT;
-        this.maxPlayersPerTeam = maxPlayersPerTeam <= 0 ? maxPlayersPerTeam : MAX_PLAYERS_PER_TEAM_DEFAULT;
-        this.numberOfDominationPoints = numberOfDominationPoints <= 0 ? numberOfDominationPoints : NUMBER_OF_DOMINATION_POINTS;
+        this.scoreLimit = scoreLimit <= 0 ? SCORE_LIMIT_DEFAULT : scoreLimit;
+        this.numberOfTeams = numberOfTeams <= 0 ? NUMBER_OF_TEAMS_DEFAULT : numberOfTeams;
+        this.maxPlayersPerTeam = maxPlayersPerTeam <= 0 ? MAX_PLAYERS_PER_TEAM_DEFAULT : maxPlayersPerTeam;
+        this.numberOfDominationPoints = numberOfDominationPoints <= 0 ? NUMBER_OF_DOMINATION_POINTS : numberOfDominationPoints;
         this.owner = owner;
-        this.gameType = gameType != null ? gameType : GAME_TYPE_DEFAULT;
+        this.gameType = gameType == null ? GAME_TYPE_DEFAULT : gameType;
         this.identifier = identifier;
     }
 

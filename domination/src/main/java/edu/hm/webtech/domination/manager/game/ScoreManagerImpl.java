@@ -5,6 +5,7 @@ import java.util.List;
 import edu.hm.webtech.domination.model.IDominationPoint;
 import edu.hm.webtech.domination.model.IGame;
 import edu.hm.webtech.domination.model.ITeam;
+import edu.hm.webtech.domination.util.Logger;
 
 /**
  * Default implementation of {@link IScoreManager}.
@@ -13,6 +14,11 @@ import edu.hm.webtech.domination.model.ITeam;
  * 
  */
 public class ScoreManagerImpl implements IScoreManager {
+
+	/**
+	 * The {@link Logger} of this {@link IScoreManager}.
+	 */
+	private Logger logger = new Logger(this.getClass().getSimpleName());
 
 	/**
 	 * The value of score, a team gets for owning a {@link IDominationPoint}.
@@ -42,6 +48,11 @@ public class ScoreManagerImpl implements IScoreManager {
 			ITeam ownerTeam = dominationPoint.getOwnerTeam();
 			if (ownerTeam != null) {
 				ownerTeam.addScore(SCORE_INCREMENT);
+				logger.infoLog("Team '" + ownerTeam.getTeamIdentifier()
+						+ "' scored '" + SCORE_INCREMENT
+						+ "' points for owning domination point at '"
+						+ dominationPoint.getLongitude() + " | "
+						+ dominationPoint.getLatitude() + "'!");
 			}
 		}
 	}

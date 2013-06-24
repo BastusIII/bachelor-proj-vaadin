@@ -114,8 +114,9 @@ public class DominationManagerImpl implements IDominationManager {
 							dominationPoint.setOwnerTeam(null);
 							logger.infoLog("Team '"
 									+ currentCapturingTeam.getTeamIdentifier()
-									+ "' stopped ownage on domination point '"
-									+ dominationPoint + "'!");
+									+ "' stopped ownage on domination point  at '"
+									+ dominationPoint.getLongitude() + " | "
+									+ dominationPoint.getLatitude() + "'!");
 						}
 					} else {
 						/*
@@ -163,8 +164,9 @@ public class DominationManagerImpl implements IDominationManager {
 								logger.infoLog("Team '"
 										+ currentCapturingTeam
 												.getTeamIdentifier()
-										+ "' stopped the capturing status on domination point '"
-										+ dominationPoint + "'!");
+										+ "' stopped the capturing status on domination point at '"
+										+ dominationPoint.getLongitude() + " | "
+										+ dominationPoint.getLatitude() + "'!");
 							}
 						} else {
 							/*
@@ -184,8 +186,9 @@ public class DominationManagerImpl implements IDominationManager {
 								logger.infoLog("Team '"
 										+ currentCapturingTeam
 												.getTeamIdentifier()
-										+ "' owns the domination point '"
-										+ dominationPoint + "'!");
+										+ "' owns the domination point at '"
+										+ dominationPoint.getLongitude() + " | "
+										+ dominationPoint.getLatitude() + "'!");
 							}
 						}
 					}
@@ -198,8 +201,9 @@ public class DominationManagerImpl implements IDominationManager {
 								.addCaptureProgress(CAPTURE_PROGRESS_INCREMENT);
 						logger.infoLog("Team '"
 								+ currentCapturingTeam.getTeamIdentifier()
-								+ "' is about to capture the domination point '"
-								+ dominationPoint + "'!");
+								+ "' is about to capture the domination point at '"
+								+ dominationPoint.getLongitude() + " | "
+								+ dominationPoint.getLatitude() + "'!");
 						/*
 						 * Since there was no capturing team before, we don't
 						 * really have to check if the owning threshold is
