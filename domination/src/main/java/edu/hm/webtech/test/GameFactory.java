@@ -4,6 +4,7 @@ import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Factory creating dummy games for testing reasons.
@@ -20,24 +21,84 @@ public class GameFactory {
 	public static IGame getGame(IGameConfiguration gameConfiguration) {
 
         IGame game = null;
-
-        ArrayList<ITeam> teams = new ArrayList<>();
-        teams.add(new Team(TeamIdentifier.BLUE, 0));
-        teams.add(new Team(TeamIdentifier.RED, 0));
-
-        // Initialize HMBACKYARD fields
-        IDominationPoint[] dominationPointsHMBackYard = new IDominationPoint[3];
-        dominationPointsHMBackYard[0] = new DominationPoint(11.555418, 48.154221, 10, 50);
-        dominationPointsHMBackYard[1] = new DominationPoint(11.556129, 48.154171, 10, 100);
-        dominationPointsHMBackYard[2] = new DominationPoint(11.556526, 48.153536, 10, 100);
-        Map mapHMBackYard = new Map(11.556062, 48.153991,18);
-		
+        List<ITeam> teams = new ArrayList<ITeam>();
+		List<IDominationPoint> dominationpoints = new ArrayList<IDominationPoint>();
+		Map map;
+        
         switch(gameConfiguration.getGameType()) {
-            case HM_BACKYARD :
+        	case MUNICH_CENTRAL:
+        		teams.add(new Team(TeamIdentifier.BLUE, 0));
+                teams.add(new Team(TeamIdentifier.RED, 0));
+                
+                // Praterinsel
+                dominationpoints.add(new DominationPoint(11.590748, 48.136652, 50));
+                // Theresienwiese
+                dominationpoints.add(new DominationPoint(11.549292, 48.131439, 50));
+                // Alter Botanischer Garten
+                dominationpoints.add(new DominationPoint(11.564054, 48.141750, 50));
+                // Marienplatz - Rathaus
+                dominationpoints.add(new DominationPoint(11.575513, 48.137375, 50));
+                // Sendlinger Tor
+                dominationpoints.add(new DominationPoint(11.567587, 48.133996, 50));
+                // Hofgarten - Dianatempel
+                dominationpoints.add(new DominationPoint(11.579998, 48.142951, 50));
+                
+                
+                map = new Map(11.578732, 48.136480,14);
             	game = new Game(gameConfiguration);
-            	game.setMap(mapHMBackYard);
+            	game.setMap(map);
                 try {
-                    for (IDominationPoint domPoint : dominationPointsHMBackYard)
+                    for (IDominationPoint domPoint : dominationpoints)
+                        game.addDominationPoint(domPoint);
+                    for(ITeam team : teams) {
+                        game.addTeam(team);
+                    }
+                } catch (ModelException ex) {
+                    ex.printStackTrace();
+                }
+        		break;
+        	case SCHWABING_WEST:
+        		teams.add(new Team(TeamIdentifier.BLUE, 0));
+                teams.add(new Team(TeamIdentifier.RED, 0));
+                
+                // Hochschule München
+                dominationpoints.add(new DominationPoint(11.559554, 48.157290, 50));
+                // Nordbad
+                dominationpoints.add(new DominationPoint(11.563690, 48.160317, 50));
+                // Alter Nordfriedhof
+                dominationpoints.add(new DominationPoint(11.571747, 48.153486, 50));
+                // Leopoldpark
+                dominationpoints.add(new DominationPoint(11.581170, 48.156489, 50));
+                // Universität (LMU)
+                dominationpoints.add(new DominationPoint(11.579853, 48.149835, 50));
+                
+                map = new Map(11.566895, 48.155236,15);
+            	game = new Game(gameConfiguration);
+            	game.setMap(map);
+                try {
+                    for (IDominationPoint domPoint : dominationpoints)
+                        game.addDominationPoint(domPoint);
+                    for(ITeam team : teams) {
+                        game.addTeam(team);
+                    }
+                } catch (ModelException ex) {
+                    ex.printStackTrace();
+                }
+        		break;
+        		
+            case HM_BACKYARD :
+                teams.add(new Team(TeamIdentifier.BLUE, 0));
+                teams.add(new Team(TeamIdentifier.RED, 0));
+
+                dominationpoints.add(new DominationPoint(11.555418, 48.154221, 10, 50));
+                dominationpoints.add(new DominationPoint(11.556129, 48.154171, 10, 100));
+                dominationpoints.add(new DominationPoint(11.556526, 48.153536, 10, 100));
+                map = new Map(11.556062, 48.153991,18);
+            	
+            	game = new Game(gameConfiguration);
+            	game.setMap(map);
+                try {
+                    for (IDominationPoint domPoint : dominationpoints)
                         game.addDominationPoint(domPoint);
                     for(ITeam team : teams) {
                         game.addTeam(team);
@@ -51,7 +112,14 @@ public class GameFactory {
              * and simulated movement of players in the HM garden.
              */
             case HM_BACKYARD_DUMMY:
+            	teams.add(new Team(TeamIdentifier.BLUE, 0));
+                teams.add(new Team(TeamIdentifier.RED, 0));
 
+                dominationpoints.add(new DominationPoint(11.555418, 48.154221, 10, 50));
+                dominationpoints.add(new DominationPoint(11.556129, 48.154171, 10, 100));
+                dominationpoints.add(new DominationPoint(11.556526, 48.153536, 10, 100));
+                map = new Map(11.556062, 48.153991,18);
+            	
                 ITeam teamBlue = teams.get(0);
                 ITeam teamRed = teams.get(1);
 
@@ -63,16 +131,16 @@ public class GameFactory {
                 players[4] = new Player(11.556300, 48.153790, "Player Five", teamBlue);
                 players[5] = new Player(11.556711, 48.153617, "Player Six", teamBlue);
 
-                game = new Game(new GameConfiguration(250,2,players.length / 2,dominationPointsHMBackYard.length,gameConfiguration.getOwner(),null,gameConfiguration.getName()));
+                game = new Game(new GameConfiguration(250,2,players.length / 2,dominationpoints.size(),gameConfiguration.getOwner(),null,gameConfiguration.getName()));
                 game.setMap(new Map(11.556062, 48.153991, 18));
 
-                dominationPointsHMBackYard[0].setOwnerTeam(teamRed);
-                dominationPointsHMBackYard[2].setOwnerTeam(teamBlue);
+                dominationpoints.get(0).setOwnerTeam(teamRed);
+                dominationpoints.get(2).setOwnerTeam(teamBlue);
 
                 try {
                     for (IPlayer player : players)
                         game.addPlayer(player);
-                    for (IDominationPoint domPoint : dominationPointsHMBackYard)
+                    for (IDominationPoint domPoint : dominationpoints)
                         game.addDominationPoint(domPoint);
                     for(ITeam team : teams) {
                         game.addTeam(team);

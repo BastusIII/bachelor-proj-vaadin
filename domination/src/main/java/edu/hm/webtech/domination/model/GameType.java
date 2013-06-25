@@ -7,7 +7,9 @@ package edu.hm.webtech.domination.model;
  */
 public enum GameType {
     HM_BACKYARD_DUMMY("HM - Yard Dummy"),
-    HM_BACKYARD("HM - Yard");
+    HM_BACKYARD("HM - Yard"),
+    MUNICH_CENTRAL("Central Munich"),
+    SCHWABING_WEST("Schwabing-West");
 
     private final String name;
 

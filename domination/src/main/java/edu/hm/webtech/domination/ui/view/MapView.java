@@ -205,6 +205,7 @@ public class MapView extends NavigationView implements PositionCallback {
 		openLayersMap.getControls().clear();
 		openLayersMap.addControl(Control.Attribution);
 		openLayersMap.addControl(Control.TouchNavigation);
+		openLayersMap.addControl(Control.ZoomPanel);
 	}
 	
 	/**
