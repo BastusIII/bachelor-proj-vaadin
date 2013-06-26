@@ -151,6 +151,11 @@ public class Game implements IGame {
     }
 
     @Override
+    public void setOwner(final IPlayer owner) {
+        this.config.setOwner(owner);
+    }
+
+    @Override
     public IGameConfiguration getGameConfiguration() {
         return this.config;
     }

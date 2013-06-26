@@ -7,7 +7,7 @@ import edu.hm.webtech.domination.model.IPlayer;
 /**
  * Defines methods for handling and creating sessions for {@link IPlayer}s.
  * 
- * @author Marco Wolff
+ * @author Marco Wolff, Felix Schramm
  * 
  */
 public interface ISessionManager {
@@ -28,5 +28,12 @@ public interface ISessionManager {
      * @author Daniel Brielbeck
      */
     public void addPlayer(IPlayer player) throws ModelException;
+
+    /**
+     * Removes a player from the list of known players and all games.
+     *
+     * @param player The player to be removed.
+     */
+    public void handleDisconnectedPlayer(IPlayer player);
 
 }

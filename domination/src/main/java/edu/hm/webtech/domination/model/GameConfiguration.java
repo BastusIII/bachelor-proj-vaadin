@@ -34,7 +34,7 @@ public class GameConfiguration implements IGameConfiguration {
     /**
      * the creator and owner of the game.
      */
-    private final IPlayer owner;
+    private IPlayer owner;
     /**
      * The game type.
      */
@@ -111,6 +111,11 @@ public class GameConfiguration implements IGameConfiguration {
     @Override
     public IPlayer getOwner() {
         return owner;
+    }
+
+    @Override
+    public void setOwner(IPlayer owner) {
+        this.owner = owner;
     }
 
     @Override

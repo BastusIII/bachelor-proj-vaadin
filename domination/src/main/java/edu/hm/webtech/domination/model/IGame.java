@@ -108,6 +108,12 @@ public interface IGame {
     public IPlayer getOwner();
 
     /**
+     * Sets a new owner for the game.
+     * @param owner The new owner.
+     */
+    public void setOwner(IPlayer owner);
+
+    /**
      *
      * @return the name of the game.
      */

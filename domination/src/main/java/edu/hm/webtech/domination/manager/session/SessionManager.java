@@ -2,6 +2,7 @@ package edu.hm.webtech.domination.manager.session;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.exception.ModelException;
+import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.Player;
 import java.util.LinkedList;
@@ -46,6 +47,14 @@ public class SessionManager implements ISessionManager {
         knownPlayers.add(player);
     }
 
-	
+    @Override
+    public void handleDisconnectedPlayer(IPlayer player) {
+        knownPlayers.remove(player);
+        /* Try removing the player from every running game. */
+        for (IGameManager gameManager: MyVaadinApplication.getLm().getGames()) {
+            gameManager.leaveGame(player);
+        }
+    }
+
 
 }

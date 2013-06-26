@@ -56,7 +56,6 @@ public class Logger {
 	 * message.
 	 * 
 	 * @param logLevel
-	 * @param className
 	 * @param message
 	 */
 	public void log(LogLevel logLevel, String message) {

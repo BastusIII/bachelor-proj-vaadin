@@ -33,6 +33,13 @@ public interface IGameConfiguration {
 	 */
 	public IPlayer getOwner();
 
+    /**
+     * Sets the new owner.
+     *
+     * @param owner The new owner.
+     */
+    public void setOwner(IPlayer owner);
+
 	/**
 	 * @return the type of the game.
 	 */

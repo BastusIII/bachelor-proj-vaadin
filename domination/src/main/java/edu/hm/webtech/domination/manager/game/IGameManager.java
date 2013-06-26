@@ -82,4 +82,12 @@ public interface IGameManager {
 	 * @return true, if starting criteria is fulfilled, else false.
 	 */
 	public boolean isGameReady();
+
+
+    /**
+     * Handles a disconnected player. Removes him from game, promotes new owner ...
+     *
+     * @param player The player that disconnected.
+     */
+    public void handleDisconnectedPlayer(IPlayer player);
 }

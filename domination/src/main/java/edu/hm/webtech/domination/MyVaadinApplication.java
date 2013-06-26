@@ -7,9 +7,10 @@ import edu.hm.webtech.domination.manager.lobby.ILobbyManager;
 import edu.hm.webtech.domination.manager.lobby.LobbyManager;
 import edu.hm.webtech.domination.manager.session.ISessionManager;
 import edu.hm.webtech.domination.manager.session.SessionManager;
+import edu.hm.webtech.domination.ui.DisconnectListener;
 import edu.hm.webtech.domination.ui.view.AbstractNavigationView;
-import edu.hm.webtech.domination.ui.view.LobbyView;
 import edu.hm.webtech.domination.ui.view.LoginNavigationView;
+import edu.hm.webtech.domination.util.Logger;
 
 /**
  * The Application's "main" class, starting the DOMINATION!
@@ -18,6 +19,11 @@ import edu.hm.webtech.domination.ui.view.LoginNavigationView;
  */
 @SuppressWarnings("serial")
 public class MyVaadinApplication extends TouchKitApplication {
+
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOGGER = new Logger(MyVaadinApplication.class.getName());
 
 	/**
 	 * The start {@link NavigationView}, managing the login.
@@ -52,6 +58,7 @@ public class MyVaadinApplication extends TouchKitApplication {
         //this.loginNaviView = new LobbyView("Game Lobby");
 		setTheme("domination");
 		getMainWindow().setContent(loginNaviView);
+        getMainWindow().addListener(new DisconnectListener());
 	}
 
 	@Override
@@ -62,4 +69,5 @@ public class MyVaadinApplication extends TouchKitApplication {
 	public static MyVaadinApplication getApp(){
 		return (MyVaadinApplication) get();
 	}
+
 }

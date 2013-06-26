@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.listener.IGameTickListener;
 import edu.hm.webtech.domination.model.Game;
@@ -282,7 +283,22 @@ public class GameManagerImpl implements IGameManager {
 
 	}
 
-	/**
+    @Override
+    public void handleDisconnectedPlayer(final IPlayer player) {
+        leaveGame(player);
+        /* If the owner leaves the game, promote another player. */
+        if (game.getOwner().equals(player)) {
+            if (!game.getPlayers().isEmpty()) {
+                game.setOwner(game.getPlayers().iterator().next());
+            } else {
+                /* No players left, game owner dead. Ending game. */
+                MyVaadinApplication.getLm().removeGame(this);
+                isGameRunning = false;
+            }
+        }
+    }
+
+    /**
 	 * The game runnable which calls the {@link IDominationManager} in homogene
 	 * time intervals in order to calculate capturing progress on
 	 * {@link IDominationPoint}s.
@@ -299,7 +315,7 @@ public class GameManagerImpl implements IGameManager {
 
 		@Override
 		public void run() {
-			while (winnerTeam == null) {
+			while (isGameRunning) {
 				synchronized (game) {
 					for (IGameTickListener gameTickListener : gameTickListeners) {
 						gameTickListener.tick(game);
@@ -313,6 +329,7 @@ public class GameManagerImpl implements IGameManager {
 								+ winnerTeam.getTeamIdentifier()
 								+ "' has won the game with a score of '"
 								+ winnerTeam.getScore() + "'!");
+                        isGameRunning = false;
 					}
 				}
 				try {
