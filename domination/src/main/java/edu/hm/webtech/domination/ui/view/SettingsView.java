@@ -1,5 +1,6 @@
 package edu.hm.webtech.domination.ui.view;
 
+import com.github.wolfie.refresher.Refresher;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -15,7 +16,7 @@ import edu.hm.webtech.domination.ui.component.LeaveGameButton;
  *
  */
 @SuppressWarnings("serial")
-public class SettingsView extends AbstractNavigationView {
+public class SettingsView extends AbstractNavigationView implements Refresher.RefreshListener {
 
     /**
      * The default caption for the settings view.
@@ -27,6 +28,8 @@ public class SettingsView extends AbstractNavigationView {
      */
     private final IGameManager gameManager;
 
+    private GameDetails gameDetails;
+
 	/**
 	 * A settings view for domination games.
 	 * @param gameManager The game manager on which the settings are applied.
@@ -34,6 +37,7 @@ public class SettingsView extends AbstractNavigationView {
 	public SettingsView(final IGameManager gameManager) {
 		super(CAPTION);
         this.gameManager = gameManager;
+        refresher.addListener(this);
         init();
 	}
 
@@ -51,7 +55,7 @@ public class SettingsView extends AbstractNavigationView {
             componentGroup.addComponent(new StartGameButton());
         }
 
-        GameDetails gameDetails = new GameDetails(gameManager.getGame());
+        gameDetails = new GameDetails(gameManager.getGame());
 
         componentGroup.addComponent(gameDetails);
 
@@ -65,6 +69,12 @@ public class SettingsView extends AbstractNavigationView {
 
 		return componentGroup;
 	}
+
+    @Override
+    public void refresh(Refresher refresher) {
+        init();
+        this.requestRepaintAll();
+    }
 
     private class StartGameButton extends Button {
         private StartGameButton() {

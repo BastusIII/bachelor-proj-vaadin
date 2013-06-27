@@ -1,8 +1,10 @@
 package edu.hm.webtech.domination.ui.view;
 
+import com.github.wolfie.refresher.Refresher;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import edu.hm.webtech.domination.manager.game.RefreshManager;
 
 /**
  * Abstract class for {@link NavigationView}s using a {@link CssLayout} as base
@@ -14,6 +16,8 @@ import com.vaadin.ui.CssLayout;
 @SuppressWarnings("serial")
 public abstract class AbstractNavigationView extends NavigationView {
 
+    protected final Refresher refresher;
+
 	/**
 	 * Constructor, initializing this {@link NavigationView}.
      * aufruf von init() bitte in der subclass!! zu wenig Kontrolle sonst. Probleme mit initialisierung der Manager.
@@ -23,6 +27,7 @@ public abstract class AbstractNavigationView extends NavigationView {
 	 */
 	public AbstractNavigationView(String caption) {
 		super(caption);
+        refresher = new RefreshManager().getRefresher();
 	}
 
 	/**
@@ -35,8 +40,11 @@ public abstract class AbstractNavigationView extends NavigationView {
 
 		Component component = initializeComponent();
 
+        content.addComponent(refresher);
+
 		content.addComponent(component);
 	}
+
 
 	/**
 	 * Initializes the {@link Component}s for this {@link NavigationView}.

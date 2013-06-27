@@ -65,3 +65,12 @@
    height: auto !important;
 }
 
+.resultView{
+    /*margin-top: 20%;*/
+}
+.resultLabel{
+    /*margin-left: 20%;*/
+    font:bold 60px arial, sans-serif;
+    text-align: center;
+}
+

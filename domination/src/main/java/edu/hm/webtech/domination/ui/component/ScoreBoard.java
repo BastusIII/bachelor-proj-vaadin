@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author Felix Schramm (incl hardcore copy pasta from Maximilian Briglmeier)
  */
-public class ScoreBoard extends CustomComponent implements ScoreListener{
+public class ScoreBoard extends CustomComponent implements ScoreListener, RefreshListener{
 
     /**
      * Map with labels for all teams.
@@ -44,8 +44,9 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
      *
      * @param gameManager The game manager from which the score is read.
      */
-    public ScoreBoard(final IGameManager gameManager) {
+    public ScoreBoard(final IGameManager gameManager, Refresher refresher) {
         this.gameManager = gameManager;
+        refresher.addListener(this);
         initLayout();
     }
 
@@ -53,17 +54,6 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
      * Initializes the ScoreBoards layout.
      */
     private void initLayout() {
-
-    	Refresher refresher = new Refresher();
-		refresher.setRefreshInterval(500);
-        final ScoreBoard thisBoard = this;
-		refresher.addListener(new RefreshListener() {
-			@Override
-			public void refresh(Refresher source) {
-                thisBoard.redrawScores();
-			}
-			
-		});
         HorizontalLayout scoreLayout = new HorizontalLayout();
         scoreLayout.setStyleName(SCOREBOARD_BG_CLASS);
 
@@ -78,7 +68,6 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
 
         VerticalLayout mainLayout = new VerticalLayout();
         mainLayout.setSizeFull();
-        mainLayout.addComponent(refresher);
         mainLayout.addComponent(scoreLayout);
         mainLayout.setComponentAlignment(scoreLayout, Alignment.MIDDLE_CENTER);
 
@@ -102,4 +91,8 @@ public class ScoreBoard extends CustomComponent implements ScoreListener{
         }
     }
 
+    @Override
+    public void refresh(Refresher refresher) {
+        redrawScores();
+    }
 }

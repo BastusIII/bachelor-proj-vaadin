@@ -1,5 +1,6 @@
 package edu.hm.webtech.domination.ui.view;
 
+import com.github.wolfie.refresher.Refresher;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.Popover;
@@ -21,7 +22,7 @@ import java.util.Collection;
  *
  * @author Sebastian Stumpf
  */
-public class GameDetailsPopover extends Popover implements Button.ClickListener {
+public class GameDetailsPopover extends Popover implements Button.ClickListener, Refresher.RefreshListener {
 
     IGameManager gameManager;
     IPlayer currentPlayer;
@@ -31,14 +32,19 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
      *
      * @param gameManager Der Game Manager aus dem Die verwendeten Spielinfos kommen.
      */
-    public GameDetailsPopover(final IGameManager gameManager) {
+    public GameDetailsPopover(final IGameManager gameManager, Refresher refresher) {
 
         this.currentPlayer = (IPlayer)MyVaadinApplication.getApp().getUser();
         this.gameManager = gameManager;
+        refresher.addListener(this);
         setStyleName("domination");
         setWidth("100%");
-        setHeight("65%");
-        // build content
+        setHeight("90%");
+        setContent(drawContent());
+
+    }
+
+    private NavigationView drawContent(){
         Layout content = new FormLayout();
         Label owner = new Label("<u>Owner</u>: " + gameManager.getGame().getOwner().getIdentifier(), Label.CONTENT_XHTML);
         Label map = new Label("<u>Map</u>: " + gameManager.getGame().getGameConfiguration().getGameType().getName(), Label.CONTENT_XHTML);
@@ -61,16 +67,13 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
             content.addComponent(new TeamDetails(gameManager.getGame(),team));
         }
         content.addComponent(joinButtonWrapper);
-
         // Decorate with navigation view
         NavigationView navigationViewWrapper = new NavigationView(content);
         navigationViewWrapper.setCaption("Details of " + gameManager.getGame().getName());
-        setContent(navigationViewWrapper);
-
         // Have a close button
         Button close = new Button("close", this);
         navigationViewWrapper.setRightComponent(close);
-
+        return navigationViewWrapper;
     }
 
     /**
@@ -82,4 +85,9 @@ public class GameDetailsPopover extends Popover implements Button.ClickListener 
         close();
     }
 
+    @Override
+    public void refresh(Refresher refresher) {
+        setContent(drawContent());
+        requestRepaintAll();
+    }
 }

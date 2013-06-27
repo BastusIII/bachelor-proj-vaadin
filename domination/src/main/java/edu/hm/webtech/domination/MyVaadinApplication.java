@@ -3,6 +3,7 @@ package edu.hm.webtech.domination;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 
+import com.vaadin.ui.Window;
 import edu.hm.webtech.domination.manager.lobby.ILobbyManager;
 import edu.hm.webtech.domination.manager.lobby.LobbyManager;
 import edu.hm.webtech.domination.manager.session.ISessionManager;
@@ -59,6 +60,12 @@ public class MyVaadinApplication extends TouchKitApplication {
 		setTheme("domination");
 		getMainWindow().setContent(loginNaviView);
         getMainWindow().addListener(new DisconnectListener());
+        getMainWindow().addListener(new Window.ResizeListener() {
+            @Override
+            public void windowResized(Window.ResizeEvent e) {
+                getMainWindow().requestRepaintAll();
+            }
+        });
 	}
 
 	@Override

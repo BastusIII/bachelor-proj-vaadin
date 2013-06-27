@@ -4,6 +4,7 @@ import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.model.GameConfiguration;
@@ -56,30 +57,14 @@ public class CreateGamePopover extends Popover implements Button.ClickListener {
         createGame.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
-                int scoreLimit = 0;
-                int maxPlayersPerTeam = 0;
-                String identifier = null;
-                try {
-                    scoreLimit = Integer.parseInt((String) scoreLimitField.getValue());
-                    maxPlayersPerTeam = Integer.parseInt((String) maxPlayersPerTeamField.getValue());
-                    identifier = (String) identifierField.getValue();
-                    if (identifier == "") {
-                        getWindow().showNotification("Error", "Enter a name for your game!!", 2);
-                    }
-                    else {
-                        GameType gameType = GameType.getType((String) gameTypeSelect.getValue());
-
-                        IGameConfiguration config = new GameConfiguration(scoreLimit, -1, maxPlayersPerTeam, -1, owner, gameType, identifier);
-                        if (MyVaadinApplication.getLm().createGame(config) == null) {
-                            getWindow().showNotification("Error", "You either have already created a game or the name you chose is in use!", 2);
-                        } else {
-                            getParent().setContent(new LobbyView());
-                            close();
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                    getWindow().showNotification("Error", "Please enter numbers in score and player field!", 2);
-                }
+                createGame(scoreLimitField,maxPlayersPerTeamField,identifierField,gameTypeSelect,owner);
+            }
+        });
+        identifierField.addShortcutListener(new AbstractField.FocusShortcut(identifierField, ShortcutAction.KeyCode.ENTER, null) {
+            @Override
+            public void handleAction(Object sender, Object target) {
+                if(target.equals(identifierField))
+                    createGame(scoreLimitField,maxPlayersPerTeamField,identifierField,gameTypeSelect,owner);
             }
         });
         Layout createButtonWrapper = new VerticalComponentGroup();
@@ -105,6 +90,33 @@ public class CreateGamePopover extends Popover implements Button.ClickListener {
         Button close = new Button("close", this);
         navigationViewWrapper.setRightComponent(close);
 
+    }
+
+    private void createGame(TextField scoreLimitField, TextField maxPlayersPerTeamField, TextField identifierField, NativeSelect gameTypeSelect, IPlayer owner){
+        int scoreLimit = 0;
+        int maxPlayersPerTeam = 0;
+        String identifier = null;
+        try {
+            scoreLimit = Integer.parseInt((String) scoreLimitField.getValue());
+            maxPlayersPerTeam = Integer.parseInt((String) maxPlayersPerTeamField.getValue());
+            identifier = (String) identifierField.getValue();
+            if (identifier == "") {
+                getWindow().showNotification("Error", "Enter a name for your game!!", 2);
+            }
+            else {
+                GameType gameType = GameType.getType((String) gameTypeSelect.getValue());
+
+                IGameConfiguration config = new GameConfiguration(scoreLimit, -1, maxPlayersPerTeam, -1, owner, gameType, identifier);
+                if (MyVaadinApplication.getLm().createGame(config) == null) {
+                    getWindow().showNotification("Error", "You either have already created a game or the name you chose is in use!", 2);
+                } else {
+                    getParent().setContent(new LobbyView());
+                    close();
+                }
+            }
+        } catch (NumberFormatException e) {
+            getWindow().showNotification("Error", "Please enter numbers in score and player field!", 2);
+        }
     }
 
     /**

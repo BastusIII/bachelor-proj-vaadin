@@ -1,16 +1,12 @@
 package edu.hm.webtech.domination.ui.view;
 
+import com.github.wolfie.refresher.Refresher;
 import com.vaadin.addon.touchkit.ui.HorizontalComponentGroup;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.game.IGameManager;
-import edu.hm.webtech.domination.model.GameConfiguration;
-import edu.hm.webtech.domination.model.GameType;
-import edu.hm.webtech.domination.model.IGameConfiguration;
-import edu.hm.webtech.domination.model.IPlayer;
 
 /**
  * Die Lobby View kommt nach dem erfolgreichen Login eines Spielers.<br />
@@ -19,7 +15,7 @@ import edu.hm.webtech.domination.model.IPlayer;
  *
  * @author Sebastian Stumpf
  */
-public class LobbyView extends AbstractNavigationView {
+public class LobbyView extends AbstractNavigationView implements Refresher.RefreshListener{
 
     VerticalLayout base;
     VerticalComponentGroup gamesContainer;
@@ -35,6 +31,7 @@ public class LobbyView extends AbstractNavigationView {
      */
     public LobbyView() {
         super(CAPTION);
+        refresher.addListener(this);
         init();
     }
 
@@ -45,6 +42,7 @@ public class LobbyView extends AbstractNavigationView {
      */
     public LobbyView(final String caption) {
         super(CAPTION);
+        refresher.addListener(this);
         init();
     }
 
@@ -90,7 +88,7 @@ public class LobbyView extends AbstractNavigationView {
         detailsButton.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
-                GameDetailsPopover gameDetailsPopover = new GameDetailsPopover(gameManager);
+                GameDetailsPopover gameDetailsPopover = new GameDetailsPopover(gameManager,refresher);
                 gameDetailsPopover.showRelativeTo(getNavigationBar());
             }
         });
@@ -112,5 +110,15 @@ public class LobbyView extends AbstractNavigationView {
         gameContainer.addComponent(detailsButton);
         gameContainer.addComponent(removeButton);
         this.gamesContainer.addComponent(gameContainer);
+    }
+
+    @Override
+    public void refresh(Refresher refresher) {
+        this.gamesContainer.removeAllComponents();
+        this.gamesContainer.addComponent(this.noGamesAvailable);
+        for (IGameManager gameManager : MyVaadinApplication.getLm().getGames()) {
+            addGameToContainer(gameManager);
+        }
+        gamesContainer.requestRepaintAll();
     }
 }

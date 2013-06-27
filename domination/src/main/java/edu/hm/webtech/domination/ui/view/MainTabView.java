@@ -21,10 +21,10 @@ public class MainTabView extends TabBarView{
 		TabSheet.Tab mapTab = addTab(gameView, "Map");
 
 		mapTab.setIcon(new ThemeResource("images/map.png"));
-		
+
 		TabSheet.Tab settingsTab = addTab(settingsView, "Settings");
 		settingsTab.setIcon(new ThemeResource("images/settings.png"));
-		
-		setSelectedTab(gameView);
+
+        setSelectedTab(gameView);
 	}
 }
