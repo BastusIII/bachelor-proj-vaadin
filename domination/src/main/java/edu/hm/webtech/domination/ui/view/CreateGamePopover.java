@@ -30,7 +30,7 @@ public class CreateGamePopover extends Popover implements Button.ClickListener {
         this.currentPlayer = (IPlayer) MyVaadinApplication.getApp().getUser();
         setStyleName("domination");
         setWidth("100%");
-        setHeight("65%");
+        setHeight("90%");
         // build content
 
         final IPlayer owner = currentPlayer;
