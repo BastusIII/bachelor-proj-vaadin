@@ -29,4 +29,5 @@ public interface ApplicationConfiguration {
     public static final String DOMINATION_POINT_PURPLE = DOMINATION_POINT_PATH + "_purple.png";
     public static final String DOMINATION_POINT_BLACK = DOMINATION_POINT_PATH + "_black.png";
     public static final String DOMINATION_POINT_NEUTRAL = DOMINATION_POINT_PATH + "_neutral.png";
+    public static final String LOGINVIEW_DOMINATION_LOGO = "images" + File.separator + "logo_trans_small.png";
 }

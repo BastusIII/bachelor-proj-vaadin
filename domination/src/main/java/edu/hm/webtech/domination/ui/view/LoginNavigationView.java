@@ -16,6 +16,7 @@ import com.vaadin.ui.Button.ClickListener;
 
 import edu.hm.webtech.domination.MyVaadinApplication;
 import edu.hm.webtech.domination.manager.session.SessionManager;
+import edu.hm.webtech.domination.model.ApplicationConfiguration;
 import edu.hm.webtech.domination.util.Logger;
 
 /**
@@ -51,7 +52,7 @@ public class LoginNavigationView extends AbstractNavigationView implements Posit
 
         VerticalComponentGroup componentGroup = new VerticalComponentGroup("Character");
 
-        Resource image = new ThemeResource("images/logo_trans_small.png");
+        Resource image = new ThemeResource(ApplicationConfiguration.LOGINVIEW_DOMINATION_LOGO);
 
         if (image != null) {
             CssLayout imageLayout = new CssLayout();

@@ -5,6 +5,8 @@ import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.IPlayer;
 import edu.hm.webtech.domination.model.Player;
+import edu.hm.webtech.domination.util.Logger;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class SessionManager implements ISessionManager {
      * List of all players known to the lobby.
      */
     private List<IPlayer> knownPlayers = new LinkedList<IPlayer>();
+    
+    private Logger logger = new Logger(this.getClass().getSimpleName());
 
 
 	@Override
@@ -34,7 +38,7 @@ public class SessionManager implements ISessionManager {
 			//MyVaadinApplication.getApp().getMainWindow().getApplication().setUser(player);
 			return true;
 		} catch (ModelException me) {
-			System.out.println(me.getMessage());
+			logger.errorLog(me.getMessage());
 		}		
 		return false;
 	}
