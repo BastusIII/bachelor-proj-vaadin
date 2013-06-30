@@ -64,7 +64,9 @@ public class MapView extends NavigationView implements RefreshListener {
      */
     private boolean locked = false;
     /**
-     * The user of the application.
+     * The user of the application. Preinitialized with a dummy, so that there don't 
+     * occur errors, when the connection is too slow to transfer the user data to
+     * the map.
      */
     private IPlayer user = new Player(0, 0, "Dummy");
     /**
@@ -72,8 +74,14 @@ public class MapView extends NavigationView implements RefreshListener {
      */
     private OpenLayersMap openLayersMap;
 
+    /**
+     * Used to get the location of the user.
+     */
     private final LocationManager locationManager;
 
+    /**
+     * Refreshes the map constantly and so updates it.
+     */
     private final Refresher refresher;
 
     // Mapping between objects and icons
@@ -248,7 +256,6 @@ public class MapView extends NavigationView implements RefreshListener {
                 addVectorsToMap();
             } catch (NullPointerException ex) {
                 logger.errorLog("User could not be identified. Maybe the access of reading the location was refused.");
-                ex.printStackTrace();
             }
         }
     }
