@@ -1,4 +1,4 @@
-package edu.hm.webtech.test;
+package edu.hm.webtech.domination.util;
 
 import edu.hm.webtech.domination.exception.ModelException;
 import edu.hm.webtech.domination.model.*;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Factory creating dummy games for testing reasons.
+ * A factory creating games.
  * @author Maximilian Briglmeier
  *
  */

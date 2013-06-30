@@ -4,7 +4,7 @@ import edu.hm.webtech.domination.manager.game.GameManagerImpl;
 import edu.hm.webtech.domination.manager.game.IGameManager;
 import edu.hm.webtech.domination.model.IGameConfiguration;
 import edu.hm.webtech.domination.model.IPlayer;
-import edu.hm.webtech.test.GameFactory;
+import edu.hm.webtech.domination.util.GameFactory;
 
 import java.util.Collection;
 import java.util.HashSet;
