@@ -1,4 +1,4 @@
-package edu.hm.webtech.domination.ui;
+package edu.hm.webtech.domination.listener;
 
 import com.vaadin.ui.Window;
 import edu.hm.webtech.domination.MyVaadinApplication;

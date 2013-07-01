@@ -4,11 +4,12 @@ import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 
 import com.vaadin.ui.Window;
+
+import edu.hm.webtech.domination.listener.DisconnectListener;
 import edu.hm.webtech.domination.manager.lobby.ILobbyManager;
 import edu.hm.webtech.domination.manager.lobby.LobbyManager;
 import edu.hm.webtech.domination.manager.session.ISessionManager;
 import edu.hm.webtech.domination.manager.session.SessionManager;
-import edu.hm.webtech.domination.ui.DisconnectListener;
 import edu.hm.webtech.domination.ui.view.AbstractNavigationView;
 import edu.hm.webtech.domination.ui.view.LoginNavigationView;
 import edu.hm.webtech.domination.util.Logger;
