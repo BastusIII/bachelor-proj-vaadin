@@ -1,5 +1,7 @@
 package edu.hm.webtech.domination.ui.view;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -321,16 +323,13 @@ public class MapView extends NavigationView implements RefreshListener {
             PointVector areaLocation = new PointVector(dominationPoint.getLongitude(), dominationPoint.getLatitude());
 
             // size of the area graphic is been calculated by converting the location and the radius into pixels with the help of the window size
-            double latitudeOffset = getLatitudeDistance(dominationPoint.getLongitude(), dominationPoint.getLatitude(), 2 * dominationPoint.getRadius());
-            double longitudeOffset = getLongitudeDistance(dominationPoint.getLongitude(), dominationPoint.getLatitude(), 2 * dominationPoint.getRadius());
-            //System.out.println("Distance: " + dominationPoint.getDistance(dominationPoint.getLongitude() + longitudeOffset, dominationPoint.getLatitude()+ latitudeOffset));
-            //System.out.println("window height: " + windowHeight + ", lat Dif: " + latitudeDifference + ", lat offset: " + latitudeOffset);
-            int graphicHeight = (int) (windowHeight / (latitudeDifference * latitudeOffset));
-            int graphicWidth = (int) (windowWidth / (longitudeDifference * longitudeOffset));
-            //System.out.println("Graphic Height: " + graphicHeight + ", Graphic Width: " + graphicWidth);
+            double latitudeOffset = getLatitudeOffset(2 * dominationPoint.getRadius());
+            double longitudeOffset = getLongitudeOffset(dominationPoint.getLatitude(), 2 * dominationPoint.getRadius());
+            
+            int graphicHeight = (int) ((windowHeight * latitudeOffset) / latitudeDifference);
+            int graphicWidth = (int) ((windowWidth * longitudeOffset) / longitudeDifference);
 
-            // TODO 50 has to be replaced
-            StyleMap areaStyle = createStyleMap(50, 50, ApplicationConfiguration.DOMINATION_POINT_AREA);
+            StyleMap areaStyle = createStyleMap(graphicHeight, graphicWidth, ApplicationConfiguration.DOMINATION_POINT_AREA);
             VectorLayer areaVector = new VectorLayer();
             areaVector.setStyleMap(areaStyle);
             areaVector.addVector(areaLocation);
@@ -379,41 +378,32 @@ public class MapView extends NavigationView implements RefreshListener {
      * Calculates the longitude of a point moved by the given meters in longitude direction.
      * This is only an approximation.
      *
-     * @param longitude the longitude of the base location
      * @param latitude  the latitude of the base location
      * @param meters    the distance
      * @return the new longitude
      */
-    private double getLongitudeDistance(double longitude, double latitude, double meters) {
-        /*final int earthRadius = 6378137;
-        double offset = meters / (earthRadius * Math.cos(Math.PI * latitude / 180));
-		double result = longitude + (offset * 180/Math.PI);
-		*/
-        final double factor = 1 / (111.111 * Math.cos(latitude));
-        double result = factor * meters;
-        result = result * Math.PI / 180;
-
-        return result;
+    private double getLongitudeOffset(double latitude, double meters) {
+    	BigDecimal convertedLatitude = new BigDecimal(latitude);
+    	BigDecimal convertedMeters = new BigDecimal(meters);
+    	
+    	final BigDecimal tmp = (new BigDecimal(111111)).multiply(new BigDecimal(Math.cos(convertedLatitude.doubleValue())));
+		final BigDecimal offsetLongitude = convertedMeters.divide(tmp,10,RoundingMode.HALF_UP);
+		
+		return offsetLongitude.abs().doubleValue();
     }
 
     /**
      * Calculates the latitude of a point moved by the given meters in latitude direction.
      *
-     * @param longitude the longitude of the base location
-     * @param latitude  the latitude of the base location
      * @param meters    the distance
      * @return the new latitude
      */
-    private double getLatitudeDistance(double longitude, double latitude, double meters) {
-		/*final int earthRadius = 6378137;
-		double offset = meters / earthRadius;
-		double result = latitude + offset * 180 / Math.PI;
-		*/
-        final double factor = 1 / 111.111;
-        double result = factor * meters;
-        result = result * Math.PI / 180;
-
-        return result;
+    private double getLatitudeOffset(double meters) {
+    	final BigDecimal convertedMeters = new BigDecimal(meters);
+    	
+    	final BigDecimal offsetLatitude = convertedMeters.divide(new BigDecimal(111111),10,RoundingMode.HALF_UP);
+    	
+        return offsetLatitude.abs().doubleValue();
     }
 
     /**

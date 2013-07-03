@@ -31,15 +31,15 @@ public class GameFactory {
                 teams.add(new Team(TeamIdentifier.RED, 0));
                 
                 // Praterinsel
-                dominationpoints.add(new DominationPoint(11.590748, 48.136652, 50));
+                dominationpoints.add(new DominationPoint(11.590748, 48.136652, 75));
                 // Theresienwiese
-                dominationpoints.add(new DominationPoint(11.549292, 48.131439, 50));
+                dominationpoints.add(new DominationPoint(11.549292, 48.131439, 300));
                 // Alter Botanischer Garten
-                dominationpoints.add(new DominationPoint(11.564054, 48.141750, 50));
+                dominationpoints.add(new DominationPoint(11.564054, 48.141750, 100));
                 // Marienplatz - Rathaus
-                dominationpoints.add(new DominationPoint(11.575513, 48.137375, 50));
+                dominationpoints.add(new DominationPoint(11.575513, 48.137375, 25));
                 // Sendlinger Tor
-                dominationpoints.add(new DominationPoint(11.567587, 48.133996, 50));
+                dominationpoints.add(new DominationPoint(11.567587, 48.133996, 25));
                 // Hofgarten - Dianatempel
                 dominationpoints.add(new DominationPoint(11.579998, 48.142951, 50));
                 
@@ -66,11 +66,11 @@ public class GameFactory {
                 // Nordbad
                 dominationpoints.add(new DominationPoint(11.563690, 48.160317, 50));
                 // Alter Nordfriedhof
-                dominationpoints.add(new DominationPoint(11.571747, 48.153486, 50));
+                dominationpoints.add(new DominationPoint(11.571747, 48.153486, 25));
                 // Leopoldpark
-                dominationpoints.add(new DominationPoint(11.581170, 48.156489, 50));
+                dominationpoints.add(new DominationPoint(11.581170, 48.156489, 100));
                 // Universität (LMU)
-                dominationpoints.add(new DominationPoint(11.579853, 48.149835, 50));
+                dominationpoints.add(new DominationPoint(11.579853, 48.149835, 75));
                 
                 map = new Map(11.566895, 48.155236,15);
             	game = new Game(gameConfiguration);
